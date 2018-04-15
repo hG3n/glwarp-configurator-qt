@@ -54,7 +54,7 @@ Sphere::Sphere(float radius, QVector3D position)
 bool Sphere::intersect(Ray const &r, std::pair<Hitpoint, Hitpoint> *hp_pair) {
 
 //    qDebug() << "Ray - origin: " <<  r.origin << " direction: " << r.direction;
-    bool verbose = true;
+    bool verbose = false;
 
     // vector from current ray orign to sphere center
 //    QVector3D L = _center - r.origin;

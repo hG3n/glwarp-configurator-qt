@@ -1,7 +1,9 @@
 {
+    "confirm_message" : "Recalculate",
     "ui": [
         {
             "title": "Projector",
+            "attribute": "projector",
             "groups": [
                 {
                     "title": "Position",
@@ -60,6 +62,22 @@
                     ]
                 },
                 {
+                    "title": "Screen",
+                    "attribute" : "screen",
+                    "elements": [{
+                            "title": "Width",
+                            "attribute": "w",
+                            "precision": 1
+                        },
+                        {
+                            "title": "Height",
+                            "attribute": "h",
+                            "precision": 1
+                        }
+
+                    ]
+                },
+                {
                     "title": "Sample Grid",
                     "attribute" : "grid",
                     "elements": [{
@@ -97,6 +115,7 @@
         },
         {
             "title": "Mirror",
+            "attribute" : "mirror",
             "groups": [{
                     "title": "Postion",
                     "attribute" : "position",
@@ -132,6 +151,7 @@
         },
         {
             "title": "Dome",
+            "attribute": "dome",
             "groups": [{
                     "title": "Postion",
                     "attribute" : "position",

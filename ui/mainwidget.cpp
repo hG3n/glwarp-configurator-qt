@@ -52,7 +52,6 @@ void MainWidget::initSimulation() {
 }
 
 void MainWidget::initLayout() {
-
     setContentsMargins(0,0,0,0);
 
     QHBoxLayout *root = new QHBoxLayout;
@@ -60,18 +59,18 @@ void MainWidget::initLayout() {
     root->setAlignment(Qt::AlignRight);
     root->setSpacing(0);
 
-    _configurator = new Configurator(_ui_config, this);
+    _glWidget = new GLWidget(this);
+    root->addWidget(_glWidget);
+
     QScrollArea *scrollarea = new QScrollArea;
     scrollarea->setFixedWidth(210);
     scrollarea->setAlignment(Qt::AlignCenter);
     scrollarea->setContentsMargins(0,0,0,0);
+
+    _configurator = new Configurator(_ui_config, this);
     scrollarea->setWidget(_configurator);
 
-    _glWidget = new GLWidget(this);
-
-    root->addWidget(_glWidget);
     root->addWidget(scrollarea);
 
-    //     set layout
     setLayout(root);
 }

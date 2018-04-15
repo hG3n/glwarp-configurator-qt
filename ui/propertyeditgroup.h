@@ -1,5 +1,6 @@
 #ifndef CONFIGURATION_HPP
 #define CONFIGURATION_HPP
+#include <utility>
 
 #include <QWidget>
 
@@ -22,6 +23,7 @@
 #include <QVector>
 #include <QDebug>
 
+
 #include "ui/propertyedit.hpp"
 
 class PropertyEditGroup : public QWidget
@@ -30,7 +32,10 @@ class PropertyEditGroup : public QWidget
     public:
         explicit PropertyEditGroup(const QJsonObject &config, QWidget *parent = 0);
 
-//        QMap<QString, QMap> getValues();
+        QMap<QString, QMap<QString, double>> getValues() const;
+        QJsonObject getValuesJson() const;
+
+        void setValues();
     signals:
 
     public slots:
@@ -51,7 +56,8 @@ class PropertyEditGroup : public QWidget
        void initEditGroup(const QJsonObject &config, QBoxLayout *layout);
 
     private:
-        QMap<QString, QWidget*> _ui_elements;
+        QMap<QString, PropertyEdit*> _ui_elements;
+
 };
 
 #endif // CONFIGURATION_HPP

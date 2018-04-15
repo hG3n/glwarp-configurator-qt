@@ -15,6 +15,14 @@ QMap<QString, double> PropertyEdit::getValues() const {
     return map;
 }
 
+QJsonObject PropertyEdit::getValuesJson() const {
+    QJsonObject obj;
+    for(auto pair: _ui_elements.toStdMap()) {
+        obj[pair.first] = pair.second->value();
+    }
+    return obj;
+}
+
 void PropertyEdit::initDefaultLayout() {
     QFormLayout *form = new QFormLayout;
     setLayout(form);

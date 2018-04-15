@@ -29,19 +29,10 @@ void PropertyEditGroup::initLayout(const QJsonObject & config) {
 void PropertyEditGroup::initEditGroup(const QJsonObject &config, QBoxLayout *layout) {
 
     QString title = config["title"].toString();
-    QString type = config["type"].toString();
     QString attribute = config["attribute"].toString();
     double precision = config["precision"].toDouble();
 
-    QWidget *edit;
-
-    if(type == "vector") {
-        edit = new Vector3Edit(precision, this);
-    } else if (type == "multiple") {
-        edit = new PropertyEdit(config, this);
-    } else {
-        qDebug() << "unknown type:" << type;
-    }
+    QWidget *edit = new PropertyEdit(config, this);
 
     QGroupBox *group_box = new QGroupBox;
     group_box->setContentsMargins(0,0,0,0);

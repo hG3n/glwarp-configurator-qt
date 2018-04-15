@@ -26,7 +26,7 @@ void PropertyEdit::initLayout(const QJsonObject &config) {
 
     // create new root layout
     QFormLayout *form = new QFormLayout;
-    form->setContentsMargins(0,0,0,0);
+    form->setFormAlignment(Qt::AlignRight);
 
     QJsonArray element_array = config["elements"].toArray();
     for(auto array_item: element_array) {

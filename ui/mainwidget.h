@@ -49,7 +49,7 @@ class MainWidget : public QWidget
          */
         void initLayout();
 
-        void loadConfigs();
+        bool loadConfigs();
 
 //        /**
 //         * @brief initUiValues

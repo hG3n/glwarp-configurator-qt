@@ -20,28 +20,28 @@ MainWidget::MainWidget(MainWindow *mw)
     loadConfigs();
     initLayout();
 
-    //    initSimulation();
+    initSimulation();
     //    setUiValues(_config.getModelConfig());
 
     // get scene and create connection
-    //    _simulation.updateScene(_glWidget->getScene());
-
-    // get model config
-    //    _model_config = _config.getModelConfig();
-
+    _simulation.updateScene(_glWidget->getScene());
 }
 
-void MainWidget:: loadConfigs() {
+bool MainWidget:: loadConfigs() {
     _config = Config();
-    if(!_config.loadModelConfig("../../../../glwarp-configuration-tool/_RES/configs/model.json")) {
+    if(_config.loadModelConfig("../../../../glwarp-configuration-tool/_RES/configs/model.json")) {
+        _model_config = _config.getModelConfig();
+    } else {
         qDebug() << "Error laoding model config!";
+        return false;
     }
-    _model_config = _config.getModelConfig();
 
-    if(!_config.loadUiConfig("../../../../glwarp-configuration-tool/_RES/configs/ui.json")) {
+    if(_config.loadUiConfig("../../../../glwarp-configuration-tool/_RES/configs/ui.json")) {
+        _ui_config = _config.getcUiConfig();
+    } else {
         qDebug() << "Error loading UI config!";
+
     }
-    _ui_config = _config.getcUiConfig();
 }
 
 
@@ -62,6 +62,8 @@ void MainWidget::initLayout() {
 
     _configurator = new Configurator(_ui_config, this);
     QScrollArea *scrollarea = new QScrollArea;
+    scrollarea->setFixedWidth(210);
+    scrollarea->setAlignment(Qt::AlignCenter);
     scrollarea->setContentsMargins(0,0,0,0);
     scrollarea->setWidget(_configurator);
 

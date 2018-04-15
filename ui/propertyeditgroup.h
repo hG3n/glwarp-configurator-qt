@@ -31,6 +31,7 @@ class PropertyEditGroup : public QWidget
     public:
         explicit PropertyEditGroup(const QJsonObject &config, QWidget *parent = 0);
 
+//        QMap<QString, QMap> getValues();
     signals:
 
     public slots:

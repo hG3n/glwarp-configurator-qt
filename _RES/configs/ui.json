@@ -5,29 +5,62 @@
             "groups": [
                 {
                     "title": "Position",
-                    "type": "vector",
-                    "precision": 0.01,
-                    "attribute" : "position"
+                    "attribute" : "position",
+                    "elements" : [
+                        {
+                            "title": "X",
+                            "attribute": "x",
+                            "precision": 0.1
+                        },
+                        {
+                            "title": "Y",
+                            "attribute": "y",
+                            "precision": 0.1
+                        },
+                        {
+                            "title": "Z",
+                            "attribute": "z",
+                            "precision": 0.1
+                        }
+
+                    ]
                 },
                 {
                     "title": "Rotation",
-                    "type": "vector",
-                    "precision": 0.1,
-                    "attribute" : "rotation"
+                    "attribute" : "rotation",
+                    "elements" : [
+
+                        {
+                            "title": "X",
+                            "attribute": "x",
+                            "precision": 0.1
+                        },
+                        {
+                            "title": "Y",
+                            "attribute": "y",
+                            "precision": 0.1
+                        },
+                        {
+                            "title": "Z",
+                            "attribute": "z",
+                            "precision": 0.1
+                        }
+
+                    ]
                 },
                 {
                     "title": "Frustum",
-                    "type": "multiple",
                     "attribute" : "fov",
-                    "elements": [{
-                        "title": "FoV",
-                        "attribute": "fov",
-                        "precision": 1
-                    }]
+                    "elements": [
+                        {
+                            "title": "FoV",
+                            "attribute": "fov",
+                            "precision": 1
+                        }
+                    ]
                 },
                 {
                     "title": "Sample Grid",
-                    "type": "multiple",
                     "attribute" : "grid",
                     "elements": [{
                             "title": "Rings",
@@ -43,8 +76,7 @@
                     ]
                 },
                 {
-                    "title": "Transformation Mesh Resolution",
-                    "type": "multiple",
+                    "title": "Mesh Resolution",
                     "attribute" : "dome",
                     "elements": [{
                             "title": "Rings",
@@ -67,13 +99,28 @@
             "title": "Mirror",
             "groups": [{
                     "title": "Postion",
-                    "type": "vector",
-                    "precistion": 0.1,
-                    "attribute" : "position"
+                    "attribute" : "position",
+                    "elements" : [
+                        {
+                            "title": "X",
+                            "attribute": "x",
+                            "precision": 0.1
+                        },
+                        {
+                            "title": "Y",
+                            "attribute": "y",
+                            "precision": 0.1
+                        },
+                        {
+                            "title": "Z",
+                            "attribute": "z",
+                            "precision": 0.1
+                        }
+
+                    ]
                 },
                 {
                     "title": "Size",
-                    "type": "multiple",
                     "attribute" : "radius",
                     "elements": [{
                         "title": "Radius",
@@ -87,13 +134,28 @@
             "title": "Dome",
             "groups": [{
                     "title": "Postion",
-                    "type": "vector",
                     "attribute" : "position",
-                    "precistion": 0.1
+                    "elements" : [
+                        {
+                            "title": "X",
+                            "attribute": "x",
+                            "precision": 0.1
+                        },
+                        {
+                            "title": "Y",
+                            "attribute": "y",
+                            "precision": 0.1
+                        },
+                        {
+                            "title": "Z",
+                            "attribute": "z",
+                            "precision": 0.1
+                        }
+
+                    ]
                 },
                 {
                     "title": "Size",
-                    "type": "multiple",
                     "attribute" : "radius",
                     "elements": [{
                         "title": "Radius",

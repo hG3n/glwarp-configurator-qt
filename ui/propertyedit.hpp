@@ -13,7 +13,6 @@ class PropertyEdit : public QWidget
         Q_OBJECT
     public:
         explicit PropertyEdit(const QJsonObject &config, QWidget *parent = 0);
-
         QMap<QString, double> getValues() const;
     signals:
 

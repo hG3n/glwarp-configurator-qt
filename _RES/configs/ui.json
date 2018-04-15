@@ -1,0 +1,102 @@
+[
+    {
+        "title" : "Projector",
+        "groups": [
+            {
+                "title": "Position",
+                "type" : "vector",
+                "precision" : 0.01
+
+            },
+            {
+                "title": "Frustum",
+                "type" : "multiple",
+                "elements" : [
+                    {
+                        "title": "FoV",
+                        "attribute" : "fov",
+                        "precision": 1
+                    }
+                ]
+            },
+            {
+                "title": "Sample Grid"
+                "type" : "multiple",
+                "elements" : [
+                    {
+                        "title": "Rings",
+                        "attribute" : "rings",
+                        "precision": 1
+                    },
+                    {
+                        "title": "Ring Elements",
+                        "attribute" : "ring_elements",
+                        "precision": 1
+                    },
+
+                ]
+            },
+            {
+                "title": "Transformation Mesh Resolution"
+                "type" : "multiple",
+                "elements" : [
+                    {
+                        "title": "Rings",
+                        "attribute" : "rings",
+                        "precision": 1
+                    },
+                    {
+                        "title": "Ring Elements",
+                        "attribute" : "ring_elements",
+                        "precision": 1
+                    },
+
+                ]
+            }
+
+        ]
+
+    },
+    {
+        "title": "Mirror",
+        "groups": [
+            {
+                "title": "Postion",
+                "type" : "vector",
+                "precistion" : 0.1
+            },
+            {
+                "title": "Size",
+                "type" : "multiple",
+                "elements" : {
+                    {
+                        "title": "Radius",
+                        "attribute" : "radius",
+                        "precision" : 0.1
+                    }
+                }
+            },
+        ]
+    },
+    {
+        "title": "Dome",
+        "groups": [
+            {
+                "title": "Postion",
+                "type" : "vector",
+                "precistion" : 0.1
+            },
+            {
+                "title": "Size",
+                "type" : "multiple",
+                "elements" : {
+                    {
+                        "title": "Radius",
+                        "attribute" : "radius",
+                        "precision" : 0.1
+                    }
+                }
+            },
+        ]
+    }
+]

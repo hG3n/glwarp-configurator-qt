@@ -1,0 +1,43 @@
+/*
+
+QMainWindow {
+    margin: 0px;
+    padding: 0px;
+    background: #08080A;
+}
+
+QWidget {
+    padding: 0px;
+    margin: 0px;
+    spacing: 0px;
+    background: #08080A;
+}
+
+QLabel {
+    color: #E2E2E2;
+}
+
+QGroupBox {
+    margin: 0px;
+    padding: 0px;
+    padding-top: 22px;
+    border-left: 1px solid green;
+    background: #202022;
+}
+
+QGroupBox::title {
+    color: #e6e6e6;
+    border-bottom:1px solid black;
+}
+
+QDoubleSpinBox {
+    margin: 0px;
+    padding: 0px;
+}
+
+QScrollArea {
+    margin: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: #08080A;
+}*/

@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>shaders/simple.frag</file>
+        <file>shaders/simple.vert</file>
+        <file>configs/application.json</file>
+        <file>configs/ui.json</file>
+        <file>configs/model.json</file>
+        <file>styles/style.css</file>
+    </qresource>
+</RCC>

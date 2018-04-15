@@ -27,7 +27,6 @@ class MainWindow;
 #include "model/dome_projector.hpp"
 
 #include "config.h"
-#include "ui/vector3edit.hpp"
 #include "ui/propertyedit.hpp"
 #include "ui/glwidget.h"
 #include "ui/configurator.h"

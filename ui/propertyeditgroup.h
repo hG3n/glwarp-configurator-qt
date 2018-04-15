@@ -22,7 +22,6 @@
 #include <QVector>
 #include <QDebug>
 
-#include "ui/vector3edit.hpp"
 #include "ui/propertyedit.hpp"
 
 class PropertyEditGroup : public QWidget

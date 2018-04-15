@@ -1,102 +1,107 @@
-[
-    {
-        "title" : "Projector",
-        "groups": [
-            {
-                "title": "Position",
-                "type" : "vector",
-                "precision" : 0.01
-
-            },
-            {
-                "title": "Frustum",
-                "type" : "multiple",
-                "elements" : [
-                    {
+{
+    "ui": [
+        {
+            "title": "Projector",
+            "groups": [
+                {
+                    "title": "Position",
+                    "type": "vector",
+                    "precision": 0.01,
+                    "attribute" : "position"
+                },
+                {
+                    "title": "Rotation",
+                    "type": "vector",
+                    "precision": 0.1,
+                    "attribute" : "rotation"
+                },
+                {
+                    "title": "Frustum",
+                    "type": "multiple",
+                    "attribute" : "fov",
+                    "elements": [{
                         "title": "FoV",
-                        "attribute" : "fov",
+                        "attribute": "fov",
                         "precision": 1
-                    }
-                ]
-            },
-            {
-                "title": "Sample Grid"
-                "type" : "multiple",
-                "elements" : [
-                    {
-                        "title": "Rings",
-                        "attribute" : "rings",
-                        "precision": 1
-                    },
-                    {
-                        "title": "Ring Elements",
-                        "attribute" : "ring_elements",
-                        "precision": 1
-                    },
+                    }]
+                },
+                {
+                    "title": "Sample Grid",
+                    "type": "multiple",
+                    "attribute" : "grid",
+                    "elements": [{
+                            "title": "Rings",
+                            "attribute": "rings",
+                            "precision": 1
+                        },
+                        {
+                            "title": "Ring Elements",
+                            "attribute": "ring_elements",
+                            "precision": 1
+                        }
 
-                ]
-            },
-            {
-                "title": "Transformation Mesh Resolution"
-                "type" : "multiple",
-                "elements" : [
-                    {
-                        "title": "Rings",
-                        "attribute" : "rings",
-                        "precision": 1
-                    },
-                    {
-                        "title": "Ring Elements",
-                        "attribute" : "ring_elements",
-                        "precision": 1
-                    },
+                    ]
+                },
+                {
+                    "title": "Transformation Mesh Resolution",
+                    "type": "multiple",
+                    "attribute" : "dome",
+                    "elements": [{
+                            "title": "Rings",
+                            "attribute": "rings",
+                            "precision": 1
+                        },
+                        {
+                            "title": "Ring Elements",
+                            "attribute": "ring_elements",
+                            "precision": 1
+                        }
 
-                ]
-            }
-
-        ]
-
-    },
-    {
-        "title": "Mirror",
-        "groups": [
-            {
-                "title": "Postion",
-                "type" : "vector",
-                "precistion" : 0.1
-            },
-            {
-                "title": "Size",
-                "type" : "multiple",
-                "elements" : {
-                    {
-                        "title": "Radius",
-                        "attribute" : "radius",
-                        "precision" : 0.1
-                    }
+                    ]
                 }
-            },
-        ]
-    },
-    {
-        "title": "Dome",
-        "groups": [
-            {
-                "title": "Postion",
-                "type" : "vector",
-                "precistion" : 0.1
-            },
-            {
-                "title": "Size",
-                "type" : "multiple",
-                "elements" : {
-                    {
+
+            ]
+
+        },
+        {
+            "title": "Mirror",
+            "groups": [{
+                    "title": "Postion",
+                    "type": "vector",
+                    "precistion": 0.1,
+                    "attribute" : "position"
+                },
+                {
+                    "title": "Size",
+                    "type": "multiple",
+                    "attribute" : "radius",
+                    "elements": [{
                         "title": "Radius",
-                        "attribute" : "radius",
-                        "precision" : 0.1
-                    }
+                        "attribute": "radius",
+                        "precision": 0.1
+                    }]
                 }
-            },
-        ]
-    }
-]
+            ]
+        },
+        {
+            "title": "Dome",
+            "groups": [{
+                    "title": "Postion",
+                    "type": "vector",
+                    "attribute" : "position",
+                    "precistion": 0.1
+                },
+                {
+                    "title": "Size",
+                    "type": "multiple",
+                    "attribute" : "radius",
+                    "elements": [{
+                        "title": "Radius",
+                        "attribute": "radius",
+                        "precision": 0.1
+                    }]
+                }
+            ]
+        }
+    ]
+}

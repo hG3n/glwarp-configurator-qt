@@ -1,22 +1,10 @@
 #include "propertyedit.hpp"
 
-PropertyEdit::PropertyEdit(QWidget *parent)
-    : QWidget(parent)
-{
-
-    if(!_config.isEmpty()) {
-        initLayout();
-    }
-
-}
 
 PropertyEdit::PropertyEdit(const QJsonObject &config, QWidget *parent)
     : QWidget(parent)
-    , _config(config)
 {
-    if(!_config.isEmpty()) {
-        initLayout();
-    }
+    initLayout(config);
 }
 
 QMap<QString, double> PropertyEdit::getValues() const {
@@ -32,30 +20,33 @@ void PropertyEdit::initDefaultLayout() {
     setLayout(form);
 }
 
-void PropertyEdit::initLayout() {
+void PropertyEdit::initLayout(const QJsonObject &config) {
+
+    setContentsMargins(0,0,0,0);
+
+    // create new root layout
     QFormLayout *form = new QFormLayout;
+    form->setContentsMargins(0,0,0,0);
 
-    if(_config.contains("elements") && _config["elements"].isArray()) {
-
-        QJsonArray element_array = _config["elements"].toArray();
-
-        for(auto array_item: element_array) {
-            QJsonObject element = array_item.toObject();
-            qDebug() << "element" << element;
-            QString title = element["title"].toString();
-            QString attribute = element["attribute"].toString();
-            double precision = element["precision"].toDouble();
-
-            QDoubleSpinBox *spinbox = new QDoubleSpinBox(this);
-            spinbox->setSingleStep(precision);
-
-            qDebug() << "attribute" << attribute;
-            _ui_elements[attribute] = spinbox;
-
-            form->addRow(title, spinbox);
-        }
+    QJsonArray element_array = config["elements"].toArray();
+    for(auto array_item: element_array) {
+        initLayoutElement(array_item.toObject(), form);
     }
 
     setLayout(form);
+}
+
+void PropertyEdit::initLayoutElement(const QJsonObject &config, QFormLayout *layout) {
+
+    QString title = config["title"].toString();
+    QString attribute = config["attribute"].toString();
+    double precision = config["precision"].toDouble();
+
+    QDoubleSpinBox *spinbox = new QDoubleSpinBox(this);
+    spinbox->setSingleStep(precision);
+
+    _ui_elements[attribute] = spinbox;
+
+    layout->addRow(title, spinbox);
 }
 

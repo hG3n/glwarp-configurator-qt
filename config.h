@@ -10,6 +10,7 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QJsonParseError>
 #include <QFile>
 
 #include "lib/json11.hpp"
@@ -89,6 +90,7 @@ class Config
          * @return
          */
         bool loadConfig(QJsonObject &object, const QString &filename);
+
 
     private:
         QString _config_path;

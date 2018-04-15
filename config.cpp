@@ -1,5 +1,7 @@
 #include "config.h"
 
+#include <string>
+
 Config::Config()
 {}
 
@@ -85,10 +87,9 @@ bool Config::loadConfig(QJsonObject &object,  const QString &filepath) {
     QString value;
     QFile file;
     file.setFileName(filepath);
-    if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    if(file.open(QIODevice::ReadOnly)) {
         value = file.readAll();
         file.close();
-        qWarning() << value;
     } else {
         file.close();
         return false;
@@ -98,7 +99,11 @@ bool Config::loadConfig(QJsonObject &object,  const QString &filepath) {
         return false;
     }
 
-    QJsonDocument document = QJsonDocument::fromJson(value.toUtf8());
+    QJsonParseError *error = new QJsonParseError;
+    QJsonDocument document = QJsonDocument::fromJson(value.toUtf8(), error);
+
+    qDebug() << "Parsing JSON:" << error->errorString();
+
     object = document.object();
 
     return true;

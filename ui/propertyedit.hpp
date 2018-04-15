@@ -12,7 +12,6 @@ class PropertyEdit : public QWidget
 {
         Q_OBJECT
     public:
-        explicit PropertyEdit(QWidget *parent = 0);
         explicit PropertyEdit(const QJsonObject &config, QWidget *parent = 0);
 
         QMap<QString, double> getValues() const;
@@ -22,9 +21,9 @@ class PropertyEdit : public QWidget
 
     private:
         void initDefaultLayout();
-        void initLayout();
+        void initLayout(const QJsonObject &config);
+        void initLayoutElement(const QJsonObject &config, QFormLayout *layout);
     private:
-        QJsonObject _config;
         QMap<QString, QDoubleSpinBox*> _ui_elements;
 
 };

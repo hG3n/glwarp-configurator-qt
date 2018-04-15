@@ -18,7 +18,7 @@ class GLWidget;
 class MainWindow;
 
 #include "glwidget.h"
-#include "configurationwidget.hpp"
+#include "propertyeditgroup.h"
 
 #include "mainwidget.h"
 #include "mainwindow.h"
@@ -30,6 +30,7 @@ class MainWindow;
 #include "ui/vector3edit.hpp"
 #include "ui/propertyedit.hpp"
 #include "ui/glwidget.h"
+#include "ui/configurator.h"
 
 class MainWidget : public QWidget
 {
@@ -47,6 +48,8 @@ class MainWidget : public QWidget
          * @brief initLayout
          */
         void initLayout();
+
+        void loadConfigs();
 
 //        /**
 //         * @brief initUiValues
@@ -73,12 +76,14 @@ class MainWidget : public QWidget
 
     private:
         GLWidget *_glWidget;
+        Configurator *_configurator;
+
         MainWindow *_mainWindow;
         Simulation _simulation;
         Config _config;
-        ModelConfig *_model_config;
 
-        ConfigurationWidget *_configuration;
+        ModelConfig *_model_config;
+        QJsonObject _ui_config;
 };
 
 #endif

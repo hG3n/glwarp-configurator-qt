@@ -27,8 +27,6 @@ SOURCES += main.cpp\
         ui/glwidget.cpp \
         ui/mainwidget.cpp \
         ui/propertyedit.cpp \
-        ui/configurationwidget.cpp \
-        ui/projectorconfigwidget.cpp \
         ui/vector3edit.cpp \
         model/dome_projector.cpp\
         model/file_writer.cpp\
@@ -40,13 +38,13 @@ SOURCES += main.cpp\
         model/simulation.cpp \
         lib/json11.cpp \
         config.cpp \
+    ui/propertyeditgroup.cpp \
+    ui/configurator.cpp
 
 HEADERS  += ui/mainwindow.h \
             ui/glwidget.h \
             ui/mainwidget.h \
             ui/propertyedit.hpp \
-            ui/configurationwidget.hpp \
-            ui/projectorconfigwidget.hpp \
             ui/vector3edit.hpp \
             model/dome_projector.hpp\
             model/file_writer.hpp\
@@ -58,6 +56,8 @@ HEADERS  += ui/mainwindow.h \
             model/simulation.h \
             lib/json11.hpp \
             config.h \
+    ui/configurator.h \
+    ui/propertyeditgroup.h
 
 DISTFILES +=  shaders/simple.frag \
               shaders/simple.vert \

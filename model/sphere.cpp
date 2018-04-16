@@ -109,9 +109,9 @@ bool Sphere::intersect(Ray const &r, std::pair<Hitpoint, Hitpoint> *hp_pair) {
     QVector3D N2 = nom2.normalized() / this->_radius;
     QVector3D N22 = (P2 - _center).normalized();
 
-    qDebug() << N2;
-    qDebug() << N22;
-    qDebug() << "";
+//    qDebug() << N2;
+//    qDebug() << N22;
+//    qDebug() << "";
 
     hp_pair->second.position = P2;
     hp_pair->second.normal = N2;

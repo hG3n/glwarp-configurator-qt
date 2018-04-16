@@ -61,10 +61,10 @@ class MainWidget : public QWidget
          */
         void loadConfigs();
 
-//        /**
-//         * @brief initUiValues
-//         */
-//        void setUiValues(ModelConfig *model_config);
+        /**
+         * @brief initUiValues
+         */
+        void setUiValues(QJsonObject model_config);
 
         /**
          * @brief initSimulation

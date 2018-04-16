@@ -20,28 +20,21 @@ MainWidget::MainWidget(MainWindow *mw)
     initLayout();
 
     initSimulation();
-    //    setUiValues(_config.getModelConfig());
 
     connect(_configurator, &Configurator::valueUpdate,
             this, &MainWidget::onValueUpdate);
 
+    setUiValues(_config.getModelConfigJson());
+
     // get scene and create connection
     _simulation.updateScene(_glWidget->getScene());
-
-
-    QMap<QString, int> map;
-    map["first"] = 1;
-    map["second"] = 2;
-    map["third"] = 3;
-
-    for(auto element: map.keys()) {
-        qDebug() << element;
-    }
-
-
 }
 
 void MainWidget::onValueUpdate(QJsonObject new_values) {
+
+    qDebug() << "new values";
+    qDebug() << new_values;
+
     QJsonObject projector_obj = new_values["projector"].toObject();
     DomeProjectorConfig projector_config = DomeProjectorConfig::fromJson(projector_obj);
 
@@ -89,11 +82,15 @@ void MainWidget:: loadConfigs() {
         qDebug() << "Error laoding model config!";
     }
 
-    if(_config.loadUiConfig("../../../../glwarp-configuration-tool/_RES/configs/ui.json")) {
+    if(_config.loadUiConfig("../../../../glwarp-configuration-tool/_RES/configs/ui_rev.json")) {
         _ui_config = _config.getcUiConfig();
     } else {
         qDebug() << "Error loading UI config!";
     }
+}
+
+void MainWidget::setUiValues(QJsonObject model_config) {
+    _configurator->setValues(model_config);
 }
 
 void MainWidget::initSimulation() {

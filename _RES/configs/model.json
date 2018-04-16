@@ -18,12 +18,12 @@
             "h": 1080
         },
         "grid": {
-            "num_rings": 8,
-            "num_ring_elements": 8
+            "rings": 8,
+            "ring_elements": 8
         },
         "mesh": {
-            "num_rings": 16,
-            "num_ring_elements": 64
+            "rings": 16,
+            "ring_elements": 64
         }
     },
     "dome": {

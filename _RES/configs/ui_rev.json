@@ -30,7 +30,6 @@
                     "title": "Rotation",
                     "attribute" : "rotation",
                     "elements" : [
-
                         {
                             "title": "X",
                             "attribute": "x",

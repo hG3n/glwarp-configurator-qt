@@ -33,11 +33,11 @@ void Simulation::updateFromConfig(ModelConfig *model_config) {
                                                              model_config->dome_projector.fov,
                                                              1.0f, 2.0f);
         _dp = new DomeProjector(new_frustum,
-                                model_config->dome_projector.num_grid_rings,
+                                model_config->dome_projector.num_mesh_rings,
                                 model_config->dome_projector.num_grid_ring_elements,
                                 model_config->dome_projector.position,
-                                model_config->dome_projector.num_dome_rings,
-                                model_config->dome_projector.num_dome_ring_elements);
+                                model_config->dome_projector.num_mesh_rings,
+                                model_config->dome_projector.num_mesh_ring_elements);
     }
 
 

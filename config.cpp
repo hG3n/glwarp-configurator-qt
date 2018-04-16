@@ -2,6 +2,56 @@
 
 #include <string>
 
+
+DomeProjectorConfig DomeProjectorConfig::fromJson(const QJsonObject &object) {
+
+    QJsonObject position_obj = object["position"].toObject();
+    QVector3D position = QVector3D( position_obj["x"].toDouble(),  position_obj["y"].toDouble(),  position_obj["z"].toDouble());
+
+    QJsonObject rotation_obj = object["rotation"].toObject();
+    QVector3D rotation = QVector3D( rotation_obj["x"].toDouble(),  rotation_obj["y"].toDouble(),  rotation_obj["z"].toDouble());
+
+    double fov = object["fov"].toObject()["fov"].toDouble();
+    qDebug() << fov;
+
+    int screen_w = object["screen"].toObject()["w"].toInt();
+    int screen_h = object["screen"].toObject()["h"].toInt();
+
+    int grid_rings = object["grid"].toObject()["rings"].toInt();
+    int grid_ring_elements = object["grid"].toObject()["ring_elements"].toInt();
+
+    int dome_rings = object["mesh"].toObject()["rings"].toInt();
+    int dome_ring_elements = object["dome"].toObject()["ring_elements"].toInt();
+
+    DomeProjectorConfig config;
+    config.position = position;
+    config.rotation = rotation;
+    config.fov = fov;
+    config.screen_width = screen_w;
+    config.screen_height = screen_h;
+    config.num_mesh_rings = grid_rings;
+    config.num_grid_ring_elements = grid_ring_elements;
+    config.num_mesh_rings = dome_rings;
+    config.num_mesh_ring_elements = dome_ring_elements;
+
+    return config;
+}
+
+
+
+SphereConfig SphereConfig::fromJson(const QJsonObject &object) {
+    qDebug() << object;
+
+    QJsonObject position_obj = object["position"].toObject();
+    QVector3D position = QVector3D( position_obj["x"].toDouble(),  position_obj["y"].toDouble(),  position_obj["z"].toDouble());
+
+    double radius = object["radius"].toObject()["radius"].toDouble();
+
+    SphereConfig config;
+    config.position = position;
+    config.radius = radius;
+}
+
 Config::Config()
 {}
 
@@ -39,33 +89,33 @@ void Config::parseModelConfig(const QJsonObject &json_config) {
     QJsonObject projector_object = json_config["projector"].toObject();
 
     DomeProjectorConfig projector_config;
-    projector_config.position = jsonArray2Vec3(projector_object["position"].toArray());
-    projector_config.position = jsonArray2Vec3(projector_object["rotation"].toArray());
-    projector_config.fov = (float) projector_object["fov"].toDouble();
+    projector_config.position = jsonObject2Vec3(projector_object["position"].toObject());
+    projector_config.position = jsonObject2Vec3(projector_object["rotation"].toObject());
+    projector_config.fov = (float) projector_object["fov"].toObject()["fov"].toDouble();
 
     QJsonObject screen_object = projector_object["screen"].toObject();
     projector_config.screen_width = (int) screen_object["w"].toInt();
     projector_config.screen_height = (int) screen_object["h"].toInt();
 
     QJsonObject projector_dome_object = projector_object["dome"].toObject();
-    projector_config.num_dome_rings = (int) projector_dome_object["num_rings"].toInt();
-    projector_config.num_dome_ring_elements = (int) projector_dome_object["num_ring_elements"].toInt();
+    projector_config.num_mesh_rings = (int) projector_dome_object["num_rings"].toInt();
+    projector_config.num_mesh_ring_elements = (int) projector_dome_object["num_ring_elements"].toInt();
 
     QJsonObject projector_grid_object = projector_object["grid"].toObject();
-    projector_config.num_grid_rings = (int) projector_grid_object["num_rings"].toInt();
+    projector_config.num_mesh_rings = (int) projector_grid_object["num_rings"].toInt();
     projector_config.num_grid_ring_elements = (int) projector_grid_object["num_ring_elements"].toInt();
 
     QJsonObject dome_object = json_config["dome"].toObject();
     SphereConfig dome_config;
-    dome_config.position = jsonArray2Vec3(dome_object["position"].toArray());
-    dome_config.rotation = jsonArray2Vec3(dome_object["rotation"].toArray());
-    dome_config.radius = dome_object["radius"].toDouble();
+    dome_config.position = jsonObject2Vec3(dome_object["position"].toObject());
+    dome_config.rotation = jsonObject2Vec3(dome_object["rotation"].toObject());
+    dome_config.radius = dome_object["radius"].toObject()["radius"].toDouble();
 
     QJsonObject mirror_object = json_config["mirror"].toObject();
     SphereConfig mirror_config;
-    mirror_config.position = jsonArray2Vec3(mirror_object["position"].toArray());
-    mirror_config.rotation = jsonArray2Vec3(mirror_object["rotation"].toArray());
-    mirror_config.radius = dome_object["radius"].toDouble();
+    mirror_config.position = jsonObject2Vec3(mirror_object["position"].toObject());
+    mirror_config.rotation = jsonObject2Vec3(mirror_object["rotation"].toObject());
+    mirror_config.radius = dome_object["radius"].toObject()["radius"].toDouble();
 
     _model_config = new ModelConfig;
     _model_config->dome_projector = projector_config;
@@ -74,10 +124,10 @@ void Config::parseModelConfig(const QJsonObject &json_config) {
 }
 
 
-QVector3D Config::jsonArray2Vec3(const QJsonArray &vector_array) {
-    float x = vector_array[0].toDouble();
-    float y = vector_array[1].toDouble();
-    float z = vector_array[2].toDouble();
+QVector3D Config::jsonObject2Vec3(const QJsonObject &object) {
+    float x = object["x"].toDouble();
+    float y = object["y"].toDouble();
+    float z = object["z"].toDouble();
     return QVector3D(x,y,z);
 }
 

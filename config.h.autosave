@@ -24,8 +24,8 @@ struct DomeProjectorConfig
         int screen_height;
         int num_grid_rings;
         int num_grid_ring_elements;
-        int num_dome_rings;
-        int num_dome_ring_elements;
+        int num_mesh_rings;
+        int num_mesh_ring_elements;
 
         static DomeProjectorConfig fromJson(const QJsonObject &object);
 };
@@ -71,10 +71,6 @@ class Config
          */
         ModelConfig* getModelConfig() const;
 
-        /**
-         * @brief getcUiConfig
-         * @return
-         */
         QJsonObject getcUiConfig() const;
 
     private:
@@ -97,7 +93,7 @@ class Config
          * @param filename
          * @return
          */
-        bool loadConfig(QJsonObject &object, const QString &filename);
+        bool loadConfig(QJsonObject &object, const QString &filename); 
 
     private:
         QString _config_path;

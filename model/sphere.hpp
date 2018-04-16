@@ -5,6 +5,7 @@
 #ifndef RAYCAST_SPHERE_H
 #define RAYCAST_SPHERE_H
 
+#include <utility>
 #include <ostream>
 
 #include "ray.hpp"
@@ -13,7 +14,6 @@
 class Sphere {
 
     public:
-
         // c'tor
         Sphere();
         Sphere(float);

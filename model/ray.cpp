@@ -54,6 +54,7 @@ Ray::~Ray() {}
 QVector3D Ray::reflect(QVector3D const &normal) const {
 //    return this->direction - 2.0f * (glm::dot(this->direction, glm::normalize(normal))) * glm::normalize(normal);
     return direction - 2.0f * (QVector3D::dotProduct(direction, normal.normalized()) * normal.normalized());
+//    return direction - 2.0f * (QVector3D::dotProduct(normal.normalized(), direction) * normal.normalized());
 }
 
 /**

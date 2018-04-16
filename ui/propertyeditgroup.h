@@ -46,14 +46,14 @@ class PropertyEditGroup : public QWidget
         * @brief initLayout
         * @param config
         */
-       void initLayout(const QJsonObject &config);
+        void initLayout(const QJsonObject &config);
 
-       /**
+        /**
         * @brief initEditGroup
         * @param config
         * @param layout
         */
-       void initEditGroup(const QJsonObject &config, QBoxLayout *layout);
+        void initEditGroup(const QJsonObject &config, QBoxLayout *layout);
 
     private:
         QMap<QString, PropertyEdit*> _ui_elements;

@@ -92,12 +92,13 @@ bool Sphere::intersect(Ray const &r, std::pair<Hitpoint, Hitpoint> *hp_pair) {
     double t_1 = t_ca + t_hc;
 
     // help vector
-    QVector3D temp = r.origin - _center;
+    QVector3D temp = _center - r.origin;// - _center;
 
     // first hitpoint
     QVector3D P1 = r.origin + ( t_0 * r.direction);
-    QVector3D nom1 = (temp + t_0 * r.direction);
-    QVector3D N1 = nom1.normalized()/ _radius;
+//    QVector3D nom1 = (temp + t_0 * r.direction);
+//    QVector3D N1 = nom1.normalized()/ _radius;
+    QVector3D N1 = (P1 - _center).normalized();
 
     hp_pair->first.position = P1;
     hp_pair->first.normal = N1;
@@ -106,6 +107,11 @@ bool Sphere::intersect(Ray const &r, std::pair<Hitpoint, Hitpoint> *hp_pair) {
     QVector3D P2 = r.origin + ((float) t_1 * r.direction);
     QVector3D nom2 = temp + (float)t_1 * r.direction;
     QVector3D N2 = nom2.normalized() / this->_radius;
+    QVector3D N22 = (P2 - _center).normalized();
+
+    qDebug() << N2;
+    qDebug() << N22;
+    qDebug() << "";
 
     hp_pair->second.position = P2;
     hp_pair->second.normal = N2;

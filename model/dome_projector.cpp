@@ -171,11 +171,11 @@ void DomeProjector::updateFromConfig(ModelConfig *model_config) {
     _frustum->setFOV(model_config->dome_projector.fov);
 
     _position = model_config->dome_projector.position;
-    _grid_rings = model_config->dome_projector.num_grid_rings;
+    _grid_rings = model_config->dome_projector.num_mesh_rings;
     _grid_ring_elements = model_config->dome_projector.num_grid_ring_elements;
 
-    _dome_rings =  model_config->dome_projector.num_dome_rings;
-    _dome_ring_elements = model_config->dome_projector.num_dome_ring_elements;
+    _dome_rings =  model_config->dome_projector.num_mesh_rings;
+    _dome_ring_elements = model_config->dome_projector.num_mesh_ring_elements;
 
     initialize();
 }

@@ -15,6 +15,8 @@ class PropertyEdit : public QWidget
         explicit PropertyEdit(const QJsonObject &config, QWidget *parent = 0);
         QMap<QString, double> getValues() const;
         QJsonObject getValuesJson() const;
+
+
     signals:
 
     public slots:

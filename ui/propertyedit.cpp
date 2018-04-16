@@ -1,6 +1,5 @@
 #include "propertyedit.hpp"
 
-
 PropertyEdit::PropertyEdit(const QJsonObject &config, QWidget *parent)
     : QWidget(parent)
 {
@@ -47,8 +46,8 @@ void PropertyEdit::initLayout(const QJsonObject &config) {
 void PropertyEdit::initLayoutElement(const QJsonObject &config, QFormLayout *layout) {
 
     QString title = config["title"].toString();
-    QString attribute = config["attribute"].toString();
     double precision = config["precision"].toDouble();
+    QString attribute = config["attribute"].toString();
 
     QDoubleSpinBox *spinbox = new QDoubleSpinBox(this);
     spinbox->setSingleStep(precision);

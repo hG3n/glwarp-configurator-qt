@@ -36,11 +36,18 @@ class MainWidget : public QWidget
         Q_OBJECT
 
     public:
+        /**
+         * @brief MainWidget
+         * @param mw
+         */
         MainWidget(MainWindow *mw);
 
-
     private slots:
-//        void onRecalculateButtonPressed();
+        /**
+         * @brief onValueUpdate
+         * @param new_values
+         */
+        void onValueUpdate(QJsonObject new_values);
 
     private:
         /**
@@ -48,7 +55,11 @@ class MainWidget : public QWidget
          */
         void initLayout();
 
-        bool loadConfigs();
+        /**
+         * @brief loadConfigs
+         * @return
+         */
+        void loadConfigs();
 
 //        /**
 //         * @brief initUiValues
@@ -60,18 +71,11 @@ class MainWidget : public QWidget
          */
         void initSimulation();
 
-//        /**
-//         * @brief createButton
-//         * @param title
-//         * @return
-//         */
-//        QPushButton* createButton(QString const & name,QString const & title);
-
-//        /**
-//         * @brief createSpinBox
-//         * @return
-//         */
-//        QDoubleSpinBox* createSpinBox(double step_size);
+        /**
+         * @brief vec3fromJson
+         * @return
+         */
+        QVector3D vec3fromJson(const QJsonObject &object) const;
 
     private:
         GLWidget *_glWidget;

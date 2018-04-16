@@ -14,9 +14,10 @@ class Configurator : public QWidget
     public:
         explicit Configurator(const QJsonObject &config, QWidget *parent = 0);
 
-        void getValues() const;
+        QJsonObject getValues() const;
 
     signals:
+        void valueUpdate(QJsonObject new_values);
 
     public slots:
         void onConfirm();
@@ -36,6 +37,8 @@ class Configurator : public QWidget
         void initLayoutGroup(const QJsonObject &config, QBoxLayout*layout);
 
     private:
+        QString _attribute;
+
         QMap<QString, PropertyEditGroup*> _ui_elements;
 
         QPushButton *_confirm_button;

@@ -4,6 +4,7 @@
         <file>shaders/simple.vert</file>
         <file>configs/application.json</file>
         <file>configs/ui.json</file>
+        <file>configs/ui_rev.json</file>
         <file>configs/model.json</file>
         <file>styles/style.css</file>
     </qresource>

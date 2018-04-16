@@ -4,8 +4,8 @@
         {
             "title": "Projector",
             "attribute": "projector",
-            "groups": [
-                {
+            "groups": {
+                "position": {
                     "title": "Position",
                     "attribute" : "position",
                     "elements" : [
@@ -26,11 +26,10 @@
                         }
                     ]
                 },
-                {
+                "rotation":{
                     "title": "Rotation",
                     "attribute" : "rotation",
                     "elements" : [
-
                         {
                             "title": "X",
                             "attribute": "x",
@@ -49,7 +48,7 @@
 
                     ]
                 },
-                {
+                "fov": {
                     "title": "Frustum",
                     "attribute" : "fov",
                     "elements": [
@@ -60,7 +59,7 @@
                         }
                     ]
                 },
-                {
+                "screen" :{
                     "title": "Screen",
                     "attribute" : "screen",
                     "elements": [{
@@ -76,7 +75,7 @@
 
                     ]
                 },
-                {
+                "grid": {
                     "title": "Sample Grid",
                     "attribute" : "grid",
                     "elements": [{
@@ -92,9 +91,9 @@
 
                     ]
                 },
-                {
+                "mesh": {
                     "title": "Mesh Resolution",
-                    "attribute" : "dome",
+                    "attribute" : "mesh",
                     "elements": [{
                             "title": "Rings",
                             "attribute": "rings",
@@ -108,14 +107,13 @@
 
                     ]
                 }
-
-            ]
-
+            }
         },
         {
             "title": "Mirror",
             "attribute" : "mirror",
-            "groups": [{
+            "groups": {
+                "position": {
                     "title": "Postion",
                     "attribute" : "position",
                     "elements" : [
@@ -137,7 +135,7 @@
 
                     ]
                 },
-                {
+                "radius": {
                     "title": "Size",
                     "attribute" : "radius",
                     "elements": [{
@@ -146,12 +144,13 @@
                         "precision": 0.1
                     }]
                 }
-            ]
+            }
         },
         {
             "title": "Dome",
             "attribute": "dome",
-            "groups": [{
+            "groups": {
+                "position": {
                     "title": "Postion",
                     "attribute" : "position",
                     "elements" : [
@@ -173,7 +172,7 @@
 
                     ]
                 },
-                {
+                "radius": {
                     "title": "Size",
                     "attribute" : "radius",
                     "elements": [{
@@ -182,7 +181,7 @@
                         "precision": 0.1
                     }]
                 }
-            ]
+            }
         }
     ]
 }

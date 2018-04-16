@@ -31,10 +31,6 @@ MainWidget::MainWidget(MainWindow *mw)
 }
 
 void MainWidget::onValueUpdate(QJsonObject new_values) {
-
-    qDebug() << "new values";
-    qDebug() << new_values;
-
     QJsonObject projector_obj = new_values["projector"].toObject();
     DomeProjectorConfig projector_config = DomeProjectorConfig::fromJson(projector_obj);
 
@@ -82,7 +78,7 @@ void MainWidget:: loadConfigs() {
         qDebug() << "Error laoding model config!";
     }
 
-    if(_config.loadUiConfig("../../../../glwarp-configuration-tool/_RES/configs/ui_rev.json")) {
+    if(_config.loadUiConfig("../../../../glwarp-configuration-tool/_RES/configs/ui.json")) {
         _ui_config = _config.getcUiConfig();
     } else {
         qDebug() << "Error loading UI config!";

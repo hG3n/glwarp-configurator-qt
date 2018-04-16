@@ -1,7 +1,6 @@
-#include "config.h"
-
 #include <string>
 
+#include "config.h"
 
 DomeProjectorConfig DomeProjectorConfig::fromJson(const QJsonObject &object) {
 
@@ -37,8 +36,6 @@ DomeProjectorConfig DomeProjectorConfig::fromJson(const QJsonObject &object) {
     return config;
 }
 
-
-
 SphereConfig SphereConfig::fromJson(const QJsonObject &object) {
     qDebug() << object;
 
@@ -50,11 +47,13 @@ SphereConfig SphereConfig::fromJson(const QJsonObject &object) {
     SphereConfig config;
     config.position = position;
     config.radius = radius;
+    return config;
 }
+
+
 
 Config::Config()
 {}
-
 
 bool Config::loadModelConfig(const QString &path) {
     QJsonObject object;
@@ -80,11 +79,17 @@ ModelConfig* Config::getModelConfig() const {
     return _model_config;
 }
 
+QJsonObject Config::getModelConfigJson() const {
+    return _model_config_json;
+}
+
 QJsonObject Config::getcUiConfig() const {
     return _ui_config;
 }
 
 void Config::parseModelConfig(const QJsonObject &json_config) {
+
+    _model_config_json = json_config;
 
     QJsonObject projector_object = json_config["projector"].toObject();
 
@@ -98,12 +103,12 @@ void Config::parseModelConfig(const QJsonObject &json_config) {
     projector_config.screen_height = (int) screen_object["h"].toInt();
 
     QJsonObject projector_dome_object = projector_object["dome"].toObject();
-    projector_config.num_mesh_rings = (int) projector_dome_object["num_rings"].toInt();
-    projector_config.num_mesh_ring_elements = (int) projector_dome_object["num_ring_elements"].toInt();
+    projector_config.num_mesh_rings = (int) projector_dome_object["rings"].toInt();
+    projector_config.num_mesh_ring_elements = (int) projector_dome_object["ring_elements"].toInt();
 
     QJsonObject projector_grid_object = projector_object["grid"].toObject();
-    projector_config.num_mesh_rings = (int) projector_grid_object["num_rings"].toInt();
-    projector_config.num_grid_ring_elements = (int) projector_grid_object["num_ring_elements"].toInt();
+    projector_config.num_mesh_rings = (int) projector_grid_object["rings"].toInt();
+    projector_config.num_grid_ring_elements = (int) projector_grid_object["ring_elements"].toInt();
 
     QJsonObject dome_object = json_config["dome"].toObject();
     SphereConfig dome_config;

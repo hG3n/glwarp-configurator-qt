@@ -8,9 +8,18 @@ Configurator::Configurator(const QJsonObject &config, QWidget *parent) : QWidget
 QJsonObject Configurator::getValues() const{
     QJsonObject obj;
     for(auto pair: _ui_elements.toStdMap()) {
-        obj[pair.first] = pair.second->getValuesJson();
+        obj[pair.first] = pair.second->toJson();
     }
     return obj;
+}
+
+void Configurator::setValues(const QJsonObject &values) {
+
+    for(auto key: values.keys()) {
+//        qDebug() << "new element" << key;
+//        //        qDebug() << "ui element" << _ui_elements[key]->
+        _ui_elements[key]->fromJson(values[key].toObject());
+    }
 }
 
 void Configurator::onConfirm() {

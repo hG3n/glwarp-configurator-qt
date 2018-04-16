@@ -8,21 +8,22 @@ PropertyEditGroup::PropertyEditGroup(const QJsonObject &config, QWidget *parent)
     initLayout(config);
 }
 
-
-QMap<QString, QMap<QString, double>> PropertyEditGroup::getValues() const {
-    QMap<QString, QMap<QString, double>> map;
-    for(auto pair: _ui_elements.toStdMap()) {
-        map[pair.first] = pair.second->getValues();
-    }
-    return map;
-}
-
-QJsonObject PropertyEditGroup::getValuesJson() const {
+QJsonObject PropertyEditGroup::toJson() const {
     QJsonObject obj;
     for(auto pair: _ui_elements.toStdMap()) {
-        obj[pair.first] = pair.second->getValuesJson();
+        obj[pair.first] = pair.second->toJson();
     }
     return obj;
+}
+
+void PropertyEditGroup::fromJson(const QJsonObject &values) {
+    for(auto key : values.keys()) {
+        _ui_elements[key]->fromJson(values[key].toObject());
+    }
+}
+
+QString PropertyEditGroup::getAttribute() const {
+    return _attribute;
 }
 
 void PropertyEditGroup::initLayout(const QJsonObject & config) {
@@ -35,9 +36,12 @@ void PropertyEditGroup::initLayout(const QJsonObject & config) {
     root->setAlignment(Qt::AlignRight);
     root->setContentsMargins(0,0,0,0);
 
+    _attribute = config["attribute"].toString();
+
     // add groups
-    QJsonArray groups = config["groups"].toArray();
+    QJsonObject groups = config["groups"].toObject();
     for(auto group : groups) {
+        qDebug() << group;
         initEditGroup(group.toObject(), root);
     }
 

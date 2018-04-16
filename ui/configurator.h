@@ -6,6 +6,8 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
+#include <QPushButton>
+
 #include "ui/propertyeditgroup.h"
 
 class Configurator : public QWidget
@@ -15,6 +17,7 @@ class Configurator : public QWidget
         explicit Configurator(const QJsonObject &config, QWidget *parent = 0);
 
         QJsonObject getValues() const;
+        void setValues(const QJsonObject& values);
 
     signals:
         void valueUpdate(QJsonObject new_values);
@@ -42,7 +45,6 @@ class Configurator : public QWidget
         QMap<QString, PropertyEditGroup*> _ui_elements;
 
         QPushButton *_confirm_button;
-
 };
 
 #endif // GROUPCONFIGURATORWIDGET_HPP

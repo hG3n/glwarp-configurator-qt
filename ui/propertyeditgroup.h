@@ -3,26 +3,13 @@
 #include <utility>
 
 #include <QWidget>
-
 #include <QObject>
-#include <QSlider>
+
 #include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QKeyEvent>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QDesktopWidget>
-#include <QApplication>
-#include <QMessageBox>
-#include <QDoubleSpinBox>
 #include <QGroupBox>
-#include <QLabel>
-#include <QScrollArea>
 #include <QJsonObject>
-#include <QJsonArray>
 #include <QVector>
 #include <QDebug>
-
 
 #include "ui/propertyedit.hpp"
 
@@ -32,10 +19,24 @@ class PropertyEditGroup : public QWidget
     public:
         explicit PropertyEditGroup(const QJsonObject &config, QWidget *parent = 0);
 
-        QMap<QString, QMap<QString, double>> getValues() const;
-        QJsonObject getValuesJson() const;
+        /**
+         * @brief Returns json containing values of all child elements
+         * @return
+         */
+        QJsonObject toJson() const;
 
-        void setValues();
+        /**
+         * @brief Set child values from Json
+         * @param values
+         */
+        void fromJson(const QJsonObject &values);
+
+        /**
+         * @brief Returns groups attribute
+         * @return
+         */
+        QString getAttribute() const;
+
     signals:
 
     public slots:
@@ -56,6 +57,7 @@ class PropertyEditGroup : public QWidget
         void initEditGroup(const QJsonObject &config, QBoxLayout *layout);
 
     private:
+        QString _attribute;
         QMap<QString, PropertyEdit*> _ui_elements;
 
 };

@@ -6,20 +6,25 @@ PropertyEdit::PropertyEdit(const QJsonObject &config, QWidget *parent)
     initLayout(config);
 }
 
-QMap<QString, double> PropertyEdit::getValues() const {
-    QMap<QString, double> map;
-    for(auto pair: _ui_elements.toStdMap()) {
-        map[pair.first] = pair.second->value();
-    }
-    return map;
-}
-
-QJsonObject PropertyEdit::getValuesJson() const {
+QJsonObject PropertyEdit::toJson() const {
     QJsonObject obj;
     for(auto pair: _ui_elements.toStdMap()) {
         obj[pair.first] = pair.second->value();
     }
     return obj;
+}
+
+void PropertyEdit::fromJson (const QJsonObject &values) {
+    for(auto key: values.keys()) {
+        double value = values[key].toDouble();
+
+        if(_ui_elements.contains(key))
+            _ui_elements[key]->setValue(value);
+    }
+}
+
+QString PropertyEdit::getAttribute() const {
+    return _attribute;
 }
 
 void PropertyEdit::initDefaultLayout() {
@@ -34,6 +39,8 @@ void PropertyEdit::initLayout(const QJsonObject &config) {
     // create new root layout
     QFormLayout *form = new QFormLayout;
     form->setFormAlignment(Qt::AlignRight);
+
+    _attribute = config["attribute"].toString();
 
     QJsonArray element_array = config["elements"].toArray();
     for(auto array_item: element_array) {

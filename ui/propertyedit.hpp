@@ -13,10 +13,11 @@ class PropertyEdit : public QWidget
         Q_OBJECT
     public:
         explicit PropertyEdit(const QJsonObject &config, QWidget *parent = 0);
-        QMap<QString, double> getValues() const;
-        QJsonObject getValuesJson() const;
 
+        QJsonObject toJson() const;
+        void fromJson(const QJsonObject &values);
 
+        QString getAttribute() const;
     signals:
 
     public slots:
@@ -26,6 +27,7 @@ class PropertyEdit : public QWidget
         void initLayout(const QJsonObject &config);
         void initLayoutElement(const QJsonObject &config, QFormLayout *layout);
     private:
+        QString _attribute;
         QMap<QString, QDoubleSpinBox*> _ui_elements;
 
 };

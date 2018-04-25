@@ -40,10 +40,17 @@ void MainWidget::onValueUpdate(QJsonObject new_values) {
     QJsonObject dome_obj = new_values["dome"].toObject();
     SphereConfig dome_config = SphereConfig::fromJson(dome_obj);
 
-    ModelConfig model_config;
-    model_config.dome_projector = projector_config;
-    model_config.dome = dome_config;
-    model_config.mirror = mirror_config;
+    ModelConfig *model_config = new ModelConfig;
+    model_config->dome_projector = projector_config;
+    model_config->dome = dome_config;
+    model_config->mirror = mirror_config;
+
+    // todo continue here
+
+//    _simulation.buildModel(model_config);
+//    _simulation.runCalculations();
+
+//    _simulation.updateScene(_glWidget->getScene());
 }
 
 void MainWidget::initLayout() {

@@ -15,23 +15,43 @@ class Sphere {
 
     public:
         // c'tor
+        /**
+         * @brief Sphere c'tor
+         */
         Sphere();
-        Sphere(float);
-        Sphere(float, QVector3D);
-        //    ~Sphere();
 
-        // methods
+        /**
+         * @brief Sphere
+         */
+        Sphere(float radius);
+
+        /**
+         * @brief Sphere
+         * @param radius
+         * @param position
+         */
+        Sphere(float radius, const QVector3D &position);
+
+        /**
+         * Validates, whether the given ray intersects the Sphere and retunts a pair of Hitpoints.
+         * @param r
+         * @param hp_pair
+         * @return bool success
+         */
         bool intersect(Ray const &r, std::pair<Hitpoint, Hitpoint> *hp_pair);
 
-        // getter
         float get_radius() const;
         QVector3D get_position() const;
 
-        // setter
-        void set_radius(float);
-        void set_position(QVector3D);
+        void set_position(const QVector3D &new_position);
+        void set_radius(float new_radius);
 
-        // ostream
+        /**
+         * overloaded out stream operator
+         * @param os
+         * @param sphere
+         * @return
+         */
         friend std::ostream &operator<<(std::ostream &os, const Sphere &sphere);
 
     private:

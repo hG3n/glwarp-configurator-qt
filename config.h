@@ -34,7 +34,6 @@ struct SphereConfig
 {
         float radius;
         QVector3D position;
-        QVector3D rotation;
 
         static SphereConfig fromJson(const QJsonObject &object);
 };

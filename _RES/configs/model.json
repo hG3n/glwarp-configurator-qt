@@ -2,7 +2,7 @@
     "projector": {
         "position": {
             "x" : 0.0,
-            "y" : 0.99,
+            "y" : 0.95,
             "z" : 0.0
         },
         "rotation": {
@@ -11,15 +11,15 @@
             "z": 0.0
         },
         "fov":{
-             "fov": 30.0
+             "fov": 20.0
         },
         "screen": {
             "w": 1920,
             "h": 1080
         },
         "grid": {
-            "rings": 8,
-            "ring_elements": 8
+            "rings": 64,
+            "ring_elements": 64
         },
         "mesh": {
             "rings": 16,

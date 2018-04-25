@@ -47,6 +47,10 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
     public slots:
         void cleanup();
 
+    signals:
+
+
+
     protected:
         /**
          * @brief initializeGL
@@ -65,7 +69,14 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
          */
         void resizeGL(int width, int height) override;
 
+
+
+        void mousePressEvent(QMouseEvent *event) override;
+
+        void mouseMoveEvent(QMouseEvent *event) override;
+
     private:
+        void setYRotation(int angle);
         /**
          * @brief initShader
          */
@@ -90,7 +101,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
          * @param color_buffer
          * @param mvp
          */
-        void renderElement(QOpenGLBuffer vertex_buffer, QOpenGLBuffer color_buffer, QMatrix4x4 mvp);
+        void renderElement(QOpenGLBuffer vertex_buffer, QOpenGLBuffer color_buffer, const QMatrix4x4 &mvp);
 
     private:
         QOpenGLShaderProgram *_shader_program;
@@ -117,6 +128,11 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
         // scene
         Scene *_scene;
         bool _running;
+
+        int _x_rotation;
+        int _y_rotation;
+        int _z_rotation;
+        QPoint _last_position;
 };
 
 #endif

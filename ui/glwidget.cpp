@@ -3,6 +3,7 @@
 #include <QMouseEvent>
 #include <QOpenGLShaderProgram>
 #include <QCoreApplication>
+#include <QPoint>
 
 #include "ui/glwidget.h"
 
@@ -10,13 +11,15 @@ GLWidget::GLWidget(QWidget *parent)
     : QOpenGLWidget(parent),
       _shader_program(0)
 {
-    _point =  {0.0f,0.0f,0.0f};
-    _point_blue   = {0.0f, 0.0f, 1.0f};
-    _point_green  = {0.0f, 1.0f, 0.0f};
-    _point_red    = {1.0f, 0.0f, 0.0f};
-    _point_yellow = {1.0f, 1.0f, 0.0f};
-    _point_white  = {1.0f, 1.0f, 1.0f};
-    _point_grey   = {0.5f, 0.5f, 0.5f};
+    _point        = { 0.0f, 0.0f, 0.0f };
+    _point_blue   = { 0.0f, 0.0f, 1.0f };
+    _point_green  = { 0.0f, 1.0f, 0.0f };
+    _point_red    = { 1.0f, 0.0f, 0.0f };
+    _point_yellow = { 1.0f, 1.0f, 0.0f };
+    _point_white  = { 1.0f, 1.0f, 1.0f };
+    _point_grey   = { 0.5f, 0.5f, 0.5f };
+
+    setFocus();
 
     _scene = new Scene;
 }
@@ -25,6 +28,8 @@ GLWidget::~GLWidget()
 {
     cleanup();
 }
+
+
 
 QSize GLWidget::minimumSizeHint() const
 {
@@ -36,12 +41,33 @@ QSize GLWidget::sizeHint() const
     return QSize(1400, 1800);
 }
 
+
+
 void GLWidget::setScene(Scene *scene) {
     _scene = scene;
 }
 
 Scene* GLWidget::getScene() const {
     return _scene;
+}
+
+
+
+static void qNormalizeAngle(int &angle)
+{
+    while (angle < 0)
+        angle += 360 * 16;
+    while (angle > 360 * 16)
+        angle -= 360 * 16;
+}
+
+void GLWidget::setYRotation(int angle)
+{
+    qNormalizeAngle(angle);
+    if (angle != _y_rotation) {
+        _y_rotation = angle;
+        update();
+    }
 }
 
 void GLWidget::cleanup()
@@ -51,7 +77,6 @@ void GLWidget::cleanup()
     _shader_program = 0;
     doneCurrent();
 }
-
 
 void GLWidget::initShader() {
     // init shader
@@ -69,7 +94,6 @@ void GLWidget::initShader() {
 
 }
 
-
 void GLWidget::initVBOs() {
 
     // create vao
@@ -82,12 +106,12 @@ void GLWidget::initVBOs() {
     _point_vbo.allocate(_point.data(), _point.size() * sizeof(GLfloat));
 
     // create color vbos
-    _point_colors["blue"] = createBuffer(_point_blue   );
-    _point_colors["green"] = createBuffer(_point_green  );
-    _point_colors["red"] = createBuffer(_point_red    );
-    _point_colors["yellow"] = createBuffer(_point_yellow );
-    _point_colors["white"] = createBuffer(_point_white  );
-    _point_colors["grey"] = createBuffer(_point_grey   );
+    _point_colors["blue"] = createBuffer(_point_blue);
+    _point_colors["green"] = createBuffer(_point_green);
+    _point_colors["red"] = createBuffer(_point_red);
+    _point_colors["yellow"] = createBuffer(_point_yellow);
+    _point_colors["white"] = createBuffer(_point_white);
+    _point_colors["grey"] = createBuffer(_point_grey);
 
 
 }
@@ -111,7 +135,7 @@ void GLWidget::initView() {
 
     // setup view matrix
     _view_mat.setToIdentity();
-    _view_mat.lookAt(QVector3D(0.0f, 1.8f, -3.5f),
+    _view_mat.lookAt(QVector3D(0.0f, 1.8f, 4.5f),
                      QVector3D(0.0f, 1.0f, 0.0f),
                      QVector3D(0.0f, 1.0f, 0.0f));
 }
@@ -126,12 +150,13 @@ void GLWidget::initializeGL()
     // aboutToBeDestroyed() signal, instead of the destructor. The emission of
     // the signal will be followed by an invocation of initializeGL() where we
     // can recreate all resources.
-    connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GLWidget::cleanup);
+    connect(context(), &QOpenGLContext::aboutToBeDestroyed,
+            this, &GLWidget::cleanup);
 
     initializeOpenGLFunctions();
 
     glClearColor(0, 0, 0, 0);
-    glPointSize(2.0f);
+    glPointSize(3.0f);
 
     initShader();
     initVBOs();
@@ -139,7 +164,7 @@ void GLWidget::initializeGL()
 }
 
 
-void GLWidget::renderElement(QOpenGLBuffer vertex_buffer, QOpenGLBuffer color_buffer, QMatrix4x4 mvp) {
+void GLWidget::renderElement(QOpenGLBuffer vertex_buffer, QOpenGLBuffer color_buffer, const QMatrix4x4 &mvp) {
 
     _shader_program->setUniformValue(_mvp_location, mvp);
 
@@ -164,9 +189,36 @@ void GLWidget::paintGL() {
 
     QOpenGLVertexArrayObject::Binder vao_binder(&_vao);
 
+    _model_mat.setToIdentity();
+//    _model_mat.rotate(180.0f - (_x_rotation / 16.0f), 1, 0, 0);
+    _model_mat.rotate(_y_rotation / 16.0f, 0, 1, 0);
+//    _model_mat.rotate(_z_rotation / 16.0f, 0, 0, 1);
+
     // calculate
     _mvp = _projection_mat * _view_mat * _model_mat;
     _shader_program->bind();
+
+    // render coordinate system
+    {
+        QMatrix4x4 current_mvp(_mvp);
+        current_mvp.translate(0.3,0.0,0.0);
+        renderElement(_point_vbo, _point_colors["blue"], current_mvp);
+    }
+    {
+        QMatrix4x4 current_mvp(_mvp);
+        current_mvp.translate(0.0,0.3,0.0);
+        renderElement(_point_vbo, _point_colors["red"], current_mvp);
+    }
+    {
+        QMatrix4x4 current_mvp(_mvp);
+        current_mvp.translate(0.0,0.0,0.3);
+        renderElement(_point_vbo, _point_colors["green"], current_mvp);
+    }
+    {
+        QMatrix4x4 current_mvp(_mvp);
+        current_mvp.translate(0.0,0.0,0.0);
+        renderElement(_point_vbo, _point_colors["white"], current_mvp);
+    }
 
     // render scene elements
     if(_scene) {
@@ -212,10 +264,27 @@ void GLWidget::paintGL() {
     vao_binder.release();
 }
 
+void GLWidget::mousePressEvent(QMouseEvent *event)
+{
 
+    _last_position = event->pos();
+    qDebug() << "Click at: " << event->pos();
+}
+
+void GLWidget::mouseMoveEvent(QMouseEvent *event)
+{
+    int dx = event->x() - _last_position.x();
+//    int dy = event->y() - _last_position.y();
+
+    if (event->buttons() & Qt::LeftButton) {
+        setYRotation(_y_rotation + 8 * dx);
+    }
+
+    _last_position = event->pos();
+}
 void GLWidget::resizeGL(int w, int h)
 {
     glViewport(0,0,w, h);
     _projection_mat.setToIdentity();
-    _projection_mat.perspective(90.0f, GLfloat(w) / h, 0.01f, 100.0f);
+    _projection_mat.perspective(70.0f, GLfloat(w) / h, 0.01f, 100.0f);
 }

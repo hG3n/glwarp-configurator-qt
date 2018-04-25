@@ -41,7 +41,6 @@ void PropertyEditGroup::initLayout(const QJsonObject & config) {
     // add groups
     QJsonObject groups = config["groups"].toObject();
     for(auto group : groups) {
-        qDebug() << group;
         initEditGroup(group.toObject(), root);
     }
 

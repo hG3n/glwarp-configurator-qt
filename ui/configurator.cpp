@@ -16,8 +16,6 @@ QJsonObject Configurator::getValues() const{
 void Configurator::setValues(const QJsonObject &values) {
 
     for(auto key: values.keys()) {
-//        qDebug() << "new element" << key;
-//        //        qDebug() << "ui element" << _ui_elements[key]->
         _ui_elements[key]->fromJson(values[key].toObject());
     }
 }

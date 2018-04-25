@@ -51,10 +51,10 @@ Ray::~Ray() {}
  * @param normal
  * @return
  */
-QVector3D Ray::reflect(QVector3D const &normal) const {
+QVector3D Ray::reflect(QVector3D const &hitpoint_normal) const {
 //    return this->direction - 2.0f * (glm::dot(this->direction, glm::normalize(normal))) * glm::normalize(normal);
-    return direction - 2.0f * (QVector3D::dotProduct(direction, normal.normalized()) * normal.normalized());
-//    return direction - 2.0f * (QVector3D::dotProduct(normal.normalized(), direction) * normal.normalized());
+//    return direction - 2.0f * (QVector3D::dotProduct(direction, hitpoint_normal.normalized()) * hitpoint_normal.normalized());
+    return direction - 2.0f * (QVector3D::dotProduct(hitpoint_normal.normalized(), direction) * hitpoint_normal.normalized());
 }
 
 /**

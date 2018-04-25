@@ -133,6 +133,7 @@ void DomeProjector::calculateDomeHitpoints(Sphere *mirror, Sphere *dome) {
 
     // raycast for each samplepoint
     for (unsigned int i = 0; i < _sample_grid.size(); ++i) {
+//    for (unsigned int i = 0; i < 1; ++i) {
 
         // calculate initial ray direction
         QVector3D initial_direction = _sample_grid[i] - _position;
@@ -141,6 +142,7 @@ void DomeProjector::calculateDomeHitpoints(Sphere *mirror, Sphere *dome) {
         Ray r(_position, initial_direction.normalized());
         std::pair<Hitpoint, Hitpoint> hpp;
         if (mirror->intersect(r, &hpp)) {
+
             _first_hits.push_back(hpp.first.position);
 
             // reflect ray
@@ -149,7 +151,6 @@ void DomeProjector::calculateDomeHitpoints(Sphere *mirror, Sphere *dome) {
             Ray r2(hpp.first.position, ref.normalized());
             std::pair<Hitpoint, Hitpoint> hpp2;
             if (dome->intersect(r2, &hpp2)) {
-                qDebug() << "pls die!";
                 if (hpp2.second.position.y() > dome->get_position().y()) {
                     _second_hits.push_back(hpp2.second.position);
                 } else {

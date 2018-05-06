@@ -19,7 +19,7 @@ DomeProjectorConfig DomeProjectorConfig::fromJson(const QJsonObject &object) {
     int grid_ring_elements = object["grid"].toObject()["ring_elements"].toInt();
 
     int mesh_rings = object["mesh"].toObject()["rings"].toInt();
-    int mesh_ring_elements = object["dome"].toObject()["ring_elements"].toInt();
+    int mesh_ring_elements = object["mesh"].toObject()["ring_elements"].toInt();
 
     DomeProjectorConfig config;
     config.position = position;
@@ -27,7 +27,7 @@ DomeProjectorConfig DomeProjectorConfig::fromJson(const QJsonObject &object) {
     config.fov = fov;
     config.screen_width = screen_w;
     config.screen_height = screen_h;
-    config.num_mesh_rings = grid_rings;
+    config.num_grid_rings = grid_rings;
     config.num_grid_ring_elements = grid_ring_elements;
     config.num_mesh_rings = mesh_rings;
     config.num_mesh_ring_elements = mesh_ring_elements;
@@ -35,28 +35,29 @@ DomeProjectorConfig DomeProjectorConfig::fromJson(const QJsonObject &object) {
     return config;
 }
 
+
 SphereConfig SphereConfig::fromJson(const QJsonObject &object) {
     QJsonObject position_obj = object["position"].toObject();
-    QVector3D position = QVector3D( position_obj["x"].toDouble(),  position_obj["y"].toDouble(),  position_obj["z"].toDouble());
 
+    QVector3D position = QVector3D( position_obj["x"].toDouble(),  position_obj["y"].toDouble(),  position_obj["z"].toDouble());
     double radius = object["radius"].toObject()["radius"].toDouble();
 
     SphereConfig config;
     config.position = position;
     config.radius = radius;
+
     return config;
 }
-
 
 
 Config::Config()
 {}
 
+
 bool Config::loadModelConfig(const QString &path) {
     QJsonObject object;
     if(loadConfig(object, path)) {
         parseModelConfig(object);
-        qDebug() << _model_config->dome_projector.position;
         return true;
     } else {
         return false;

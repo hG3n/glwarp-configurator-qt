@@ -20,8 +20,6 @@ GLWidget::GLWidget(QWidget *parent)
     _point_grey   = { 0.5f, 0.5f, 0.5f };
 
     setFocus();
-
-    _scene = new Scene;
 }
 
 GLWidget::~GLWidget()
@@ -41,17 +39,17 @@ QSize GLWidget::sizeHint() const
     return QSize(1400, 1800);
 }
 
-
-
-void GLWidget::setScene(Scene *scene) {
-    _scene = scene;
+void GLWidget::setScene(Scene scene) {
+    _scene.dome_vertices = scene.dome_vertices;
+    _scene.far_corners = scene.far_corners;
+    _scene.first_hits = scene.first_hits;
+    _scene.sample_grid = scene.sample_grid;
+    _scene.near_corners = scene.near_corners;
+    _scene.screen_points = scene.screen_points;
+    _scene.second_hits = scene.second_hits;
+    _scene.texture_coords = scene.texture_coords;
+    update();
 }
-
-Scene* GLWidget::getScene() const {
-    return _scene;
-}
-
-
 
 static void qNormalizeAngle(int &angle)
 {
@@ -77,6 +75,7 @@ void GLWidget::cleanup()
     _shader_program = 0;
     doneCurrent();
 }
+
 
 void GLWidget::initShader() {
     // init shader
@@ -190,9 +189,9 @@ void GLWidget::paintGL() {
     QOpenGLVertexArrayObject::Binder vao_binder(&_vao);
 
     _model_mat.setToIdentity();
-//    _model_mat.rotate(180.0f - (_x_rotation / 16.0f), 1, 0, 0);
+    //    _model_mat.rotate(180.0f - (_x_rotation / 16.0f), 1, 0, 0);
     _model_mat.rotate(_y_rotation / 16.0f, 0, 1, 0);
-//    _model_mat.rotate(_z_rotation / 16.0f, 0, 0, 1);
+    //    _model_mat.rotate(_z_rotation / 16.0f, 0, 0, 1);
 
     // calculate
     _mvp = _projection_mat * _view_mat * _model_mat;
@@ -221,42 +220,40 @@ void GLWidget::paintGL() {
     }
 
     // render scene elements
-    if(_scene) {
-        for(auto point: _scene->dome_vertices) {
-            QMatrix4x4 current_mvp(_mvp);
-            current_mvp.translate(point);
-            renderElement(_point_vbo, _point_colors["grey"], current_mvp);
-        }
+    for(auto point: _scene.dome_vertices) {
+        QMatrix4x4 current_mvp(_mvp);
+        current_mvp.translate(point);
+        renderElement(_point_vbo, _point_colors["grey"], current_mvp);
+    }
 
-        for(auto point: _scene->sample_grid) {
-            QMatrix4x4 current_mvp(_mvp);
-            current_mvp.translate(point);
-            renderElement(_point_vbo, _point_colors["blue"], current_mvp);
-        }
+    for(auto point: _scene.sample_grid) {
+        QMatrix4x4 current_mvp(_mvp);
+        current_mvp.translate(point);
+        renderElement(_point_vbo, _point_colors["blue"], current_mvp);
+    }
 
-        for(auto point: _scene->first_hits) {
-            QMatrix4x4 current_mvp(_mvp);
-            current_mvp.translate(point);
-            renderElement(_point_vbo, _point_colors["green"], current_mvp);
-        }
+    for(auto point: _scene.first_hits) {
+        QMatrix4x4 current_mvp(_mvp);
+        current_mvp.translate(point);
+        renderElement(_point_vbo, _point_colors["green"], current_mvp);
+    }
 
-        for(auto point: _scene->second_hits) {
-            QMatrix4x4 current_mvp(_mvp);
-            current_mvp.translate(point);
-            renderElement(_point_vbo, _point_colors["red"], current_mvp);
-        }
+    for(auto point: _scene.second_hits) {
+        QMatrix4x4 current_mvp(_mvp);
+        current_mvp.translate(point);
+        renderElement(_point_vbo, _point_colors["red"], current_mvp);
+    }
 
-        for(auto pair: _scene->near_corners) {
-            QMatrix4x4 current_mvp(_mvp);
-            current_mvp.translate(pair.second);
-            renderElement(_point_vbo, _point_colors["yellow"], current_mvp);
-        }
+    for(auto pair: _scene.near_corners) {
+        QMatrix4x4 current_mvp(_mvp);
+        current_mvp.translate(pair.second);
+        renderElement(_point_vbo, _point_colors["yellow"], current_mvp);
+    }
 
-        for(auto pair: _scene->far_corners) {
-            QMatrix4x4 current_mvp(_mvp);
-            current_mvp.translate(pair.second);
-            renderElement(_point_vbo, _point_colors["yellow"], current_mvp);
-        }
+    for(auto pair: _scene.far_corners) {
+        QMatrix4x4 current_mvp(_mvp);
+        current_mvp.translate(pair.second);
+        renderElement(_point_vbo, _point_colors["yellow"], current_mvp);
     }
 
     _shader_program->release();
@@ -266,15 +263,13 @@ void GLWidget::paintGL() {
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
-
     _last_position = event->pos();
-    qDebug() << "Click at: " << event->pos();
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
     int dx = event->x() - _last_position.x();
-//    int dy = event->y() - _last_position.y();
+    //    int dy = event->y() - _last_position.y();
 
     if (event->buttons() & Qt::LeftButton) {
         setYRotation(_y_rotation + 8 * dx);
@@ -282,6 +277,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 
     _last_position = event->pos();
 }
+
 void GLWidget::resizeGL(int w, int h)
 {
     glViewport(0,0,w, h);

@@ -41,15 +41,13 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
          */
         QSize sizeHint() const override;
 
-        Scene *getScene() const;
-        void setScene(Scene* scene);
+        void setScene(Scene scene);
 
     public slots:
         void cleanup();
 
     signals:
-
-
+        void updateScene(Scene scene);
 
     protected:
         /**
@@ -68,8 +66,6 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
          * @param height
          */
         void resizeGL(int width, int height) override;
-
-
 
         void mousePressEvent(QMouseEvent *event) override;
 
@@ -126,7 +122,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
         QMatrix4x4 _mvp;
 
         // scene
-        Scene *_scene;
+        Scene _scene;
         bool _running;
 
         int _x_rotation;

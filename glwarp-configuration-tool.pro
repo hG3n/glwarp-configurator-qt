@@ -32,6 +32,7 @@ SOURCES += main.cpp\
         ui/propertyedit.cpp \
         ui/propertyeditgroup.cpp \
         ui/configurator.cpp \
+        ui/glwarpwidget.cpp \
         model/dome_projector.cpp\
         model/file_writer.cpp\
         model/hitpoint.cpp\
@@ -41,7 +42,7 @@ SOURCES += main.cpp\
         model/sphere.cpp\
         model/simulation.cpp \
         lib/json11.cpp \
-        config.cpp \
+        config.cpp
 
 HEADERS  += ui/mainwindow.h \
             ui/glwidget.h \
@@ -49,6 +50,7 @@ HEADERS  += ui/mainwindow.h \
             ui/propertyedit.hpp \
             ui/configurator.h \
             ui/propertyeditgroup.h \
+            ui/glwarpwidget.h \
             model/dome_projector.hpp\
             model/file_writer.hpp\
             model/hitpoint.hpp\
@@ -58,7 +60,7 @@ HEADERS  += ui/mainwindow.h \
             model/sphere.hpp\
             model/simulation.h \
             lib/json11.hpp \
-            config.h \
+            config.h
 
 DISTFILES +=  shaders/simple.frag \
               shaders/simple.vert \

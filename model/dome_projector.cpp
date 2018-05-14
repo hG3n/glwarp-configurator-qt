@@ -34,36 +34,36 @@ DomeProjector::~DomeProjector()  {
  * methods
  */
 void DomeProjector::initialize() {
-    this->generateRadialGrid();
-    this->generateDomeVertices();
+    generateRadialGrid();
+    _frustum->translate(_position);
+
+    QMatrix4x4 translation;
+    translation.translate(_position);
+    for (auto &point: sample_grid) {
+        point = translation * point;
+    }
+
+    generateDomeVertices();
 
     // scale dome vertices to match the given size
     QMatrix4x4 scale_mat;
     scale_mat.scale( QVector3D(1.6f, 1.6f, 1.6f) );
-    for (auto &vert: _dome_vertices) {
+    for (auto &vert: dome_vertices) {
         vert = scale_mat * vert;
-    }
-
-    // translate frustum
-    _frustum->translateTo(_position);
-
-    QMatrix4x4 translation;
-    translation.translate(_position);
-    for (auto &point: _sample_grid) {
-        point = translation * point;
     }
 }
 
-std::vector<QVector3D> DomeProjector::calculateTransformationMesh() {
+void DomeProjector::calculateTransformationMesh() {
     // create green list here
     std::map<int, int> map;
 
     float last_distance = std::numeric_limits<float>::max();
     int last_hitpoint_idx = 0;
 
-    for (unsigned int vert_idx = 0; vert_idx < this->_dome_vertices.size(); ++vert_idx) {
-        for (unsigned int hp_idx = 0; hp_idx < this->_second_hits.size(); ++hp_idx) {
-            float current_distance = (this->_second_hits[hp_idx] - this->_dome_vertices[vert_idx]).length();
+    // todo add binary search here
+    for (unsigned int vert_idx = 0; vert_idx < dome_vertices.size(); ++vert_idx) {
+        for (unsigned int hp_idx = 0; hp_idx < second_hits.size(); ++hp_idx) {
+            float current_distance = (second_hits[hp_idx] - dome_vertices[vert_idx]).length();
             if (current_distance < last_distance) {
                 last_distance = current_distance;
                 last_hitpoint_idx = hp_idx;
@@ -77,8 +77,8 @@ std::vector<QVector3D> DomeProjector::calculateTransformationMesh() {
     std::vector<QVector3D> screen_points;
     std::vector<QVector3D> texture_points;
     for (auto pair : map) {
-        texture_points.push_back(this->_dome_vertices[pair.first]);
-        screen_points.push_back(this->_sample_grid[pair.second]);
+        texture_points.push_back(this->dome_vertices[pair.first]);
+        screen_points.push_back(this->sample_grid[pair.second]);
     }
 
     // normalize screen list
@@ -108,42 +108,34 @@ std::vector<QVector3D> DomeProjector::calculateTransformationMesh() {
         texture_coords_normalized.emplace_back(QVector3D(new_x, new_y, 0.0f));
     }
 
-    this->_screen_points = screen_points_normalized;
-    this->_texture_coords = texture_coords_normalized;
-
-    return std::vector<QVector3D>();
+    this->mesh_coords = screen_points_normalized;
+    this->texture_coords = texture_coords_normalized;
 }
 
 void DomeProjector::calculateDomeHitpoints(Sphere *mirror, Sphere *dome) {
 
-    qDebug() << "calculateDomeHitpoints";
-    qDebug() << "Projector Position: " << _position;
-    qDebug() << "Dome position: " << dome->get_position();
-    qDebug() << "Mirror position: " << mirror->get_position();
-
-    _first_hits.clear();
-    _second_hits.clear();
+    first_hits.clear();
+    second_hits.clear();
 
     // translate dome vertices to the domes position
     QMatrix4x4 dome_translation;
     dome_translation.translate(dome->get_position());
-    for(auto &vertex : _dome_vertices) {
+    for(auto &vertex : dome_vertices) {
         vertex = dome_translation * vertex;
     }
 
     // raycast for each samplepoint
-    for (unsigned int i = 0; i < _sample_grid.size(); ++i) {
-//    for (unsigned int i = 0; i < 1; ++i) {
+    for (unsigned int i = 0; i < sample_grid.size(); ++i) {
 
         // calculate initial ray direction
-        QVector3D initial_direction = _sample_grid[i] - _position;
+        QVector3D initial_direction = sample_grid[i] - _position;
 
         // build ray and define hitpoint
         Ray r(_position, initial_direction.normalized());
         std::pair<Hitpoint, Hitpoint> hpp;
         if (mirror->intersect(r, &hpp)) {
 
-            _first_hits.push_back(hpp.first.position);
+            first_hits.push_back(hpp.first.position);
 
             // reflect ray
             QVector3D ref = r.reflect(hpp.first.normal);
@@ -152,46 +144,66 @@ void DomeProjector::calculateDomeHitpoints(Sphere *mirror, Sphere *dome) {
             std::pair<Hitpoint, Hitpoint> hpp2;
             if (dome->intersect(r2, &hpp2)) {
                 if (hpp2.second.position.y() > dome->get_position().y()) {
-                    _second_hits.push_back(hpp2.second.position);
+                    second_hits.push_back(hpp2.second.position);
                 } else {
-                    _second_hits.push_back({1000, 1000, 1000});
+                    second_hits.push_back({1000, 1000, 1000});
                 }
             } else {
-                _second_hits.push_back({1000, 1000, 1000});
+                second_hits.push_back({1000, 1000, 1000});
             }
 
         } else {
-            _second_hits.push_back({1000, 1000, 1000});
+            first_hits.push_back({1000, 1000, 1000});
         }
 
     }
 
 }
 
-void DomeProjector::updateFromConfig(ModelConfig *model_config) {
-    _frustum->setFOV(model_config->dome_projector.fov);
+void DomeProjector::updateFromConfig(ModelConfig *config) {
 
-    _position = model_config->dome_projector.position;
-    _grid_rings = model_config->dome_projector.num_mesh_rings;
-    _grid_ring_elements = model_config->dome_projector.num_grid_ring_elements;
+    // translate reset frustum position & update fov
+    QVector3D current_frustum_pos = _frustum->getPosition();
+    _frustum->translate(-current_frustum_pos);
+    _frustum->setFOV(config->dome_projector.fov);
 
-    _dome_rings =  model_config->dome_projector.num_mesh_rings;
-    _dome_ring_elements = model_config->dome_projector.num_mesh_ring_elements;
+    // update sample grid
+    _grid_rings = config->dome_projector.num_grid_rings;
+    _grid_ring_elements = config->dome_projector.num_grid_ring_elements;
+    generateRadialGrid();
 
-    initialize();
+    // translate frustum back & apply new transformation
+    _frustum->translate(current_frustum_pos);
+    translate(config->dome_projector.position);
+
+    // move sample grid to current near clipping plane
+    QMatrix4x4 translation;
+    translation.translate(_position);
+    for (auto &point: sample_grid) {
+        point = translation * point;
+    }
+
+    // update dome geometry
+    _dome_rings =  config->dome_projector.num_mesh_rings;
+    _dome_ring_elements = config->dome_projector.num_mesh_ring_elements;
+    generateDomeVertices();
+
+    // scale dome vertices to match the given size
+    QMatrix4x4 scale_mat;
+    scale_mat.scale( QVector3D(1.6f, 1.6f, 1.6f) );
+    for (auto &vert: dome_vertices) {
+        vert = scale_mat * vert;
+    }
 }
 
 void DomeProjector::generateRadialGrid() {
 
     // if there are elements in there clear the vector
-    if (!_sample_grid.empty()) {
-        _sample_grid.clear();
+    if (!sample_grid.empty()) {
+        sample_grid.clear();
     }
 
     auto near = _frustum->getNearCorners();
-    for(auto pair: near) {
-        qDebug() << pair.first << " " << pair.second;
-    }
 
     float step_size = fabsf((near[ProjectorFrustum::TL].x() - near[ProjectorFrustum::TR].x()) / _grid_rings) / 2;
 
@@ -206,7 +218,7 @@ void DomeProjector::generateRadialGrid() {
     float bottom_y = near[ProjectorFrustum::BR].y();
     float top_y = near[ProjectorFrustum::TL].y();
 
-    _sample_grid.push_back(center_point);
+    sample_grid.push_back(center_point);
     for (int ring_idx = 1; ring_idx < _grid_rings + 1; ++ring_idx) {
         for (int ring_point_idx = 0; ring_point_idx < _grid_ring_elements; ++ring_point_idx) {
             QQuaternion euler_quat = QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 1.0f,(step_angle * ring_point_idx));
@@ -214,7 +226,7 @@ void DomeProjector::generateRadialGrid() {
 
             if (coord.y() < top_y && coord.y() > bottom_y) {
                 // push back the rotated point at the near clipping planes z position
-                _sample_grid.emplace_back(QVector3D(coord.x(), coord.y(), near[ProjectorFrustum::TL].z()));
+                sample_grid.emplace_back(QVector3D(coord.x(), coord.y(), near[ProjectorFrustum::TL].z()));
             }
 
         }
@@ -223,6 +235,10 @@ void DomeProjector::generateRadialGrid() {
 }
 
 void DomeProjector::generateDomeVertices() {
+
+    if(!dome_vertices.empty()) {
+        dome_vertices.clear();
+    }
     /*
      * THETA - AROUND Y
      * PHI - X AND
@@ -237,17 +253,15 @@ void DomeProjector::generateDomeVertices() {
 
     for (int ring_idx = 1; ring_idx < this->_dome_rings + 1; ++ring_idx) {
         QQuaternion phi_quat = QQuaternion::fromAxisAndAngle(0.0f,0.0f,1.0f,(ring_idx * delta_phi));
-        //        glm::quat phi_quat(QVector3D(glm::radians(ring_idx * delta_phi), 0.0f, 0.0f));
         QVector3D vec = phi_quat * QVector3D(pole_cap.x(), pole_cap.y(), pole_cap.z());
         for (int segment_idx = 0; segment_idx < this->_dome_ring_elements; ++segment_idx) {
             QQuaternion theta_quat = QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,(segment_idx * delta_theta));
-            //            glm::quat theta_quat(QVector3D(0.0f, glm::radians(segment_idx * delta_theta), 0.0f));
             QVector3D final = theta_quat * vec;
             vertices.push_back(final);
         }
     }
 
-    this->_dome_vertices = vertices;
+    this->dome_vertices = vertices;
 }
 
 /*
@@ -257,30 +271,15 @@ ProjectorFrustum *DomeProjector::getFrustum() const {
     return _frustum;
 }
 
-std::vector<QVector3D> const &DomeProjector::get_sample_grid() const {
-    return this->_sample_grid;
-}
+void DomeProjector::translate(QVector3D position) {
+    QVector3D diff = position - _position;
 
-std::vector<QVector3D> const &DomeProjector::get_first_hits() const {
-    return this->_first_hits;
-}
+    QMatrix4x4 translation;
+    translation.translate(diff);
 
-std::vector<QVector3D> const &DomeProjector::get_second_hits() const {
-    return this->_second_hits;
+    _position = translation * _position;
+    _frustum->translate(diff);
 }
-
-std::vector<QVector3D> const &DomeProjector::get_dome_vertices() const {
-    return this->_dome_vertices;
-}
-
-std::vector<QVector3D> const &DomeProjector::get_screen_points() const {
-    return this->_screen_points;
-}
-
-std::vector<QVector3D> const &DomeProjector::get_texture_coords() const {
-    return this->_texture_coords;
-}
-
 
 QVector3D DomeProjector::findMinValues(std::vector<QVector3D> vector) {
 
@@ -344,9 +343,9 @@ std::ostream &operator<<(std::ostream &os, const DomeProjector &projector) {
        << "  position: [" << projector._position.x() << " , " << projector._position.y() << " , "<< projector._position.z() << "]\n"
        << "  grid_rings: " << projector._grid_rings << "\n"
        << "  grid_ring_elements: " << projector._grid_ring_elements << "\n"
-       << "  sample_grid: " << projector._sample_grid.size() << "\n"
-       << "  first_hits: " << projector._first_hits.size() << "\n"
-       << "  second_hits: " << projector._second_hits.size();
+       << "  sample_grid: " << projector.sample_grid.size() << "\n"
+       << "  first_hits: " << projector.first_hits.size() << "\n"
+       << "  second_hits: " << projector.second_hits.size();
     return os;
 }
 

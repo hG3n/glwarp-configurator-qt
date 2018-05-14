@@ -1,7 +1,3 @@
-//
-// Created by Hagen Hiller on 09/01/18.
-//
-
 #ifndef RAYCAST_DOMEPROJECTOR_HPP
 #define RAYCAST_DOMEPROJECTOR_HPP
 
@@ -50,7 +46,7 @@ class DomeProjector {
          * calculate the transformation mesh
          * @return std::vector<QVector3D> transformation mesh
          */
-        std::vector<QVector3D> calculateTransformationMesh();
+        void calculateTransformationMesh();
 
         /**
          * calculates hitpoints in the dome
@@ -58,7 +54,6 @@ class DomeProjector {
          * @param dome
          */
         void calculateDomeHitpoints(Sphere *mirror, Sphere *dome);
-
 
         /**
          * @brief updateFromConfig
@@ -73,40 +68,10 @@ class DomeProjector {
         ProjectorFrustum* getFrustum() const;
 
         /**
-         * Returns a std::vec containing the radial sample grid.
-         * @return
+         * @brief translate
+         * @param position
          */
-        std::vector<QVector3D> const &get_sample_grid() const;
-
-        /**
-         * Returns a std::vector containing all first hitpoints supposed to be on the mirrors surface.
-         * @return
-         */
-        std::vector<QVector3D> const &get_first_hits() const;
-
-        /**
-         * Returns a std::vector containing all second hitpoints supposed to be within the dome.
-         * @return
-         */
-        std::vector<QVector3D> const &get_second_hits() const;
-
-        /**
-         * Returns a std::vector containing the vertices for a half sphere.
-         * @return
-         */
-        std::vector<QVector3D> const &get_dome_vertices() const;
-
-        /**
-         * Returns a std::vector containing vertices of the final warping mesh
-         * @return
-         */
-        std::vector<QVector3D> const &get_screen_points() const;
-
-        /**
-         * Returns a std::vector containing vertices of the final warping mesh
-         * @return
-         */
-        std::vector<QVector3D> const &get_texture_coords() const;
+        void translate(QVector3D position);
 
         /**
          * ostream
@@ -166,14 +131,15 @@ class DomeProjector {
         int _dome_rings;
         int _dome_ring_elements;
 
-        std::vector<QVector3D> _sample_grid;
-        std::vector<QVector3D> _first_hits;
-        std::vector<QVector3D> _second_hits;
+    public:
+        std::vector<QVector3D> sample_grid;
+        std::vector<QVector3D> first_hits;
+        std::vector<QVector3D> second_hits;
 
-        std::vector<QVector3D> _dome_vertices;
+        std::vector<QVector3D> dome_vertices;
 
-        std::vector<QVector3D> _screen_points;
-        std::vector<QVector3D> _texture_coords;
+        std::vector<QVector3D> mesh_coords;
+        std::vector<QVector3D> texture_coords;
 };
 
 

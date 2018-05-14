@@ -46,6 +46,12 @@ class Simulation
         void runCalculations();
 
         /**
+         * @brief initialize
+         * @param model_config
+         */
+        void initialize(ModelConfig *model_config);
+
+        /**
          * @brief updateFromConfig
          * @param config
          */
@@ -60,7 +66,19 @@ class Simulation
         /**
          * @brief getScene
          */
-        void updateScene(Scene* scene) const;
+        Scene getCurrentScene() const;
+
+        /**
+         * @brief Returns the current transformation mesh points
+         * @return
+         */
+        std::vector<QVector3D> getTransformationMesh() const;
+
+        /**
+         * @brief Returns the current calculated texture coordinates
+         * @return
+         */
+        std::vector<QVector3D> getTextureCoords() const;
 
     private:
         /**

@@ -1,6 +1,5 @@
 #include "simulation.h"
 
-
 Simulation::Simulation()
     : _dp(nullptr)
     , _mirror(nullptr)
@@ -22,61 +21,58 @@ void Simulation::runCalculations() {
 }
 
 
-void Simulation::updateFromConfig(ModelConfig *model_config) {
+void Simulation::initialize(ModelConfig *config) {
+    float aspect_ratio = (float)config->dome_projector.screen_width /  config->dome_projector.screen_height;
 
-    float aspect_ratio = (float)model_config->dome_projector.screen_width /  model_config->dome_projector.screen_height;
+    ProjectorFrustum *new_frustum = new ProjectorFrustum(aspect_ratio,
+                                                         config->dome_projector.fov,
+                                                         1.0f, 1.5f);
 
-    if(_dp) {
-        _dp->updateFromConfig(model_config);
-    } else {
-        ProjectorFrustum *new_frustum = new ProjectorFrustum(aspect_ratio,
-                                                             model_config->dome_projector.fov,
-                                                             1.0f, 1.5f);
-        _dp = new DomeProjector(new_frustum,
-                                model_config->dome_projector.num_grid_rings,
-                                model_config->dome_projector.num_grid_ring_elements,
-                                model_config->dome_projector.position,
-                                model_config->dome_projector.num_mesh_rings,
-                                model_config->dome_projector.num_mesh_ring_elements);
-    }
+    _dp = new DomeProjector(new_frustum,
+                            config->dome_projector.num_grid_rings,
+                            config->dome_projector.num_grid_ring_elements,
+                            config->dome_projector.position,
+                            config->dome_projector.num_mesh_rings,
+                            config->dome_projector.num_mesh_ring_elements);
 
+    _mirror = new Sphere(config->mirror.radius,
+                         config->mirror.position);
 
-    if(_mirror) {
-        _mirror->set_radius(model_config->mirror.radius);
-        qDebug() << "mirror radius" << model_config->mirror.radius;
-        _mirror->set_position(model_config->mirror.position);
-        qDebug() << "mirror position" << model_config->mirror.position;
-    } else {
-        _mirror = new Sphere(model_config->mirror.radius,
-                             model_config->mirror.position);
-        qDebug() << "mirror radius" << model_config->mirror.radius;
-        qDebug() << "mirror position" << model_config->mirror.position;
-    }
-
-    if(_dome) {
-        _dome->set_radius(model_config->dome.radius);
-        _dome->set_position(model_config->dome.position);
-    } else {
-        _dome = new Sphere(model_config->dome.radius,
-                           model_config->dome.position);
-    }
-
+    _dome = new Sphere(config->dome.radius,
+                       config->dome.position);
 }
 
 
-void Simulation::buildModel(ModelConfig *model_config) {
-    updateFromConfig(model_config);
+void Simulation::updateFromConfig(ModelConfig *config) {
+    _dp->updateFromConfig(config);
+
+    _mirror->set_radius(config->mirror.radius);
+    _mirror->set_position(config->mirror.position);
+
+    _dome->set_radius(config->dome.radius);
+    _dome->set_position(config->dome.position);
 }
 
 
-void Simulation::updateScene(Scene* scene) const {
-    scene->dome_vertices = _dp->get_dome_vertices();
-    scene->first_hits = _dp->get_first_hits();
-    scene->second_hits = _dp->get_second_hits();
-    scene->sample_grid = _dp->get_sample_grid();
-    scene->screen_points = _dp->get_screen_points();
-    scene->far_corners = _dp->getFrustum()->getFarCorners();
-    scene->near_corners = _dp->getFrustum()->getNearCorners();
+Scene Simulation::getCurrentScene() const {
+    Scene s;
+    s.dome_vertices = _dp->dome_vertices;
+    s.first_hits = _dp->first_hits;
+    s.second_hits = _dp->second_hits;
+    s.sample_grid = _dp->sample_grid;
+    s.screen_points = _dp->mesh_coords;
+    s.far_corners = _dp->getFrustum()->getFarCorners();
+    s.near_corners = _dp->getFrustum()->getNearCorners();
+    return s;
+}
+
+
+std::vector<QVector3D> Simulation::getTransformationMesh() const {
+    return _dp->mesh_coords;
+}
+
+std::vector<QVector3D> Simulation::getTextureCoords() const {
+    return _dp->texture_coords;
 }
 
 

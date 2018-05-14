@@ -2,9 +2,13 @@
     <qresource prefix="/">
         <file>shaders/simple.frag</file>
         <file>shaders/simple.vert</file>
+        <file>shaders/simple-warp.frag</file>
+        <file>shaders/simple-warp.vert</file>
         <file>configs/application.json</file>
         <file>configs/ui.json</file>
         <file>configs/model.json</file>
-        <file>styles/style.css</file>
+        <file>styles/style.css</file> 
+        <file>textures/radialgrid.tga</file>
+        <file>textures/radialgrid.png</file>
     </qresource>
 </RCC>

@@ -12,17 +12,23 @@
                         {
                             "title": "X",
                             "attribute": "x",
-                            "precision": 0.1
+                            "precision": 0.1,
+                            "min": -2.0,
+                            "max": 2.0
                         },
                         {
                             "title": "Y",
                             "attribute": "y",
-                            "precision": 0.1
+                            "precision": 0.1,
+                            "min": -2.0,
+                            "max": 2.0
                         },
                         {
                             "title": "Z",
                             "attribute": "z",
-                            "precision": 0.1
+                            "precision": 0.1,
+                            "min": -2.0,
+                            "max": 2.0
                         }
                     ]
                 },
@@ -33,17 +39,23 @@
                         {
                             "title": "X",
                             "attribute": "x",
-                            "precision": 0.1
+                            "precision": 0.1,
+                            "min": -360.0,
+                            "max": 360.0
                         },
                         {
                             "title": "Y",
                             "attribute": "y",
-                            "precision": 0.1
+                            "precision": 0.1,
+                            "min": -360.0,
+                            "max": 360.0
                         },
                         {
                             "title": "Z",
                             "attribute": "z",
-                            "precision": 0.1
+                            "precision": 0.1,
+                            "min": -360.0,
+                            "max": 360.0
                         }
 
                     ]
@@ -55,7 +67,9 @@
                         {
                             "title": "FoV",
                             "attribute": "fov",
-                            "precision": 1
+                            "precision": 1,
+                            "min": 0,
+                            "max": 179
                         }
                     ]
                 },
@@ -65,12 +79,16 @@
                     "elements": [{
                             "title": "Width",
                             "attribute": "w",
-                            "precision": 1
+                            "precision": 1,
+                            "min": 0,
+                            "max": 10000
                         },
                         {
                             "title": "Height",
                             "attribute": "h",
-                            "precision": 1
+                            "precision": 1,
+                            "min": 0,
+                            "max": 10000
                         }
 
                     ]
@@ -81,12 +99,16 @@
                     "elements": [{
                             "title": "Rings",
                             "attribute": "rings",
-                            "precision": 1
+                            "precision": 1,
+                            "min": 0,
+                            "max": 10000
                         },
                         {
                             "title": "Ring Elements",
                             "attribute": "ring_elements",
-                            "precision": 1
+                            "precision": 1,
+                            "min": 0,
+                            "max": 10000
                         }
 
                     ]
@@ -97,12 +119,16 @@
                     "elements": [{
                             "title": "Rings",
                             "attribute": "rings",
-                            "precision": 1
+                            "precision": 1,
+                            "min": 0,
+                            "max": 10000
                         },
                         {
                             "title": "Ring Elements",
                             "attribute": "ring_elements",
-                            "precision": 1
+                            "precision": 1,
+                            "min": 0,
+                            "max": 10000
                         }
 
                     ]
@@ -120,17 +146,23 @@
                         {
                             "title": "X",
                             "attribute": "x",
-                            "precision": 0.1
+                            "precision": 0.1,
+                            "min": -2.00,
+                            "max": 2.0
                         },
                         {
                             "title": "Y",
                             "attribute": "y",
-                            "precision": 0.1
+                            "precision": 0.1,
+                            "min": -2.00,
+                            "max": 2.0
                         },
                         {
                             "title": "Z",
                             "attribute": "z",
-                            "precision": 0.1
+                            "precision": 0.1,
+                            "min": -2.00,
+                            "max": 2.0
                         }
 
                     ]
@@ -139,10 +171,12 @@
                     "title": "Size",
                     "attribute" : "radius",
                     "elements": [{
-                        "title": "Radius",
-                        "attribute": "radius",
-                        "precision": 0.1
-                    }]
+                            "title": "Radius",
+                            "attribute": "radius",
+                            "precision": 0.1,
+                            "min": -2.0,
+                            "max": 2.0
+                        }]
                 }
             }
         },
@@ -157,17 +191,23 @@
                         {
                             "title": "X",
                             "attribute": "x",
-                            "precision": 0.1
+                            "precision": 0.1,
+                            "min": -2.0,
+                            "max": 2.0
                         },
                         {
                             "title": "Y",
                             "attribute": "y",
-                            "precision": 0.1
+                            "precision": 0.1,
+                            "min": -2.0,
+                            "max": 2.0
                         },
                         {
                             "title": "Z",
                             "attribute": "z",
-                            "precision": 0.1
+                            "precision": 0.1,
+                            "min": -2.0,
+                            "max": 2.0
                         }
 
                     ]
@@ -175,11 +215,15 @@
                 "radius": {
                     "title": "Size",
                     "attribute" : "radius",
-                    "elements": [{
-                        "title": "Radius",
-                        "attribute": "radius",
-                        "precision": 0.1
-                    }]
+                    "elements": [
+                        {
+                            "title": "Radius",
+                            "attribute": "radius",
+                            "precision": 0.1,
+                            "min": 0.1,
+                            "max": 2.0
+                        }
+                    ]
                 }
             }
         }

@@ -15,7 +15,6 @@ ProjectorFrustum::ProjectorFrustum()
         , _rotation(QVector3D())
 {}
 
-
 ProjectorFrustum::ProjectorFrustum(float _aspect_ratio, float _fov, float _near, float _far)
         : _aspect_ratio(_aspect_ratio)
         , _fov(_fov)
@@ -35,8 +34,6 @@ void ProjectorFrustum::initialize() {
     // calculate top point
     QQuaternion euler = QQuaternion::fromAxisAndAngle(1.0f,0.0f,0.0f, (_fov /2.0f ));
     QVector3D near_top_point = euler * _eye;
-    qDebug().nospace() << Q_FUNC_INFO << " :" << __LINE__;
-    qDebug() << "  >" << "near top point" << near_top_point;
 
     float width = near_top_point.y() * 2.0f;
     QVector3D near_tl(-(width * _aspect_ratio / 2.0f), near_top_point.y(), near_top_point.z());
@@ -79,7 +76,7 @@ void ProjectorFrustum::initialize() {
 }
 
 
-void ProjectorFrustum::translateTo(QVector3D const &position) {
+void ProjectorFrustum::translate(QVector3D const &position) {
     QMatrix4x4 translation;
     translation.translate(position);
     _position = translation * _position;
@@ -97,8 +94,6 @@ void ProjectorFrustum::translateTo(QVector3D const &position) {
 
 
 void ProjectorFrustum::rotate(float angle, QVector3D const &axis) {
-
-
     // make rotation matrix
     QQuaternion rotation = QQuaternion::fromAxisAndAngle(axis, angle);
     _eye = rotation * _eye;
@@ -115,6 +110,7 @@ void ProjectorFrustum::rotate(float angle, QVector3D const &axis) {
 
 void ProjectorFrustum::setFOV(float fov) {
     _fov = fov;
+    initialize();
 }
 
 
@@ -130,4 +126,8 @@ std::map<ProjectorFrustum::Corner, QVector3D> const &ProjectorFrustum::getFarCor
 
 QVector3D const &ProjectorFrustum::getEye() const {
     return _eye;
+}
+
+QVector3D const &ProjectorFrustum::getPosition() const {
+    return _position;
 }

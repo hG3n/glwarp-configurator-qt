@@ -42,7 +42,7 @@ class ProjectorFrustum {
          * Translate to current position
          * @param position
          */
-        void translateTo(QVector3D const &position);
+        void translate(QVector3D const &position);
 
         /**
          * Rotate by given degree angle around specified axis
@@ -70,12 +70,14 @@ class ProjectorFrustum {
          */
         std::map<Corner, QVector3D> const& getFarCorners() const;
 
-
         /**
          * returns frustum eye ray
          * @return
          */
         QVector3D const& getEye() const;
+
+        QVector3D const& getPosition() const;
+
 
     private:
         void initialize();

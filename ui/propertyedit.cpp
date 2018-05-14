@@ -55,9 +55,13 @@ void PropertyEdit::initLayoutElement(const QJsonObject &config, QFormLayout *lay
     QString title = config["title"].toString();
     double precision = config["precision"].toDouble();
     QString attribute = config["attribute"].toString();
+    double min_value = config["min"].toDouble();
+    double max_value = config["max"].toDouble();
 
     QDoubleSpinBox *spinbox = new QDoubleSpinBox(this);
     spinbox->setSingleStep(precision);
+    spinbox->setMinimum(min_value);
+    spinbox->setMaximum(max_value);
 
     _ui_elements[attribute] = spinbox;
 

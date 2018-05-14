@@ -5,17 +5,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QScrollArea>
-
-
-QT_BEGIN_NAMESPACE
-class QSlider;
-class QPushButton;
-class QLineEdit;
-class QDoubleSpinBox;
-QT_END_NAMESPACE
-
-class GLWidget;
-class MainWindow;
+#include <QKeyEvent>
+#include <QWindow>
 
 #include "glwidget.h"
 #include "propertyeditgroup.h"
@@ -29,6 +20,7 @@ class MainWindow;
 #include "config.h"
 #include "ui/propertyedit.hpp"
 #include "ui/glwidget.h"
+#include "ui/glwarpwidget.h"
 #include "ui/configurator.h"
 
 class MainWidget : public QWidget
@@ -41,13 +33,15 @@ class MainWidget : public QWidget
          * @param mw
          */
         MainWidget(MainWindow *mw);
-
     private slots:
         /**
          * @brief onValueUpdate
          * @param new_values
          */
         void onValueUpdate(QJsonObject new_values);
+
+    public slots:
+        void keyPressEvent(QKeyEvent *event);
 
     private:
         /**
@@ -79,6 +73,7 @@ class MainWidget : public QWidget
 
     private:
         GLWidget *_glWidget;
+        GLWarpWidget *_glWarpWidget;
         Configurator *_configurator;
 
         MainWindow *_mainWindow;

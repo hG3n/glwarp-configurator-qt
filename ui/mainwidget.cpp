@@ -4,8 +4,6 @@
 #include <map>
 #include <fstream>
 
-#include <map>
-
 #include "mainwidget.h"
 #include "mainwindow.h"
 #include "config.h"
@@ -26,11 +24,15 @@ MainWidget::MainWidget(MainWindow *mw)
 
     setUiValues(_config.getModelConfigJson());
 
-    // get scene and create connection
-    _simulation.updateScene(_glWidget->getScene());
+    _glWarpWidget = new GLWarpWidget();
+
+    // todo: reimplement this
+    // get scene pointer
+    //    _simulation.updateScene(_glWidget->getScene());
 }
 
 void MainWidget::onValueUpdate(QJsonObject new_values) {
+    // get configs
     QJsonObject projector_obj = new_values["projector"].toObject();
     DomeProjectorConfig projector_config = DomeProjectorConfig::fromJson(projector_obj);
 
@@ -40,17 +42,35 @@ void MainWidget::onValueUpdate(QJsonObject new_values) {
     QJsonObject dome_obj = new_values["dome"].toObject();
     SphereConfig dome_config = SphereConfig::fromJson(dome_obj);
 
-    ModelConfig *model_config = new ModelConfig;
-    model_config->dome_projector = projector_config;
-    model_config->dome = dome_config;
-    model_config->mirror = mirror_config;
+    // create model config
+    ModelConfig *config = new ModelConfig;
+    config->dome_projector = projector_config;
+    config->dome = dome_config;
+    config->mirror = mirror_config;
 
-    // todo continue here
+    // get new simulation values and update gl
+    _simulation.updateFromConfig(config);
+    delete config;
+    _simulation.runCalculations();
+    Scene s = _simulation.getCurrentScene();
+    _glWidget->setScene(s);
 
-//    _simulation.buildModel(model_config);
-//    _simulation.runCalculations();
+    // update the warp view as well
+    std::vector<QVector3D> mesh_coords = _simulation.getTransformationMesh();
+    std::vector<QVector3D> tex_coords = _simulation.getTextureCoords();
+    _glWarpWidget->updateValues(mesh_coords, tex_coords);
+}
 
-//    _simulation.updateScene(_glWidget->getScene());
+void MainWidget::keyPressEvent(QKeyEvent *event) {
+    if(event->key() == Qt::Key_Space) {
+
+        std::vector<QVector3D> mesh_coords = _simulation.getTransformationMesh();
+        std::vector<QVector3D> tex_coords = _simulation.getTextureCoords();
+
+        _glWarpWidget->updateValues(mesh_coords, tex_coords);
+
+        _glWarpWidget->show();
+    }
 }
 
 void MainWidget::initLayout() {
@@ -65,7 +85,7 @@ void MainWidget::initLayout() {
     root->addWidget(_glWidget);
 
     QScrollArea *scrollarea = new QScrollArea;
-    scrollarea->setFixedWidth(210);
+    scrollarea->setFixedWidth(250);
     scrollarea->setAlignment(Qt::AlignCenter);
     scrollarea->setContentsMargins(0,0,0,0);
 
@@ -98,8 +118,12 @@ void MainWidget::setUiValues(QJsonObject model_config) {
 
 void MainWidget::initSimulation() {
     _simulation = Simulation();
-    _simulation.buildModel(_config.getModelConfig());
+    _simulation.initialize(_config.getModelConfig());
+
     _simulation.runCalculations();
+    Scene s = _simulation.getCurrentScene();
+
+    _glWidget->setScene(s);
 }
 
 QVector3D MainWidget::vec3fromJson(const QJsonObject &object) const{

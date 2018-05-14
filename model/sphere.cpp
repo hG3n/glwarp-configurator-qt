@@ -28,16 +28,13 @@ Sphere::Sphere(float radius, const QVector3D &position)
 
 bool Sphere::intersect(Ray const &r, std::pair<Hitpoint, Hitpoint> *hp_pair) {
 
-//    qDebug() << "Ray - origin: " <<  r.origin << " direction: " << r.direction;
     bool verbose = false;
 
     // vector from current ray orign to sphere center
     QVector3D L = _center - r.origin;
-//    QVector3D L = r.origin - _center;
 
     // distance from ray origin to intersection with the spheres perpendicular vector
     double t_ca = QVector3D::dotProduct(L, r.direction);
-
 
     // if t_ca is smaller than 0 the ray might be pointing in the wrong direction
     if (t_ca < 0) {
@@ -76,7 +73,6 @@ bool Sphere::intersect(Ray const &r, std::pair<Hitpoint, Hitpoint> *hp_pair) {
     QVector3D P1 = r.origin + ( t_0 * r.direction);
     QVector3D nom1 = (temp + t_0 * r.direction);
     QVector3D N1 = nom1.normalized() / _radius;
-//    QVector3D N1 = (P1 - _center).normalized();
 
     hp_pair->first.position = P1;
     hp_pair->first.normal = N1;
@@ -85,11 +81,6 @@ bool Sphere::intersect(Ray const &r, std::pair<Hitpoint, Hitpoint> *hp_pair) {
     QVector3D P2 = r.origin + ((float) t_1 * r.direction);
     QVector3D nom2 = temp + (float)t_1 * r.direction;
     QVector3D N2 = nom2.normalized() / _radius;
-//    QVector3D N2 = (P2 - _center).normalized();
-
-//    qDebug() << N2;
-//    qDebug() << N22;
-//    qDebug() << "";
 
     hp_pair->second.position = P2;
     hp_pair->second.normal = N2;

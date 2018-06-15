@@ -61,6 +61,7 @@ Scene Simulation::getCurrentScene() const {
     s.second_hits = _dp->second_hits;
     s.sample_grid = _dp->sample_grid;
     s.screen_points = _dp->mesh_coords;
+    s.texture_coords = _dp->texture_coords;
     s.far_corners = _dp->getFrustum()->getFarCorners();
     s.near_corners = _dp->getFrustum()->getNearCorners();
     return s;
@@ -68,11 +69,11 @@ Scene Simulation::getCurrentScene() const {
 
 
 std::vector<QVector3D> Simulation::getTransformationMesh() const {
-    return _dp->mesh_coords;
+    return _dp->getMeshCoords();
 }
 
 std::vector<QVector3D> Simulation::getTextureCoords() const {
-    return _dp->texture_coords;
+    return _dp->getTexCoords();
 }
 
 

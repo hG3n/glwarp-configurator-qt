@@ -1,5 +1,6 @@
 #include "ui/glwarpwidget.h"
 
+#include <vector>
 #include <math.h>
 
 #include <QCoreApplication>
@@ -27,13 +28,16 @@ QSize GLWarpWidget::sizeHint() const
 
 void GLWarpWidget::updateValues(std::vector<QVector3D> mesh_values,
                                 std::vector<QVector3D> uv_values) {
+
     qDebug().nospace() << Q_FUNC_INFO << " :" << __LINE__;
     qDebug() << "  >" << "values received";
     qDebug() << "  >" << "number of mesh values:" <<mesh_values.size();
+    qDebug() << "  >" << "mesh meta:" << mesh_values.back();
     qDebug() << "  >" << "number of uv values:" <<uv_values.size();
+    qDebug() << "  >" << "uv meta:" << uv_values.back();
 
     int triangle_count;
-    std::vector<QVector3D> mesh;
+    std::vector<GLfloat> mesh;
     if(setup_vertices(mesh_values, &mesh, &triangle_count)) {
         qDebug() << "  >" << "Mesh setup succeeded!";
     } else {
@@ -41,7 +45,7 @@ void GLWarpWidget::updateValues(std::vector<QVector3D> mesh_values,
         qDebug() << "  >" << "Error in setting up the transformation mesh";
     }
 
-    std::vector<QVector2D> uv_coords;
+    std::vector<GLfloat> uv_coords;
     if(setup_tex_coords(uv_values, &uv_coords)) {
         qDebug() << "  >" << "Texture coord setup succeeded!";
     } else {
@@ -49,6 +53,13 @@ void GLWarpWidget::updateValues(std::vector<QVector3D> mesh_values,
         qDebug() << "  >" << "Error in setting up texture coordinates";
     }
 
+    _mesh_vbo.create();
+    _mesh_vbo.bind();
+    _mesh_vbo.allocate(mesh.data(), mesh.size() * sizeof(GLfloat));
+
+    _texture_vbo.create();
+    _texture_vbo.bind();
+    _texture_vbo.allocate(uv_coords.data(), uv_coords.size() * sizeof(GLfloat));
 }
 
 void GLWarpWidget::cleanup()
@@ -150,21 +161,24 @@ void GLWarpWidget::initializeGL()
 }
 
 
-void GLWarpWidget::renderElement(QOpenGLBuffer vertex_buffer, QOpenGLBuffer color_buffer, const QMatrix4x4 &mvp) {
+void GLWarpWidget::renderElement(QOpenGLBuffer vertex_buffer, QOpenGLBuffer tex_buffer, const QMatrix4x4 &mvp) {
 
     _shader_program->setUniformValue(_mvp_location, mvp);
+
 
     vertex_buffer.bind();
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
     vertex_buffer.release();
 
-    color_buffer.bind();
+    tex_buffer.bind();
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    color_buffer.release();
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    tex_buffer.release();
 
-    glDrawArrays(GL_POINTS, 0, 3);
+    _texture->bind();
+
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 
@@ -178,6 +192,8 @@ void GLWarpWidget::paintGL() {
     // calculate
     _mvp = _projection_mat * _view_mat * _model_mat;
     _shader_program->bind();
+
+    renderElement(_mesh_vbo, _texture_vbo, _mvp);
 
     _shader_program->release();
 
@@ -193,7 +209,7 @@ void GLWarpWidget::resizeGL(int w, int h)
 }
 
 
-bool GLWarpWidget::setup_vertices(std::vector<QVector3D> mesh_values, std::vector<QVector3D> *mesh, int *triangle_count){
+bool GLWarpWidget::setup_vertices(std::vector<QVector3D> mesh_values, std::vector<GLfloat> *mesh, int *triangle_count){
 
     // get meta information about calculated
     auto ring_count = (int) mesh_values.back().x();
@@ -203,12 +219,12 @@ bool GLWarpWidget::setup_vertices(std::vector<QVector3D> mesh_values, std::vecto
     qDebug().nospace() << Q_FUNC_INFO << " :" << __LINE__;
     qDebug() << "  >" << "circle count: " << ring_count << " points_per_circle: " << ring_elements_count;
 
-    mesh_values.pop_back();
+    // remove meta info
     mesh_values.pop_back();
 
     //mapVecToRange(&mesh);
     qDebug() << "  >" << "Number of verices:" << mesh_values.size() << " actual number of vertices:" << point_count;
-    if (mesh_values.size() != point_count) {
+    if ((int)mesh_values.size() != point_count) {
         qDebug().nospace() << Q_FUNC_INFO << " :" << __LINE__;
         qDebug() << "  >" << "Error: Number of mesh points do not match!";
         return false;
@@ -222,6 +238,8 @@ bool GLWarpWidget::setup_vertices(std::vector<QVector3D> mesh_values, std::vecto
     // }
 
     // create mesh
+
+    std::vector<QVector3D> mesh_vec;
     for (int circle_idx = 0; circle_idx < ring_count; ++circle_idx) {
         if (circle_idx == 0) {
             for (int t = 1; t < ring_elements_count + 1; ++t) {
@@ -231,9 +249,9 @@ bool GLWarpWidget::setup_vertices(std::vector<QVector3D> mesh_values, std::vecto
                 int i1 = 0;
                 int i2 = t;
                 int i3 = 1 + (t % ring_elements_count);
-                mesh->push_back(mesh_values[i1]);
-                mesh->push_back(mesh_values[i2]);
-                mesh->push_back(mesh_values[i3]);
+                mesh_vec.push_back(mesh_values[i1]);
+                mesh_vec.push_back(mesh_values[i2]);
+                mesh_vec.push_back(mesh_values[i3]);
                 *triangle_count += 1;
             }
         } else {
@@ -242,21 +260,33 @@ bool GLWarpWidget::setup_vertices(std::vector<QVector3D> mesh_values, std::vecto
                 int i1 = start_point + idx;
                 int i2 = start_point + idx + ring_elements_count;
                 int i3 = start_point + (idx + 1) % ring_elements_count;
-                mesh->push_back(mesh_values[i1]);
-                mesh->push_back(mesh_values[i2]);
-                mesh->push_back(mesh_values[i3]);
+                mesh_vec.push_back(mesh_values[i1]);
+                mesh_vec.push_back(mesh_values[i2]);
+                mesh_vec.push_back(mesh_values[i3]);
                 //std::cout << i1<< " " << i2 << " " << i3 << std::endl;
                 int i4 = start_point + (idx + 1) % ring_elements_count;
                 int i5 = start_point + idx + ring_elements_count;
                 int i6 = start_point + ((idx + 1) % ring_elements_count) + ring_elements_count;
-                mesh->push_back(mesh_values[i4]);
-                mesh->push_back(mesh_values[i5]);
-                mesh->push_back(mesh_values[i6]);
+                mesh_vec.push_back(mesh_values[i4]);
+                mesh_vec.push_back(mesh_values[i5]);
+                mesh_vec.push_back(mesh_values[i6]);
                 //std::cout << i4 << " " << i5<< " " << i6 << std::endl;
                 *triangle_count += 2;
             }
         }
     }
+
+    // convert to std::vector<GLfloat>
+    for( auto i : mesh_vec) {
+        GLfloat x = i.x();
+        GLfloat y = i.y();
+        GLfloat z = i.z();
+
+        mesh->push_back(x);
+        mesh->push_back(y);
+        mesh->push_back(z);
+    }
+
 
     return true;
 
@@ -269,14 +299,14 @@ bool GLWarpWidget::setup_vertices(std::vector<QVector3D> mesh_values, std::vecto
 }
 
 
-bool GLWarpWidget::setup_tex_coords(std::vector<QVector3D> uv_coord_values, std::vector<QVector2D> *uv_coords){
+bool GLWarpWidget::setup_tex_coords(std::vector<QVector3D> uv_coord_values, std::vector<GLfloat> *uv_coords){
 
     // get meta information about calculated
     auto ring_count = (int) uv_coord_values.back().x();
     auto ring_elements_count = (int) uv_coord_values.back().y();
     auto point_count = (int) uv_coord_values.back().z();
 
-    uv_coord_values.pop_back();
+    // remove meta info
     uv_coord_values.pop_back();
 
     // IF HAGEN SWITCHES HIS ZERO COORDS AGAIN JUST SLAP HIM IN THE FACE
@@ -288,6 +318,7 @@ bool GLWarpWidget::setup_tex_coords(std::vector<QVector3D> uv_coord_values, std:
     qDebug().nospace() << Q_FUNC_INFO << " :" << __LINE__;
     qDebug() << "  >" << "red size: " << uv_coord_values.size() << " read point count: " << point_count;
 
+    std::vector<QVector3D> uv_vec;
     for (int circle_idx = 0; circle_idx < ring_count; ++circle_idx) {
         if (circle_idx == 0) {
             for (int t = 1; t < ring_elements_count + 1; ++t) {
@@ -300,15 +331,15 @@ bool GLWarpWidget::setup_tex_coords(std::vector<QVector3D> uv_coord_values, std:
                 //float u = mapToRange(uv_coords[i1].x, min_pos_x, max_pos_x, 0.0f, 1.0f);
                 float u = uv_coord_values[i1].x();
                 float v = uv_coord_values[i1].y();
-                uv_coords->push_back(QVector2D(u, v));
+                uv_vec.push_back(QVector2D(u, v));
 
                 u = uv_coord_values[i2].x();
                 v = uv_coord_values[i2].y();
-                uv_coords->push_back(QVector2D(u, v));
+                uv_vec.push_back(QVector2D(u, v));
 
                 u = uv_coord_values[i3].x();
                 v = uv_coord_values[i3].y();
-                uv_coords->push_back(QVector2D(u, v));
+                uv_vec.push_back(QVector2D(u, v));
             }
         } else {
             int start_point = circle_idx * ring_elements_count - (ring_elements_count - 1);
@@ -318,15 +349,15 @@ bool GLWarpWidget::setup_tex_coords(std::vector<QVector3D> uv_coord_values, std:
                 int i3 = start_point + (idx + 1) % ring_elements_count;
                 float u = uv_coord_values[i1].x();
                 float v = uv_coord_values[i1].y();
-                uv_coords->push_back(QVector2D(u, v));
+                uv_vec.push_back(QVector2D(u, v));
 
                 u = uv_coord_values[i2].x();
                 v = uv_coord_values[i2].y();
-                uv_coords->push_back(QVector2D(u, v));
+                uv_vec.push_back(QVector2D(u, v));
 
                 u = uv_coord_values[i3].x();
                 v = uv_coord_values[i3].y();
-                uv_coords->push_back(QVector2D(u, v));
+                uv_vec.push_back(QVector2D(u, v));
 
                 //std::cout << i1<< " " << i2 << " " << i3 << std::endl;
                 int i4 = start_point + (idx + 1) % ring_elements_count;
@@ -334,19 +365,31 @@ bool GLWarpWidget::setup_tex_coords(std::vector<QVector3D> uv_coord_values, std:
                 int i6 = start_point + ((idx + 1) % ring_elements_count) + ring_elements_count;
                 u = uv_coord_values[i4].x();
                 v = uv_coord_values[i4].y();
-                uv_coords->push_back(QVector2D(u, v));
+                uv_vec.push_back(QVector2D(u, v));
 
                 u = uv_coord_values[i5].x();
                 v = uv_coord_values[i5].y();
-                uv_coords->push_back(QVector2D(u, v));
+                uv_vec.push_back(QVector2D(u, v));
 
                 u = uv_coord_values[i6].x();
                 v = uv_coord_values[i6].y();
-                uv_coords->push_back(QVector2D(u, v));
+                uv_vec.push_back(QVector2D(u, v));
                 //std::cout << i4 << " " << i5<< " " << i6 << std::endl;
             }
         }
     }
+
+
+    for( auto i : uv_vec) {
+        GLfloat x = i.x();
+        GLfloat y = i.y();
+        GLfloat z = i.z();
+
+        uv_coords->push_back(x);
+        uv_coords->push_back(y);
+        uv_coords->push_back(z);
+    }
+
     return true;
 
 //    GLuint uv_buffer;

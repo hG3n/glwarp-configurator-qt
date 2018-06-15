@@ -2,8 +2,8 @@
     "projector": {
         "position": {
             "x" : 0.0,
-            "y" : 0.95,
-            "z" : 0.0
+            "y" : 0.6,
+            "z" : -0.5
         },
         "rotation": {
             "x": 0.0,
@@ -18,12 +18,12 @@
             "h": 1080
         },
         "grid": {
-            "rings": 64,
-            "ring_elements": 64
+            "rings": 128,
+            "ring_elements": 128
         },
         "mesh": {
-            "rings": 16,
-            "ring_elements": 64
+            "rings": 8,
+            "ring_elements": 32
         }
     },
     "dome": {
@@ -42,8 +42,8 @@
         },
         "position": {
            "x":  0.0,
-           "y":  0.8,
-           "z":  -1.7
+           "y":  0.5,
+           "z":  -1.2
        }
     }
 }

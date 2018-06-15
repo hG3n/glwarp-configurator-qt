@@ -1,7 +1,3 @@
-//
-// Created by Hagen Hiller on 18/12/17.
-//
-
 #ifndef RAYCAST_HITPOINT_HPP
 #define RAYCAST_HITPOINT_HPP
 
@@ -29,14 +25,6 @@ class Hitpoint {
          * @param t
          */
         Hitpoint(const QVector3D &position, const QVector3D &normal, double t);
-
-        /**
-         * @brief operator <<
-         * @param os
-         * @param hitpoint
-         * @return
-         */
-        friend std::ostream &operator<<(std::ostream &os, const Hitpoint &hitpoint);
 
         // member
         QVector3D position;

@@ -7,6 +7,7 @@
 #include <QScrollArea>
 #include <QKeyEvent>
 #include <QWindow>
+#include <QMenu>
 
 #include "glwidget.h"
 #include "propertyeditgroup.h"
@@ -23,6 +24,8 @@
 #include "ui/glwarpwidget.h"
 #include "ui/configurator.h"
 
+class MainWindow;
+
 class MainWidget : public QWidget
 {
         Q_OBJECT
@@ -33,6 +36,8 @@ class MainWidget : public QWidget
          * @param mw
          */
         MainWidget(MainWindow *mw);
+
+        QMenu *getMenu();
     private slots:
         /**
          * @brief onValueUpdate
@@ -41,47 +46,43 @@ class MainWidget : public QWidget
         void onValueUpdate(QJsonObject new_values);
 
     public slots:
-        void keyPressEvent(QKeyEvent *event);
+        void onOpenTransformationView();
+        void onLoadCustomConfig();
+        void onSaveModelConfig();
 
     private:
-        /**
-         * @brief initLayout
-         */
-        void initLayout();
 
-        /**
-         * @brief loadConfigs
-         * @return
-         */
-        void loadConfigs();
-
-        /**
-         * @brief initUiValues
-         */
-        void setUiValues(QJsonObject model_config);
-
-        /**
-         * @brief initSimulation
-         */
-        void initSimulation();
-
-        /**
-         * @brief vec3fromJson
-         * @return
-         */
         QVector3D vec3fromJson(const QJsonObject &object) const;
 
+        void loadConfigs();
+        void loadModelConfig(bool default_config);
+        void loadUiConfig(bool default_config);
+        void setUiValues(QJsonObject model_config);
+        void initSimulation();
+        void saveTransformationValues() const;
+
+        // inits
+        void initWidgets();
+        void initLayout();
+        void initActions();
+        void initMenu();
+
     private:
-        GLWidget *_glWidget;
-        GLWarpWidget *_glWarpWidget;
-        Configurator *_configurator;
+        MainWindow *main_window_;
 
-        MainWindow *_mainWindow;
-        Simulation _simulation;
-        Config _config;
+        // widgets
+        GLWidget *gl_widget_;
+        GLWarpWidget *gl_warp_widget_;
+        Configurator *configurator_;
 
-        ModelConfig *_model_config;
-        QJsonObject _ui_config;
+        Simulation simulation_;
+        Config config_;
+        ModelConfig *model_config_;
+        QJsonObject ui_config_;
+
+        QMenu *main_menu_;
+        QMap<QString, QAction*> actions_;
+
 };
 
 #endif

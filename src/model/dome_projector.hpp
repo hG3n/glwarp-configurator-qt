@@ -74,12 +74,16 @@ class DomeProjector {
         void translate(QVector3D position);
 
         /**
-         * ostream
-         * @param os
-         * @param projector
+         * @brief Returns mesh coordinates
          * @return
          */
-        friend std::ostream &operator<<(std::ostream &os, const DomeProjector &projector);
+        std::vector<QVector3D> getMeshCoords() const;
+
+        /**
+         * @brief getTexCoords
+         * @return
+         */
+        std::vector<QVector3D> getTexCoords() const;
 
     private:
 
@@ -140,6 +144,7 @@ class DomeProjector {
 
         std::vector<QVector3D> mesh_coords;
         std::vector<QVector3D> texture_coords;
+
 };
 
 

@@ -1,4 +1,4 @@
-#include <string>
+#include <QCoreApplication>
 
 #include "config.h"
 
@@ -49,6 +49,19 @@ SphereConfig SphereConfig::fromJson(const QJsonObject &object) {
     return config;
 }
 
+ModelConfig ModelConfig::fromJson(const QJsonObject &object) {
+
+    QJsonObject projector_config = object["projector"].toObject();
+    qDebug().nospace() << Q_FUNC_INFO << " :" << __LINE__;
+    qDebug() << "  >" << projector_config;
+
+    QJsonObject dome_config = object["dome"].toObject();
+    qDebug() << "  >" << dome_config;
+
+    QJsonObject mirror_config = object["mirror"].toObject();
+    qDebug() << "  >" << mirror_config;
+}
+
 
 Config::Config()
 {}
@@ -82,8 +95,18 @@ QJsonObject Config::getModelConfigJson() const {
     return _model_config_json;
 }
 
-QJsonObject Config::getcUiConfig() const {
+QJsonObject Config::getUiConfig() const {
     return _ui_config;
+}
+
+QDir Config::getApplicationPath() {
+    QString application_path = QCoreApplication::applicationDirPath();
+
+    QDir app_root_dir(application_path);
+    app_root_dir.cdUp();
+    app_root_dir.cdUp();
+    app_root_dir.cdUp();
+    return app_root_dir;
 }
 
 void Config::parseModelConfig(const QJsonObject &json_config) {

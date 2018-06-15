@@ -12,6 +12,7 @@
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QFile>
+#include <QDir>
 
 #include "lib/json11.hpp"
 
@@ -43,6 +44,8 @@ struct ModelConfig
         DomeProjectorConfig dome_projector;
         SphereConfig dome;
         SphereConfig mirror;
+
+        static ModelConfig fromJson(const QJsonObject &object);
 };
 
 
@@ -80,7 +83,9 @@ class Config
          * @brief getcUiConfig
          * @return
          */
-        QJsonObject getcUiConfig() const;
+        QJsonObject getUiConfig() const;
+
+        static QDir getApplicationPath();
 
     private:
         /**

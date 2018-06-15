@@ -256,6 +256,19 @@ void GLWidget::paintGL() {
         renderElement(_point_vbo, _point_colors["yellow"], current_mvp);
     }
 
+    for(auto pair: _scene.screen_points) {
+        QMatrix4x4 current_mvp(_mvp);
+        current_mvp.translate(pair);
+        renderElement(_point_vbo, _point_colors["yellow"], current_mvp);
+    }
+
+//    for(auto pair: _scene.texture_coords) {
+//        QMatrix4x4 current_mvp(_mvp);
+//        current_mvp.translate(pair);
+//        renderElement(_point_vbo, _point_colors["white"], current_mvp);
+//    }
+
+
     _shader_program->release();
 
     vao_binder.release();

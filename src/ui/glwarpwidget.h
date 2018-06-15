@@ -114,7 +114,7 @@ class GLWarpWidget : public QOpenGLWidget, protected QOpenGLFunctions
          * @param triangle_count
          * @return
          */
-        bool setup_vertices(std::vector<QVector3D> mesh_values, std::vector<QVector3D> *mesh, int *triangle_count);
+        bool setup_vertices(std::vector<QVector3D> mesh_values, std::vector<GLfloat> *mesh, int *triangle_count);
 
         /**
          * @brief Calculates the final uv coordinates used for warping
@@ -122,18 +122,19 @@ class GLWarpWidget : public QOpenGLWidget, protected QOpenGLFunctions
          * @param uv_coords
          * @return
          */
-        bool setup_tex_coords(std::vector<QVector3D> uv_coord_values, std::vector<QVector2D> *uv_coords);
+        bool setup_tex_coords(std::vector<QVector3D> uv_coord_values, std::vector<GLfloat> *uv_coords);
 
     private:
         QOpenGLShaderProgram *_shader_program;
         int _mvp_location;
 
-        std::vector<QVector3D> _mesh;
-        std::vector<QVector3D> _uv_values;
+        std::vector<GLfloat> _mesh;
+        std::vector<GLfloat> _uv_values;
 
         QOpenGLVertexArrayObject _vao;
         QOpenGLBuffer _point_vbo;
         QOpenGLBuffer _mesh_vbo;
+        QOpenGLBuffer _texture_vbo;
 
         QOpenGLTexture *_texture;
 
@@ -147,9 +148,6 @@ class GLWarpWidget : public QOpenGLWidget, protected QOpenGLFunctions
         Scene _scene;
         bool _running;
 
-        int _x_rotation;
-        int _y_rotation;
-        int _z_rotation;
         QPoint _last_position;
 };
 

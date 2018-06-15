@@ -15,7 +15,8 @@ void main() {
     // furthermore gl's internal format converts to bgra anyway, therefor . bgra as color output
 
 //    vec2 coord = vec2(UV.x, 1.0f - UV.y);
-    color = texture( texture_sampler, vec2(UV.x, 1.0f- UV.y)).bgra;
+//    color = texture( texture_sampler, vec2(UV.x, 1.0f- UV.y)).bgra;
+    color = vec4(1.0,1.0,1.0,1.0);
     //	color = texture( myTextureSampler, vec2(UV.x, 1.0f- UV.y)).rgba;
     //color = vec4(200.0, 0.0, 0.0, 1.0).rgba;
 }

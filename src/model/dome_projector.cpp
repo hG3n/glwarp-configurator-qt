@@ -82,17 +82,20 @@ void DomeProjector::calculateTransformationMesh() {
     }
 
     // normalize screen list
-    float screen_min_x = findMinValues(screen_points).x();
-    float screen_max_x = findMaxValues(screen_points).x();
-    float screen_min_y = findMinValues(screen_points).y();
-    float screen_max_y = findMaxValues(screen_points).y();
+//    float screen_min_x = findMinValues(screen_points).x();
+//    float screen_max_x = findMaxValues(screen_points).x();
+//    float screen_min_y = findMinValues(screen_points).y();
+//    float screen_max_y = findMaxValues(screen_points).y();
 
     std::vector<QVector3D> screen_points_normalized;
     for (auto point : screen_points) {
-        float new_x = mapToRange(point.x(), screen_min_x, screen_max_x, -1.0f, 1.0f);
-        float new_y = mapToRange(point.y(), screen_min_y, screen_max_y, -1.0f, 1.0f);
+//        float new_x = mapToRange(point.x(), screen_min_x, screen_max_x, -1.0f, 1.0f);
+//        float new_y = mapToRange(point.y(), screen_min_y, screen_max_y, -1.0f, 1.0f);
 
-        screen_points_normalized.emplace_back(QVector3D(new_x, new_y, 0.0f));
+//        screen_points_normalized.emplace_back(QVector3D(new_x, new_y, 0.0f));
+
+        screen_points_normalized.push_back(QVector3D(point.x(), point.y(), 0.0f));
+
     }
 
     // normalize texture points
@@ -281,6 +284,25 @@ void DomeProjector::translate(QVector3D position) {
     _frustum->translate(diff);
 }
 
+std::vector<QVector3D> DomeProjector::getMeshCoords() const {
+    std::vector<QVector3D> mesh_copy(mesh_coords);
+    qDebug().nospace() << Q_FUNC_INFO << " :" << __LINE__;
+    qDebug() << "  >" << "num mesh coords" << mesh_coords.size();
+    QVector3D meta(_dome_rings, _dome_ring_elements, mesh_coords.size());
+    mesh_copy.push_back(meta);
+    return mesh_copy;
+}
+
+std::vector<QVector3D> DomeProjector::getTexCoords() const {
+    std::vector<QVector3D> tex_copy(texture_coords);
+    qDebug().nospace() << Q_FUNC_INFO << " :" << __LINE__;
+    qDebug() << "  >" << "num tex coords" << texture_coords.size();
+    QVector3D meta(_dome_rings, _dome_ring_elements, texture_coords.size());
+    tex_copy.push_back(meta);
+    return tex_copy;
+}
+
+
 QVector3D DomeProjector::findMinValues(std::vector<QVector3D> vector) {
 
     float smallest_x = std::numeric_limits<float>::max();
@@ -334,19 +356,3 @@ QVector3D  DomeProjector::findMaxValues(std::vector<QVector3D> vector) {
 float DomeProjector::mapToRange(float value, float in_min, float in_max, float out_min, float out_max) {
     return (value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
-
-/*
- * ostream
- */
-std::ostream &operator<<(std::ostream &os, const DomeProjector &projector) {
-    os << "Dome Projector:" << "\n"
-       << "  position: [" << projector._position.x() << " , " << projector._position.y() << " , "<< projector._position.z() << "]\n"
-       << "  grid_rings: " << projector._grid_rings << "\n"
-       << "  grid_ring_elements: " << projector._grid_ring_elements << "\n"
-       << "  sample_grid: " << projector.sample_grid.size() << "\n"
-       << "  first_hits: " << projector.first_hits.size() << "\n"
-       << "  second_hits: " << projector.second_hits.size();
-    return os;
-}
-
-

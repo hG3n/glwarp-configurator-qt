@@ -29,13 +29,6 @@ QSize GLWarpWidget::sizeHint() const
 void GLWarpWidget::updateValues(std::vector<QVector3D> mesh_values,
                                 std::vector<QVector3D> uv_values) {
 
-    qDebug().nospace() << Q_FUNC_INFO << " :" << __LINE__;
-    qDebug() << "  >" << "values received";
-    qDebug() << "  >" << "number of mesh values:" <<mesh_values.size();
-    qDebug() << "  >" << "mesh meta:" << mesh_values.back();
-    qDebug() << "  >" << "number of uv values:" <<uv_values.size();
-    qDebug() << "  >" << "uv meta:" << uv_values.back();
-
     int triangle_count;
     std::vector<GLfloat> mesh;
     if(setup_vertices(mesh_values, &mesh, &triangle_count)) {

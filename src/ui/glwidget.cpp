@@ -1,24 +1,43 @@
 #include <math.h>
 
 #include <QMouseEvent>
-#include <QOpenGLShaderProgram>
 #include <QCoreApplication>
 #include <QPoint>
 
 #include "ui/glwidget.h"
 
 GLWidget::GLWidget(QWidget *parent)
-    : QOpenGLWidget(parent),
-      _shader_program(0)
+    : QOpenGLWidget(parent)
+    , _shader_program(Q_NULLPTR)
+    , _mvp_location()
+    , _point()
+    , _point_blue()
+    , _point_green()
+    , _point_red()
+    , _point_yellow()
+    , _point_white()
+    , _point_grey()
+    , _vao()
+    , _point_vbo()
+    , _point_colors()
+    , _projection_mat()
+    , _view_mat()
+    , _model_mat()
+    , _mvp()
+    , _scene()
+    , _running()
+    , _x_rotation()
+    , _y_rotation()
+    , _z_rotation()
+    , _last_position()
 {
-    _point        = { 0.0f, 0.0f, 0.0f };
-    _point_blue   = { 0.0f, 0.0f, 1.0f };
-    _point_green  = { 0.0f, 1.0f, 0.0f };
-    _point_red    = { 1.0f, 0.0f, 0.0f };
-    _point_yellow = { 1.0f, 1.0f, 0.0f };
-    _point_white  = { 1.0f, 1.0f, 1.0f };
-    _point_grey   = { 0.5f, 0.5f, 0.5f };
-
+    _point        = {0.0f, 0.0f, 0.0f};
+    _point_blue   = {0.0f, 0.0f, 1.0f};
+    _point_green  = {0.0f, 1.0f, 0.0f};
+    _point_red    = {1.0f, 0.0f, 0.0f};
+    _point_yellow = {1.0f, 1.0f, 0.0f};
+    _point_white  = {1.0f, 1.0f, 1.0f};
+    _point_grey   = {0.5f, 0.5f, 0.5f};
     setFocus();
 }
 
@@ -26,8 +45,6 @@ GLWidget::~GLWidget()
 {
     cleanup();
 }
-
-
 
 QSize GLWidget::minimumSizeHint() const
 {
@@ -39,7 +56,8 @@ QSize GLWidget::sizeHint() const
     return QSize(1400, 1800);
 }
 
-void GLWidget::setScene(Scene scene) {
+void GLWidget::setScene(Scene scene)
+{
     _scene.dome_vertices = scene.dome_vertices;
     _scene.far_corners = scene.far_corners;
     _scene.first_hits = scene.first_hits;
@@ -77,7 +95,8 @@ void GLWidget::cleanup()
 }
 
 
-void GLWidget::initShader() {
+void GLWidget::initShader()
+{
     // init shader
     _shader_program = new QOpenGLShaderProgram;
     _shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex,  ":/shaders/simple.vert" );
@@ -90,11 +109,10 @@ void GLWidget::initShader() {
     _shader_program->bind();
     _mvp_location = _shader_program->uniformLocation("mvp");
     _shader_program->release();
-
 }
 
-void GLWidget::initVBOs() {
-
+void GLWidget::initVBOs()
+{
     // create vao
     _vao.create();
     QOpenGLVertexArrayObject::Binder vaoBinder(&_vao);
@@ -111,11 +129,10 @@ void GLWidget::initVBOs() {
     _point_colors["yellow"] = createBuffer(_point_yellow);
     _point_colors["white"] = createBuffer(_point_white);
     _point_colors["grey"] = createBuffer(_point_grey);
+  }
 
-
-}
-
-QOpenGLBuffer GLWidget::createBuffer(std::vector<GLfloat> buffer_data) {
+QOpenGLBuffer GLWidget::createBuffer(std::vector<GLfloat> buffer_data)
+{
     QOpenGLBuffer buffer;
     buffer.create();
     buffer.bind();
@@ -124,7 +141,8 @@ QOpenGLBuffer GLWidget::createBuffer(std::vector<GLfloat> buffer_data) {
 }
 
 
-void GLWidget::initView() {
+void GLWidget::initView()
+{
     // setup projection matrix
     _projection_mat.setToIdentity();
     _projection_mat.perspective(90.0f, 16.0f/9.0f, 0.1f, 100.0f);
@@ -142,13 +160,6 @@ void GLWidget::initView() {
 
 void GLWidget::initializeGL()
 {
-    // In this example the widget's corresponding top-level window can change
-    // several times during the widget's lifetime. Whenever this happens, the
-    // QOpenGLWidget's associated context is destroyed and a new one is created.
-    // Therefore we have to be prepared to clean up the resources on the
-    // aboutToBeDestroyed() signal, instead of the destructor. The emission of
-    // the signal will be followed by an invocation of initializeGL() where we
-    // can recreate all resources.
     connect(context(), &QOpenGLContext::aboutToBeDestroyed,
             this, &GLWidget::cleanup);
 
@@ -163,8 +174,8 @@ void GLWidget::initializeGL()
 }
 
 
-void GLWidget::renderElement(QOpenGLBuffer vertex_buffer, QOpenGLBuffer color_buffer, const QMatrix4x4 &mvp) {
-
+void GLWidget::renderElement(QOpenGLBuffer vertex_buffer, QOpenGLBuffer color_buffer, const QMatrix4x4 &mvp)
+{
     _shader_program->setUniformValue(_mvp_location, mvp);
 
     vertex_buffer.bind();
@@ -181,7 +192,8 @@ void GLWidget::renderElement(QOpenGLBuffer vertex_buffer, QOpenGLBuffer color_bu
 }
 
 
-void GLWidget::paintGL() {
+void GLWidget::paintGL()
+{
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -189,9 +201,7 @@ void GLWidget::paintGL() {
     QOpenGLVertexArrayObject::Binder vao_binder(&_vao);
 
     _model_mat.setToIdentity();
-    //    _model_mat.rotate(180.0f - (_x_rotation / 16.0f), 1, 0, 0);
     _model_mat.rotate(_y_rotation / 16.0f, 0, 1, 0);
-    //    _model_mat.rotate(_z_rotation / 16.0f, 0, 0, 1);
 
     // calculate
     _mvp = _projection_mat * _view_mat * _model_mat;
@@ -200,17 +210,17 @@ void GLWidget::paintGL() {
     // render coordinate system
     {
         QMatrix4x4 current_mvp(_mvp);
-        current_mvp.translate(0.3,0.0,0.0);
+        current_mvp.translate(0.3f,0.0f,0.0f);
         renderElement(_point_vbo, _point_colors["blue"], current_mvp);
     }
     {
         QMatrix4x4 current_mvp(_mvp);
-        current_mvp.translate(0.0,0.3,0.0);
+        current_mvp.translate(0.0f,0.3f,0.0f);
         renderElement(_point_vbo, _point_colors["red"], current_mvp);
     }
     {
         QMatrix4x4 current_mvp(_mvp);
-        current_mvp.translate(0.0,0.0,0.3);
+        current_mvp.translate(0.0f,0.0f,0.3f);
         renderElement(_point_vbo, _point_colors["green"], current_mvp);
     }
     {
@@ -220,54 +230,60 @@ void GLWidget::paintGL() {
     }
 
     // render scene elements
-    for(auto point: _scene.dome_vertices) {
+    for(auto point: _scene.dome_vertices)
+    {
         QMatrix4x4 current_mvp(_mvp);
         current_mvp.translate(point);
         renderElement(_point_vbo, _point_colors["grey"], current_mvp);
     }
 
-    for(auto point: _scene.sample_grid) {
+    for(auto point: _scene.sample_grid)
+    {
         QMatrix4x4 current_mvp(_mvp);
         current_mvp.translate(point);
         renderElement(_point_vbo, _point_colors["blue"], current_mvp);
     }
 
-    for(auto point: _scene.first_hits) {
+    for(auto point: _scene.first_hits)
+    {
         QMatrix4x4 current_mvp(_mvp);
         current_mvp.translate(point);
         renderElement(_point_vbo, _point_colors["green"], current_mvp);
     }
 
-    for(auto point: _scene.second_hits) {
+    for(auto point: _scene.second_hits)
+    {
         QMatrix4x4 current_mvp(_mvp);
         current_mvp.translate(point);
         renderElement(_point_vbo, _point_colors["red"], current_mvp);
     }
 
-    for(auto pair: _scene.near_corners) {
+    for(auto pair: _scene.near_corners)
+    {
         QMatrix4x4 current_mvp(_mvp);
         current_mvp.translate(pair.second);
         renderElement(_point_vbo, _point_colors["yellow"], current_mvp);
     }
 
-    for(auto pair: _scene.far_corners) {
+    for(auto pair: _scene.far_corners)
+    {
         QMatrix4x4 current_mvp(_mvp);
         current_mvp.translate(pair.second);
         renderElement(_point_vbo, _point_colors["yellow"], current_mvp);
     }
 
-    for(auto pair: _scene.screen_points) {
+    for(auto pair: _scene.screen_points)
+    {
         QMatrix4x4 current_mvp(_mvp);
         current_mvp.translate(pair);
         renderElement(_point_vbo, _point_colors["yellow"], current_mvp);
     }
 
-//    for(auto pair: _scene.texture_coords) {
-//        QMatrix4x4 current_mvp(_mvp);
-//        current_mvp.translate(pair);
-//        renderElement(_point_vbo, _point_colors["white"], current_mvp);
-//    }
-
+    //    for(auto pair: _scene.texture_coords) {
+    //        QMatrix4x4 current_mvp(_mvp);
+    //        current_mvp.translate(pair);
+    //        renderElement(_point_vbo, _point_colors["white"], current_mvp);
+    //    }
 
     _shader_program->release();
 
@@ -284,9 +300,8 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
     int dx = event->x() - _last_position.x();
     //    int dy = event->y() - _last_position.y();
 
-    if (event->buttons() & Qt::LeftButton) {
+    if (event->buttons() & Qt::LeftButton)
         setYRotation(_y_rotation + 8 * dx);
-    }
 
     _last_position = event->pos();
 }

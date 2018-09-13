@@ -1,13 +1,17 @@
 #include "ui/configurator.h"
 
-Configurator::Configurator(const QJsonObject &config, QWidget *parent) : QWidget(parent)
+Configurator::Configurator(const QJsonObject &config, QWidget *parent)
+    : QWidget(parent)
+    , attribute_()
+    , ui_elements_()
+    , confirm_button_(Q_NULLPTR)
 {
-    initLayout(config);
+    initUI(config);
 }
 
 QJsonObject Configurator::getValues() const{
     QJsonObject obj;
-    for(auto pair: _ui_elements.toStdMap()) {
+    for(auto pair: ui_elements_.toStdMap()) {
         obj[pair.first] = pair.second->toJson();
     }
     return obj;
@@ -16,7 +20,7 @@ QJsonObject Configurator::getValues() const{
 void Configurator::setValues(const QJsonObject &values) {
 
     for(auto key: values.keys()) {
-        _ui_elements[key]->fromJson(values[key].toObject());
+        ui_elements_[key]->fromJson(values[key].toObject());
     }
 }
 
@@ -25,7 +29,7 @@ void Configurator::onConfirm() {
     emit valueUpdate(values);
 }
 
-void Configurator::initLayout(const QJsonObject &config) {
+void Configurator::initUI(const QJsonObject &config) {
 
     setContentsMargins(0,0,0,0);
 
@@ -41,11 +45,11 @@ void Configurator::initLayout(const QJsonObject &config) {
     }
 
     QString confirm_message = config["confirm_message"].toString();
-    _confirm_button = new QPushButton(confirm_message, this);
-    connect(_confirm_button, &QPushButton::pressed,
+    confirm_button_ = new QPushButton(confirm_message, this);
+    connect(confirm_button_, &QPushButton::pressed,
             this, &Configurator::onConfirm);
 
-    root->addWidget(_confirm_button);
+    root->addWidget(confirm_button_);
 
     // set layout
     setLayout(root);
@@ -63,7 +67,7 @@ void Configurator::initLayoutGroup(const QJsonObject &config, QBoxLayout *layout
     group->setTitle(title);
     group->setLayout(edit->layout());
 
-    _ui_elements[attribute] = edit;
+    ui_elements_[attribute] = edit;
 
     layout->addWidget(group);
 }

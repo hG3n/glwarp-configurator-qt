@@ -2,8 +2,8 @@
 
 #include "config.h"
 
-DomeProjectorConfig DomeProjectorConfig::fromJson(const QJsonObject &object) {
-
+DomeProjectorConfig DomeProjectorConfig::fromJson(const QJsonObject &object)
+{
     QJsonObject position_obj = object["position"].toObject();
     QVector3D position = QVector3D( position_obj["x"].toDouble(),  position_obj["y"].toDouble(),  position_obj["z"].toDouble());
 
@@ -36,7 +36,8 @@ DomeProjectorConfig DomeProjectorConfig::fromJson(const QJsonObject &object) {
 }
 
 
-SphereConfig SphereConfig::fromJson(const QJsonObject &object) {
+SphereConfig SphereConfig::fromJson(const QJsonObject &object)
+{
     QJsonObject position_obj = object["position"].toObject();
 
     QVector3D position = QVector3D( position_obj["x"].toDouble(),  position_obj["y"].toDouble(),  position_obj["z"].toDouble());
@@ -49,57 +50,58 @@ SphereConfig SphereConfig::fromJson(const QJsonObject &object) {
     return config;
 }
 
-ModelConfig ModelConfig::fromJson(const QJsonObject &object) {
-
+ModelConfig ModelConfig::fromJson(const QJsonObject &object)
+{
     QJsonObject projector_config = object["projector"].toObject();
-    qDebug().nospace() << Q_FUNC_INFO << " :" << __LINE__;
-    qDebug() << "  >" << projector_config;
-
     QJsonObject dome_config = object["dome"].toObject();
-    qDebug() << "  >" << dome_config;
-
     QJsonObject mirror_config = object["mirror"].toObject();
-    qDebug() << "  >" << mirror_config;
 }
 
 
 Config::Config()
+    : _config_path()
+    , _model_config(nullptr)
+    , _model_config_json()
+    , _ui_config()
 {}
 
-
-bool Config::loadModelConfig(const QString &path) {
+bool Config::loadModelConfig(const QString &path)
+{
     QJsonObject object;
     if(loadConfig(object, path)) {
         parseModelConfig(object);
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
-bool Config::loadUiConfig(const QString &path) {
+bool Config::loadUiConfig(const QString &path)
+{
     QJsonObject object;
     if(loadConfig(object, path)) {
         _ui_config = object;
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
-ModelConfig* Config::getModelConfig() const {
+ModelConfig* Config::getModelConfig() const
+{
     return _model_config;
 }
 
-QJsonObject Config::getModelConfigJson() const {
+QJsonObject Config::getModelConfigJson() const
+{
     return _model_config_json;
 }
 
-QJsonObject Config::getUiConfig() const {
+QJsonObject Config::getUiConfig() const
+{
     return _ui_config;
 }
 
-QDir Config::getApplicationPath() {
+QDir Config::getApplicationPath()
+{
     QString application_path = QCoreApplication::applicationDirPath();
 
     QDir app_root_dir(application_path);
@@ -109,8 +111,8 @@ QDir Config::getApplicationPath() {
     return app_root_dir;
 }
 
-void Config::parseModelConfig(const QJsonObject &json_config) {
-
+void Config::parseModelConfig(const QJsonObject &json_config)
+{
     _model_config_json = json_config;
 
     QJsonObject projector_object = json_config["projector"].toObject();
@@ -149,7 +151,8 @@ void Config::parseModelConfig(const QJsonObject &json_config) {
 }
 
 
-QVector3D Config::jsonObject2Vec3(const QJsonObject &object) {
+QVector3D Config::jsonObject2Vec3(const QJsonObject &object)
+{
     float x = object["x"].toDouble();
     float y = object["y"].toDouble();
     float z = object["z"].toDouble();
@@ -157,8 +160,8 @@ QVector3D Config::jsonObject2Vec3(const QJsonObject &object) {
 }
 
 
-bool Config::loadConfig(QJsonObject &object,  const QString &filepath) {
-
+bool Config::loadConfig(QJsonObject &object,  const QString &filepath)
+{
     QString value;
     QFile file;
     file.setFileName(filepath);
@@ -170,9 +173,8 @@ bool Config::loadConfig(QJsonObject &object,  const QString &filepath) {
         return false;
     }
 
-    if(value.isEmpty() || value.isNull()) {
+    if(value.isEmpty() || value.isNull())
         return false;
-    }
 
     QJsonParseError *error = new QJsonParseError;
     QJsonDocument document = QJsonDocument::fromJson(value.toUtf8(), error);

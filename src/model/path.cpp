@@ -1,22 +1,20 @@
 #include "path.hpp"
 
 Path::Path()
-        : _path() {}
+    : _path() {}
 
 Path::Path(std::string const &path)
-        : _path() {
+    : _path() {
     _path.push_back(path);
 }
 
 Path::Path(std::vector<std::string> const &path)
-        : _path() {
+    : _path() {
     for (auto e : path) {
         _path.push_back(e);
     }
 }
 
-// - methods -
-// -----------
 void Path::push_s(std::string const &route) {
     _path.push_back(route);
 }
@@ -36,6 +34,7 @@ std::string const &Path::str() const {
     for (auto e: _path) {
         res += e + "/";
     }
+
     res.pop_back();
     return res;
 }

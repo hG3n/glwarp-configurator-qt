@@ -2,11 +2,14 @@
 #define RAYCAST_HITPOINT_HPP
 
 #include <ostream>
+#include <QVector3D>
 
-class Hitpoint {
+/**
+ * @brief The Hitpoint struct contains the two hitpoints of a ray with volume.
+ */
+struct Hitpoint {
 
     public:
-
         /**
          * @brief Hitpoint
          */
@@ -32,6 +35,4 @@ class Hitpoint {
         double t;
 };
 
-
 #endif //RAYCAST_HITPOINT_HPP
-

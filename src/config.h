@@ -14,8 +14,6 @@
 #include <QFile>
 #include <QDir>
 
-#include "lib/json11.hpp"
-
 struct DomeProjectorConfig
 {
         QVector3D position;
@@ -49,38 +47,41 @@ struct ModelConfig
 };
 
 
+/**
+ * @brief The Config class handles config loading and parsing.
+ */
 class Config
 {
     public:
         Config();
 
         /**
-         * @brief loadModelConfig
+         * @brief Loads model config.
          * @return
          */
         bool loadModelConfig(const QString &path);
 
         /**
-         * @brief loadUiConfig
+         * @brief Loads user interface config.
          * @param path
          * @return
          */
         bool loadUiConfig(const QString &path);
 
         /**
-         * @brief getModelConfig
+         * @brief Returns model config.
          * @return
          */
         ModelConfig* getModelConfig() const;
 
         /**
-         * @brief getModelConfigJson
+         * @brief Returns model config as json.
          * @return
          */
         QJsonObject getModelConfigJson() const;
 
         /**
-         * @brief getcUiConfig
+         * @brief Returns user interface config.
          * @return
          */
         QJsonObject getUiConfig() const;
@@ -89,7 +90,7 @@ class Config
 
     private:
         /**
-         * @brief parseConfigFile
+         * @brief Parses the model config from json and fills the ModelConfig dto.
          * @param json_config
          */
         void parseModelConfig(const QJsonObject &json_config);

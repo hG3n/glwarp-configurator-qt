@@ -31,7 +31,7 @@ class GLWarpWidget : public QOpenGLWidget, protected QOpenGLFunctions
          * @brief GLWidget
          * @param parent
          */
-        GLWarpWidget(QWidget *parent = 0);
+        GLWarpWidget(QWidget *parent = Q_NULLPTR);
 
         /**
          * d'tor
@@ -66,7 +66,8 @@ class GLWarpWidget : public QOpenGLWidget, protected QOpenGLFunctions
 
     protected:
         /**
-         * @brief initializeGL
+         * @brief Initializes the Qt-OpenGL context
+         *
          */
         void initializeGL() override;
 

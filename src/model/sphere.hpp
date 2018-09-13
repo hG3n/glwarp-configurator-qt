@@ -1,7 +1,3 @@
-
-// Created by Hagen Hiller on 18/12/17.
-//
-
 #ifndef RAYCAST_SPHERE_H
 #define RAYCAST_SPHERE_H
 
@@ -14,7 +10,6 @@
 class Sphere {
 
     public:
-        // c'tor
         /**
          * @brief Sphere c'tor
          */
@@ -40,14 +35,39 @@ class Sphere {
          */
         bool intersect(Ray const &r, std::pair<Hitpoint, Hitpoint> *hp_pair);
 
+        /**
+         * @brief Returns the spheres radius.
+         * @return
+         */
         float get_radius() const;
+
+        /**
+         * @brief Returns the spheres position.
+         * @return
+         */
         QVector3D get_position() const;
 
+        /**
+         * @brief Set the Spheres position.
+         * @param new_position
+         */
         void set_position(const QVector3D &new_position);
+
+        /**
+         * @brief Set the Spheres radius.
+         * @param new_radius
+         */
         void set_radius(float new_radius);
 
         /**
-         * overloaded out stream operator
+         * @brief operator << used for printing the Class using std<<cout;
+         *
+         * Because of reasons, Qt has its own way of printing things.
+         * Therefor this'll not work with Qt's qDebug() <<
+         *
+         * I'm not going to look into this,
+         * ... just because.
+         *
          * @param os
          * @param sphere
          * @return

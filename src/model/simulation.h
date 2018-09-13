@@ -13,6 +13,9 @@
 #include "lib/json11.hpp"
 #include "config.h"
 
+/**
+ * @brief The Scene struct contains all values needed by the GlWidget class to render a simulated configuration.
+ */
 struct Scene {
     std::vector<QVector3D> sample_grid;
     std::vector<QVector3D> first_hits;
@@ -27,55 +30,61 @@ struct Scene {
     std::map<ProjectorFrustum::Corner, QVector3D> far_corners;
 };
 
+/**
+ * @brief The Simulation class handles single model simulation passes.
+ * The Simulation is a mere middleman handling connections to the model
+ * from the outside as well as passing computed results to outter classes
+ * and interfaces.
+ *
+ */
 class Simulation
 {
     public:
-        /**
-         * @brief Simulation
-         */
         Simulation();
-
-        /**
-         * d'tor
-         */
         ~Simulation();
 
         /**
-         * @brief runCalculations
+         * @brief Runs a Simulation pass.
          */
         void runCalculations();
 
         /**
-         * @brief initialize
+         * @brief Initializes main Simulation components.
+         *
+         * Components created are:
+         *   the first reflection mirror <Sphere>
+         *   the final reflection medium <Sphere>
+         *   the dome projector maintaining the calculations <DomeProjector>
+         *
          * @param model_config
          */
         void initialize(ModelConfig *model_config);
 
         /**
-         * @brief updateFromConfig
+         * @brief Updates the Simulation from given json configuration.
          * @param config
          */
         void updateFromConfig(ModelConfig* model_config);
 
         /**
-         * @brief buildModel
+         * @brief Builds the model.
          * @param model_config
          */
         void buildModel(ModelConfig *model_config);
 
         /**
-         * @brief getScene
+         * @brief Returns a scene dto.
          */
         Scene getCurrentScene() const;
 
         /**
-         * @brief Returns the current transformation mesh points
+         * @brief Returns the current transformation mesh points.
          * @return
          */
         std::vector<QVector3D> getTransformationMesh() const;
 
         /**
-         * @brief Returns the current calculated texture coordinates
+         * @brief Returns the current calculated texture coordinates.
          * @return
          */
         std::vector<QVector3D> getTextureCoords() const;

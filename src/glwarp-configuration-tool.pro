@@ -34,9 +34,7 @@ SOURCES += main.cpp\
         ui/configurator.cpp \
         ui/glwarpwidget.cpp \
         model/dome_projector.cpp\
-        model/file_writer.cpp\
         model/hitpoint.cpp\
-        model/path.cpp\
         model/projector_frustum.cpp\
         model/ray.cpp\
         model/sphere.cpp\
@@ -52,9 +50,7 @@ HEADERS  += ui/mainwindow.h \
             ui/propertyeditgroup.h \
             ui/glwarpwidget.h \
             model/dome_projector.hpp\
-            model/file_writer.hpp\
             model/hitpoint.hpp\
-            model/path.hpp\
             model/projector_frustum.hpp\
             model/ray.hpp\
             model/sphere.hpp\
@@ -64,7 +60,7 @@ HEADERS  += ui/mainwindow.h \
 
 DISTFILES +=  shaders/simple.frag \
               shaders/simple.vert \
-    _RES/style.css
+              _RES/style.css
 
 
 RESOURCES +=  _RES/resources.qrc

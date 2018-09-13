@@ -25,35 +25,35 @@ DomeProjector::DomeProjector(ProjectorFrustum *frustum,
     initialize();
 }
 
-DomeProjector::~DomeProjector()  {
+DomeProjector::~DomeProjector()
+{
     delete _frustum;
 }
-
 
 /*
  * methods
  */
-void DomeProjector::initialize() {
+void DomeProjector::initialize()
+{
     generateRadialGrid();
     _frustum->translate(_position);
 
     QMatrix4x4 translation;
     translation.translate(_position);
-    for (auto &point: sample_grid) {
+    for (auto &point: sample_grid)
         point = translation * point;
-    }
 
     generateDomeVertices();
 
     // scale dome vertices to match the given size
     QMatrix4x4 scale_mat;
     scale_mat.scale( QVector3D(1.6f, 1.6f, 1.6f) );
-    for (auto &vert: dome_vertices) {
+    for (auto &vert: dome_vertices)
         vert = scale_mat * vert;
-    }
 }
 
-void DomeProjector::calculateTransformationMesh() {
+void DomeProjector::calculateTransformationMesh()
+{
     // create green list here
     std::map<int, int> map;
 
@@ -61,12 +61,15 @@ void DomeProjector::calculateTransformationMesh() {
     int last_hitpoint_idx = 0;
 
     // todo add binary search here
-    for (unsigned int vert_idx = 0; vert_idx < dome_vertices.size(); ++vert_idx) {
-        for (unsigned int hp_idx = 0; hp_idx < second_hits.size(); ++hp_idx) {
+    for (unsigned int vert_idx = 0; vert_idx < dome_vertices.size(); ++vert_idx)
+    {
+        for (unsigned int hp_idx = 0; hp_idx < second_hits.size(); ++hp_idx)
+        {
             float current_distance = (second_hits[hp_idx] - dome_vertices[vert_idx]).length();
-            if (current_distance < last_distance) {
+            if (current_distance < last_distance)
+            {
                 last_distance = current_distance;
-                last_hitpoint_idx = hp_idx;
+                last_hitpoint_idx = static_cast<int>(hp_idx);
             }
         }
         last_distance = std::numeric_limits<float>::max();
@@ -76,27 +79,15 @@ void DomeProjector::calculateTransformationMesh() {
     // calculate mapping
     std::vector<QVector3D> screen_points;
     std::vector<QVector3D> texture_points;
-    for (auto pair : map) {
+    for (auto pair : map)
+    {
         texture_points.push_back(this->dome_vertices[pair.first]);
         screen_points.push_back(this->sample_grid[pair.second]);
     }
 
-    // normalize screen list
-//    float screen_min_x = findMinValues(screen_points).x();
-//    float screen_max_x = findMaxValues(screen_points).x();
-//    float screen_min_y = findMinValues(screen_points).y();
-//    float screen_max_y = findMaxValues(screen_points).y();
-
-    std::vector<QVector3D> screen_points_normalized;
-    for (auto point : screen_points) {
-//        float new_x = mapToRange(point.x(), screen_min_x, screen_max_x, -1.0f, 1.0f);
-//        float new_y = mapToRange(point.y(), screen_min_y, screen_max_y, -1.0f, 1.0f);
-
-//        screen_points_normalized.emplace_back(QVector3D(new_x, new_y, 0.0f));
-
-        screen_points_normalized.push_back(QVector3D(point.x(), point.y(), 0.0f));
-
-    }
+    std::vector<QVector3D> screen_points_adjusted;
+    for (auto point : screen_points)
+        screen_points_adjusted.push_back(QVector3D(point.x(), point.y(), 0.0f));
 
     // normalize texture points
     float texture_min_x = findMinValues(texture_points).x();
@@ -105,30 +96,31 @@ void DomeProjector::calculateTransformationMesh() {
     float texture_max_z = findMaxValues(texture_points).z();
 
     std::vector<QVector3D> texture_coords_normalized;
-    for (auto point:texture_points) {
+    for (auto point:texture_points)
+    {
         float new_x = mapToRange(point.x(), texture_min_x, texture_max_x, 0.0f, 1.0f);
         float new_y = mapToRange(point.z(), texture_min_z, texture_max_z, 0.0f, 1.0f);
         texture_coords_normalized.emplace_back(QVector3D(new_x, new_y, 0.0f));
     }
 
-    this->mesh_coords = screen_points_normalized;
+    this->mesh_coords = screen_points_adjusted;
     this->texture_coords = texture_coords_normalized;
 }
 
-void DomeProjector::calculateDomeHitpoints(Sphere *mirror, Sphere *dome) {
-
+void DomeProjector::calculateDomeHitpoints(Sphere *mirror, Sphere *dome)
+{
     first_hits.clear();
     second_hits.clear();
 
     // translate dome vertices to the domes position
     QMatrix4x4 dome_translation;
     dome_translation.translate(dome->get_position());
-    for(auto &vertex : dome_vertices) {
+    for(auto &vertex : dome_vertices)
         vertex = dome_translation * vertex;
-    }
 
     // raycast for each samplepoint
-    for (unsigned int i = 0; i < sample_grid.size(); ++i) {
+    for (unsigned int i = 0; i < sample_grid.size(); ++i)
+    {
 
         // calculate initial ray direction
         QVector3D initial_direction = sample_grid[i] - _position;
@@ -136,7 +128,8 @@ void DomeProjector::calculateDomeHitpoints(Sphere *mirror, Sphere *dome) {
         // build ray and define hitpoint
         Ray r(_position, initial_direction.normalized());
         std::pair<Hitpoint, Hitpoint> hpp;
-        if (mirror->intersect(r, &hpp)) {
+        if (mirror->intersect(r, &hpp))
+        {
 
             first_hits.push_back(hpp.first.position);
 
@@ -146,16 +139,17 @@ void DomeProjector::calculateDomeHitpoints(Sphere *mirror, Sphere *dome) {
             Ray r2(hpp.first.position, ref.normalized());
             std::pair<Hitpoint, Hitpoint> hpp2;
             if (dome->intersect(r2, &hpp2)) {
-                if (hpp2.second.position.y() > dome->get_position().y()) {
+                if (hpp2.second.position.y() > dome->get_position().y())
                     second_hits.push_back(hpp2.second.position);
-                } else {
+                else
                     second_hits.push_back({1000, 1000, 1000});
-                }
-            } else {
+            }
+            else {
                 second_hits.push_back({1000, 1000, 1000});
             }
 
-        } else {
+        }
+        else {
             first_hits.push_back({1000, 1000, 1000});
         }
 
@@ -163,8 +157,8 @@ void DomeProjector::calculateDomeHitpoints(Sphere *mirror, Sphere *dome) {
 
 }
 
-void DomeProjector::updateFromConfig(ModelConfig *config) {
-
+void DomeProjector::updateFromConfig(ModelConfig *config)
+{
     // translate reset frustum position & update fov
     QVector3D current_frustum_pos = _frustum->getPosition();
     _frustum->translate(-current_frustum_pos);
@@ -182,9 +176,8 @@ void DomeProjector::updateFromConfig(ModelConfig *config) {
     // move sample grid to current near clipping plane
     QMatrix4x4 translation;
     translation.translate(_position);
-    for (auto &point: sample_grid) {
+    for (auto &point: sample_grid)
         point = translation * point;
-    }
 
     // update dome geometry
     _dome_rings =  config->dome_projector.num_mesh_rings;
@@ -194,17 +187,15 @@ void DomeProjector::updateFromConfig(ModelConfig *config) {
     // scale dome vertices to match the given size
     QMatrix4x4 scale_mat;
     scale_mat.scale( QVector3D(1.6f, 1.6f, 1.6f) );
-    for (auto &vert: dome_vertices) {
+    for (auto &vert: dome_vertices)
         vert = scale_mat * vert;
-    }
 }
 
-void DomeProjector::generateRadialGrid() {
-
+void DomeProjector::generateRadialGrid()
+{
     // if there are elements in there clear the vector
-    if (!sample_grid.empty()) {
+    if (!sample_grid.empty())
         sample_grid.clear();
-    }
 
     auto near = _frustum->getNearCorners();
 
@@ -222,27 +213,28 @@ void DomeProjector::generateRadialGrid() {
     float top_y = near[ProjectorFrustum::TL].y();
 
     sample_grid.push_back(center_point);
-    for (int ring_idx = 1; ring_idx < _grid_rings + 1; ++ring_idx) {
-        for (int ring_point_idx = 0; ring_point_idx < _grid_ring_elements; ++ring_point_idx) {
+    for (int ring_idx = 1; ring_idx < _grid_rings + 1; ++ring_idx)
+    {
+        for (int ring_point_idx = 0; ring_point_idx < _grid_ring_elements; ++ring_point_idx)
+        {
             QQuaternion euler_quat = QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 1.0f,(step_angle * ring_point_idx));
             QVector3D coord = euler_quat * QVector3D(ring_idx * step_size, 0.0f, 0.0f);
 
-            if (coord.y() < top_y && coord.y() > bottom_y) {
+            if (coord.y() < top_y && coord.y() > bottom_y)
                 // push back the rotated point at the near clipping planes z position
                 sample_grid.emplace_back(QVector3D(coord.x(), coord.y(), near[ProjectorFrustum::TL].z()));
-            }
-
         }
     }
 
 }
 
-void DomeProjector::generateDomeVertices() {
-
-    if(!dome_vertices.empty()) {
+void DomeProjector::generateDomeVertices()
+{
+    if(!dome_vertices.empty())
         dome_vertices.clear();
-    }
+
     /*
+     * Remember remember ...
      * THETA - AROUND Y
      * PHI - X AND
      */
@@ -254,10 +246,12 @@ void DomeProjector::generateDomeVertices() {
     QVector3D pole_cap(0.0f, 1.0f, 0.0f);
     vertices.push_back(pole_cap);
 
-    for (int ring_idx = 1; ring_idx < this->_dome_rings + 1; ++ring_idx) {
+    for (int ring_idx = 1; ring_idx < this->_dome_rings + 1; ++ring_idx)
+    {
         QQuaternion phi_quat = QQuaternion::fromAxisAndAngle(0.0f,0.0f,1.0f,(ring_idx * delta_phi));
         QVector3D vec = phi_quat * QVector3D(pole_cap.x(), pole_cap.y(), pole_cap.z());
-        for (int segment_idx = 0; segment_idx < this->_dome_ring_elements; ++segment_idx) {
+        for (int segment_idx = 0; segment_idx < this->_dome_ring_elements; ++segment_idx)
+        {
             QQuaternion theta_quat = QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,(segment_idx * delta_theta));
             QVector3D final = theta_quat * vec;
             vertices.push_back(final);
@@ -270,11 +264,13 @@ void DomeProjector::generateDomeVertices() {
 /*
  * Getter
  */
-ProjectorFrustum *DomeProjector::getFrustum() const {
+ProjectorFrustum *DomeProjector::getFrustum() const
+{
     return _frustum;
 }
 
-void DomeProjector::translate(QVector3D position) {
+void DomeProjector::translate(QVector3D position)
+{
     QVector3D diff = position - _position;
 
     QMatrix4x4 translation;
@@ -284,75 +280,66 @@ void DomeProjector::translate(QVector3D position) {
     _frustum->translate(diff);
 }
 
-std::vector<QVector3D> DomeProjector::getMeshCoords() const {
+std::vector<QVector3D> DomeProjector::getMeshCoords() const
+{
     std::vector<QVector3D> mesh_copy(mesh_coords);
-    qDebug().nospace() << Q_FUNC_INFO << " :" << __LINE__;
-    qDebug() << "  >" << "num mesh coords" << mesh_coords.size();
     QVector3D meta(_dome_rings, _dome_ring_elements, mesh_coords.size());
     mesh_copy.push_back(meta);
     return mesh_copy;
 }
 
-std::vector<QVector3D> DomeProjector::getTexCoords() const {
+std::vector<QVector3D> DomeProjector::getTexCoords() const
+{
     std::vector<QVector3D> tex_copy(texture_coords);
-    qDebug().nospace() << Q_FUNC_INFO << " :" << __LINE__;
-    qDebug() << "  >" << "num tex coords" << texture_coords.size();
     QVector3D meta(_dome_rings, _dome_ring_elements, texture_coords.size());
     tex_copy.push_back(meta);
     return tex_copy;
 }
 
 
-QVector3D DomeProjector::findMinValues(std::vector<QVector3D> vector) {
-
+QVector3D DomeProjector::findMinValues(std::vector<QVector3D> vector)
+{
     float smallest_x = std::numeric_limits<float>::max();
     float smallest_y = smallest_x;
     float smallest_z = smallest_x;
 
     for (auto point: vector) {
-        if (point.x() < smallest_x) {
+        if (point.x() < smallest_x)
             smallest_x = point.x();
-        }
 
-        if (point.y() < smallest_y) {
+        if (point.y() < smallest_y)
             smallest_y = point.y();
-        }
 
-        if (point.z() < smallest_z) {
+        if (point.z() < smallest_z)
             smallest_z = point.z();
-        }
     }
 
     return QVector3D(smallest_x, smallest_y, smallest_z);
-
 }
 
 
-QVector3D  DomeProjector::findMaxValues(std::vector<QVector3D> vector) {
-
+QVector3D  DomeProjector::findMaxValues(std::vector<QVector3D> vector)
+{
     float smallest_x = std::numeric_limits<float>::min();
     float smallest_y = smallest_x;
     float smallest_z = smallest_x;
 
     for (auto point: vector) {
-        if (point.x() > smallest_x) {
+        if (point.x() > smallest_x)
             smallest_x = point.x();
-        }
 
-        if (point.y() > smallest_y) {
+        if (point.y() > smallest_y)
             smallest_y = point.y();
-        }
 
-        if (point.z() > smallest_z) {
+        if (point.z() > smallest_z)
             smallest_z = point.z();
-        }
     }
 
     return QVector3D(smallest_x, smallest_y, smallest_z);
-
 }
 
 
-float DomeProjector::mapToRange(float value, float in_min, float in_max, float out_min, float out_max) {
+float DomeProjector::mapToRange(float value, float in_min, float in_max, float out_min, float out_max)
+{
     return (value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }

@@ -2,19 +2,23 @@
 
 PropertyEdit::PropertyEdit(const QJsonObject &config, QWidget *parent)
     : QWidget(parent)
+    , _attribute()
+    , _ui_elements()
 {
     initLayout(config);
 }
 
-QJsonObject PropertyEdit::toJson() const {
+QJsonObject PropertyEdit::toJson() const
+{
     QJsonObject obj;
-    for(auto pair: _ui_elements.toStdMap()) {
+    for(auto pair: _ui_elements.toStdMap())
         obj[pair.first] = pair.second->value();
-    }
+
     return obj;
 }
 
-void PropertyEdit::fromJson (const QJsonObject &values) {
+void PropertyEdit::fromJson (const QJsonObject &values)
+{
     for(auto key: values.keys()) {
         double value = values[key].toDouble();
 
@@ -23,17 +27,19 @@ void PropertyEdit::fromJson (const QJsonObject &values) {
     }
 }
 
-QString PropertyEdit::getAttribute() const {
+QString PropertyEdit::getAttribute() const
+{
     return _attribute;
 }
 
-void PropertyEdit::initDefaultLayout() {
+void PropertyEdit::initDefaultLayout()
+{
     QFormLayout *form = new QFormLayout;
     setLayout(form);
 }
 
-void PropertyEdit::initLayout(const QJsonObject &config) {
-
+void PropertyEdit::initLayout(const QJsonObject &config)
+{
     setContentsMargins(0,0,0,0);
 
     // create new root layout
@@ -43,15 +49,14 @@ void PropertyEdit::initLayout(const QJsonObject &config) {
     _attribute = config["attribute"].toString();
 
     QJsonArray element_array = config["elements"].toArray();
-    for(auto array_item: element_array) {
+    for(auto array_item: element_array)
         initLayoutElement(array_item.toObject(), form);
-    }
 
     setLayout(form);
 }
 
-void PropertyEdit::initLayoutElement(const QJsonObject &config, QFormLayout *layout) {
-
+void PropertyEdit::initLayoutElement(const QJsonObject &config, QFormLayout *layout)
+{
     QString title = config["title"].toString();
     double precision = config["precision"].toDouble();
     QString attribute = config["attribute"].toString();
@@ -67,4 +72,3 @@ void PropertyEdit::initLayoutElement(const QJsonObject &config, QFormLayout *lay
 
     layout->addRow(title, spinbox);
 }
-

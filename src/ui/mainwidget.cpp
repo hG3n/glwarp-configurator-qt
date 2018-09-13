@@ -21,9 +21,11 @@ MainWidget::MainWidget(MainWindow *mw)
     , gl_warp_widget_(0)
     , configurator_(0)
     , simulation_()
-    , config_ ()
+    , config_()
     , model_config_(0)
     , ui_config_()
+    , main_menu_(0)
+    , actions_()
 
 {
     loadModelConfig(true);
@@ -76,7 +78,8 @@ void MainWidget::onValueUpdate(QJsonObject new_values) {
     gl_warp_widget_->updateValues(mesh_coords, tex_coords);
 }
 
-void MainWidget::onOpenTransformationView() {
+void MainWidget::onOpenTransformationView()
+{
     std::vector<QVector3D> mesh_coords = simulation_.getTransformationMesh();
     std::vector<QVector3D> tex_coords = simulation_.getTextureCoords();
 
@@ -85,40 +88,43 @@ void MainWidget::onOpenTransformationView() {
 }
 
 
-void MainWidget::onLoadCustomConfig() {
+void MainWidget::onLoadCustomConfig()
+{
     loadModelConfig(false);
     setUiValues(config_.getModelConfigJson());
     initSimulation();
 }
 
-void MainWidget::onSaveModelConfig() {
+void MainWidget::onSaveModelConfig()
+{
     QJsonObject current_values = configurator_->getValues();
+
     QJsonDocument document(current_values);
-
     QDir app_path = Config::getApplicationPath();
-
     QString filepath = QFileDialog::getSaveFileName( nullptr, tr("Save current transformation"), app_path.absoluteFilePath("model.json"));
 
-    qDebug().nospace() << Q_FUNC_INFO << " :" << __LINE__;
-    qDebug() << "  >" << filepath;
-
-    if(filepath != "") {
+    if(filepath != "")
+    {
         QFile json_file(filepath);
-        if(json_file.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text)){
+        if(json_file.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text))
             json_file.write(document.toJson());
-        } else {
+         else
             qDebug() << "Error: Saving file" << filepath << "was not possible!";
-        }
-    } else {
+
+    }
+    else {
         qDebug() << "Error: No file specified";
     }
 }
 
-void MainWidget::loadModelConfig(bool default_config) {
-    if(default_config) {
+void MainWidget::loadModelConfig(bool default_config)
+{
+    if(default_config)
+    {
         if(config_.loadModelConfig(":configs/model.json"))
             model_config_ = config_.getModelConfig();
-    } else {
+    }
+    else {
         QDir app_root_dir = Config::getApplicationPath();
         QString config_file = QFileDialog::getOpenFileName(nullptr, tr("Load Model Config"), app_root_dir.absoluteFilePath("model.json"));
 
@@ -129,11 +135,14 @@ void MainWidget::loadModelConfig(bool default_config) {
     }
 }
 
-void MainWidget::loadUiConfig(bool default_config) {
-    if(default_config) {
+void MainWidget::loadUiConfig(bool default_config)
+{
+    if(default_config)
+    {
         if(config_.loadUiConfig(":configs/ui.json"))
             ui_config_ = config_.getUiConfig();
-    } else {
+    }
+    else {
         QDir app_root_dir = Config::getApplicationPath();
         QString config_file = QFileDialog::getOpenFileName(nullptr, tr("Load UI Config"), app_root_dir.absoluteFilePath("ui.json"));
 
@@ -144,27 +153,28 @@ void MainWidget::loadUiConfig(bool default_config) {
     }
 }
 
-void MainWidget:: loadConfigs() {
+void MainWidget:: loadConfigs()
+{
     config_ = Config();
 
-    if(config_.loadModelConfig(":/configs/model.json")) {
+    if(config_.loadModelConfig(":/configs/model.json"))
         model_config_ = config_.getModelConfig();
-    } else {
+    else
         qDebug() << "Error laoding model config!";
-    }
 
-    if(config_.loadUiConfig(":/configs/ui.json")) {
+    if(config_.loadUiConfig(":/configs/ui.json"))
         ui_config_ = config_.getUiConfig();
-    } else {
+    else
         qDebug() << "Error loading UI config!";
-    }
 }
 
-void MainWidget::setUiValues(QJsonObject model_config) {
+void MainWidget::setUiValues(QJsonObject model_config)
+{
     configurator_->setValues(model_config);
 }
 
-void MainWidget::initSimulation() {
+void MainWidget::initSimulation()
+{
     simulation_ = Simulation();
     simulation_.initialize(config_.getModelConfig());
 
@@ -178,19 +188,18 @@ QVector3D MainWidget::vec3fromJson(const QJsonObject &object) const{
     return QVector3D(object["x"].toDouble(), object["y"].toDouble(), object["z"].toDouble());
 }
 
-void MainWidget::saveTransformationValues() const {
+void MainWidget::saveTransformationValues() const
+{
 
     auto mesh = simulation_.getTransformationMesh();
     auto tex = simulation_.getTextureCoords();
 
     QString filename =  QFileDialog::getSaveFileName(nullptr, tr("Save Transformation files"), tr("foo"));
-    if(filename =="") {
-        qDebug().nospace() << Q_FUNC_INFO << " :" << __LINE__;
-        qDebug() << "  >" << "no filename";
-    } else {
-        qDebug().nospace() << Q_FUNC_INFO << " :" << __LINE__;
-        qDebug() << "  >" << filename;
-
+    if(filename =="")
+    {
+        qDebug() << "Error: there was no filename specified";
+    }
+    else {
         QString tex_filename = filename + ".tex";
         QFile tex_file(tex_filename);
         QTextStream tex_stream(&tex_file);
@@ -209,23 +218,23 @@ void MainWidget::saveTransformationValues() const {
                 mesh_stream << i.x() << " " << i.y() << " " << i.z() << "\n";
 
         mesh_file.close();
-        qDebug() << "mesh saved!";
     }
 
 
 }
 
-void MainWidget::initWidgets() {
+void MainWidget::initWidgets()
+{
     gl_widget_ = new GLWidget(this);
     configurator_ = new Configurator(ui_config_, this);
     gl_warp_widget_ = new GLWarpWidget();
 
     connect(configurator_, &Configurator::valueUpdate,
             this, &MainWidget::onValueUpdate);
-
 }
 
-void MainWidget::initLayout() {
+void MainWidget::initLayout()
+{
     setContentsMargins(0,0,0,0);
 
     QHBoxLayout *root = new QHBoxLayout;

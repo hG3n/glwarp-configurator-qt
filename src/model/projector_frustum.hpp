@@ -11,6 +11,9 @@
 
 #include <QVector3D>
 
+/**
+ * @brief The ProjectorFrustum class describes a light projector frustum
+ */
 class ProjectorFrustum {
 
     public:
@@ -24,13 +27,12 @@ class ProjectorFrustum {
         };
 
         /**
-         * Default c'tor
+         * @brief ProjectorFrustum
          */
         ProjectorFrustum();
 
         /**
-         * Custom c'tor
-         * creates new frustum in
+         * @brief Creates a new frustum with the given values.
          * @param _aspect_ratio
          * @param _fov
          * @param _near
@@ -39,43 +41,46 @@ class ProjectorFrustum {
         ProjectorFrustum(float _aspect_ratio, float _fov, float _near, float _far);
 
         /**
-         * Translate to current position
+         * @brief Translate to current position.
          * @param position
          */
         void translate(QVector3D const &position);
 
         /**
-         * Rotate by given degree angle around specified axis
+         * @brief Rotate by given degree angle around specified axis.
          * @param angle
          * @param axis
          */
         void rotate(float angle, QVector3D const &axis);
 
-
         /**
-         * @brief setFOV
+         * @brief Set the frustum field of view.
          * @param fov
          */
         void setFOV(float fov);
 
         /**
-         * Returns near clipping plane corners
+         * @brief Returns near clipping plane corners.
          * @return
          */
         std::map<Corner, QVector3D> const& getNearCorners() const;
 
         /**
-         * Returns far clipping plane corners
+         * @brief Returns far clipping plane corners.
          * @return
          */
         std::map<Corner, QVector3D> const& getFarCorners() const;
 
         /**
-         * returns frustum eye ray
+         * @brief Returns frustum eye ray.
          * @return
          */
         QVector3D const& getEye() const;
 
+        /**
+         * @brief Returns the position.
+         * @return
+         */
         QVector3D const& getPosition() const;
 
 

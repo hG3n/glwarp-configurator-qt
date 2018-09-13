@@ -7,6 +7,7 @@
 #include <QOpenGLFunctions>
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLBuffer>
+#include <QOpenGLShaderProgram>
 #include <QMatrix4x4>
 
 #include "model/simulation.h"
@@ -18,15 +19,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
         Q_OBJECT
 
     public:
-        /**
-         * @brief GLWidget
-         * @param parent
-         */
-        GLWidget(QWidget *parent = 0);
-
-        /**
-         * d'tor
-         */
+        GLWidget(QWidget *parent = Q_NULLPTR);
         ~GLWidget();
 
         /**
@@ -41,17 +34,25 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
          */
         QSize sizeHint() const override;
 
+        /**
+         * @brief Sets the current scene.
+         * @param scene
+         */
         void setScene(Scene scene);
 
     public slots:
         void cleanup();
 
     signals:
+        /**
+         * @brief Updates the scene.
+         * @param scene
+         */
         void updateScene(Scene scene);
 
     protected:
         /**
-         * @brief initializeGL
+         * @brief Initialize OpenGL context.
          */
         void initializeGL() override;
 
@@ -68,18 +69,17 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
         void resizeGL(int width, int height) override;
 
         void mousePressEvent(QMouseEvent *event) override;
-
         void mouseMoveEvent(QMouseEvent *event) override;
 
     private:
         void setYRotation(int angle);
         /**
-         * @brief initShader
+         * @brief Initializes Shaders.
          */
         void initShader();
 
         /**
-         * @brief initVBOs
+         * @brief Initialize Vertext Buffer Objects
          */
         void initVBOs();
 
@@ -88,11 +88,15 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
          */
         void initView();
 
+        /**
+         * @brief Create buffer.
+         * @param buffer_data
+         * @return
+         */
         QOpenGLBuffer createBuffer(std::vector<GLfloat> buffer_data);
 
-
         /**
-         * @brief renderElement
+         * @brief Renders a single vertex in the scene as quad.
          * @param vertex_buffer
          * @param color_buffer
          * @param mvp
@@ -105,11 +109,11 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 
         std::vector<GLfloat> _point;
         std::vector<GLfloat> _point_blue;
-        std::vector<GLfloat> _point_green  ;
-        std::vector<GLfloat> _point_red    ;
-        std::vector<GLfloat> _point_yellow ;
-        std::vector<GLfloat> _point_white  ;
-        std::vector<GLfloat> _point_grey   ;
+        std::vector<GLfloat> _point_green;
+        std::vector<GLfloat> _point_red;
+        std::vector<GLfloat> _point_yellow;
+        std::vector<GLfloat> _point_white;
+        std::vector<GLfloat> _point_grey;
 
         QOpenGLVertexArrayObject _vao;
         QOpenGLBuffer _point_vbo;

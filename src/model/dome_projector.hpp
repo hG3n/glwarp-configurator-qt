@@ -14,6 +14,11 @@
 #include "sphere.hpp"
 #include "config.h"
 
+/**
+ * @brief The DomeProjector class describes a projector specialized on calculating a warping geometry.
+ *
+ * The dome projector calculates a, for the given model accurate projection mesh.
+ */
 class DomeProjector {
 
     public:
@@ -43,44 +48,50 @@ class DomeProjector {
         void initialize();
 
         /**
-         * calculate the transformation mesh
+         * @brief Calculates the transformation mesh using data previously simulated.
+         *
+         *
+         *
          * @return std::vector<QVector3D> transformation mesh
          */
         void calculateTransformationMesh();
 
         /**
-         * calculates hitpoints in the dome
+         * @brief Performs a raycast, aiming to hit the dome using the mirror as reflection medium.
          * @param mirror
          * @param dome
          */
         void calculateDomeHitpoints(Sphere *mirror, Sphere *dome);
 
         /**
-         * @brief updateFromConfig
+         * @brief Updates internal values from given config.
+         *
+         * It thereby regenerates the radial sampling grid as well as the dome
+         * grid with the specified values.
          * @param model_config
          */
         void updateFromConfig(ModelConfig *model_config);
 
         /**
-         * Returns the projectors frustum
+         * Returns the projectors frustum.
          * @return
          */
         ProjectorFrustum* getFrustum() const;
 
         /**
-         * @brief translate
+         * @brief Alter the DomeProjector's position.
          * @param position
          */
         void translate(QVector3D position);
 
         /**
-         * @brief Returns mesh coordinates
+         * @brief Returns calculated mesh coordinates.
          * @return
          */
         std::vector<QVector3D> getMeshCoords() const;
 
         /**
-         * @brief getTexCoords
+         * @brief Returns calculated texture coordinates.
          * @return
          */
         std::vector<QVector3D> getTexCoords() const;
@@ -88,32 +99,32 @@ class DomeProjector {
     private:
 
         /**
-         * generates a radial grid
+         * @brief Generates the radial sampling grid on the Frustums near clipping plane.
          * @return
          */
         void generateRadialGrid();
 
         /**
-         * @brief Generates the vertices of a half sphere by using the grid specified settings
+         * @brief Generates the vertices of a half sphere by using the grid specified settings.
          */
         void generateDomeVertices();
 
         /**
-         * @brief findMinValues
+         * @brief Finds minimum values for all three axis of a list of QVectors.
          * @param vector
          * @return
          */
         QVector3D findMinValues(std::vector<QVector3D> vector);
 
         /**
-         * @brief findMaxValues
+         * @brief Finds maximum values for all three axis of a list of QVectors.
          * @param vector
          * @return
          */
         QVector3D findMaxValues(std::vector<QVector3D> vector);
 
         /**
-         * @brief mapToRange
+         * @brief Maps a value in a given range to the desired output range.
          * @param value
          * @param in_min
          * @param in_max
@@ -128,6 +139,7 @@ class DomeProjector {
         ProjectorFrustum *_frustum;
 
         QVector3D _position;
+        QVector3D _rotation;
 
         int _grid_rings;
         int _grid_ring_elements;
@@ -144,8 +156,6 @@ class DomeProjector {
 
         std::vector<QVector3D> mesh_coords;
         std::vector<QVector3D> texture_coords;
-
 };
-
 
 #endif //RAYCAST_DOMEPROJECTOR_HPP

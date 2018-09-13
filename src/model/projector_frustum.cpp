@@ -1,33 +1,35 @@
-#include <QVector3D>
-#include <QMatrix4x4>
+#include <QVector3D> #include <QMatrix4x4>
 #include <QQuaternion>
 #include <QDebug>
+
+#include <QMatrix4x4>
 
 #include "projector_frustum.hpp"
 
 ProjectorFrustum::ProjectorFrustum()
-        : _aspect_ratio(1)
-        , _fov(90.0f)
-        , _near(1.0f)
-        , _far(2.0f)
-        , _eye(QVector3D(0.0f, 0.0, -1.0f))
-        , _position(QVector3D())
-        , _rotation(QVector3D())
+    : _aspect_ratio(1)
+    , _fov(90.0f)
+    , _near(1.0f)
+    , _far(2.0f)
+    , _eye(QVector3D(0.0f, 0.0, -1.0f))
+    , _position(QVector3D())
+    , _rotation(QVector3D())
 {}
 
 ProjectorFrustum::ProjectorFrustum(float _aspect_ratio, float _fov, float _near, float _far)
-        : _aspect_ratio(_aspect_ratio)
-        , _fov(_fov)
-        , _near(_near)
-        , _far(_far)
-        , _eye(QVector3D(0.0f, 0.0, -1.0f))
-        , _position(QVector3D())
-        , _rotation(QVector3D())
+    : _aspect_ratio(_aspect_ratio)
+    , _fov(_fov)
+    , _near(_near)
+    , _far(_far)
+    , _eye(QVector3D(0.0f, 0.0, -1.0f))
+    , _position(QVector3D())
+    , _rotation(QVector3D())
 {
     initialize();
 }
 
-void ProjectorFrustum::initialize() {
+void ProjectorFrustum::initialize()
+{
     // create foward vector
     _eye.setZ(-_near);
 
@@ -46,12 +48,6 @@ void ProjectorFrustum::initialize() {
     _near_corners[BR] = near_br;
     _near_corners[BL] = near_bl;
 
-//    qDebug() << "Near Clipping Corners";
-//    for (auto p : _near_corners) {
-//        qDebug() << p.second;
-//    }
-//    qDebug();
-
     _eye.setZ(-_far);
 
     // calculate top point
@@ -67,44 +63,36 @@ void ProjectorFrustum::initialize() {
     _far_corners[TR] = far_tr;
     _far_corners[BR] = far_br;
     _far_corners[BL] = far_bl;
-
-//    qDebug() << "Far Clipping Corners";
-//    for (auto p : _far_corners) {
-//        qDebug() << p.second;
-//    }
-//    qDebug();
 }
 
 
-void ProjectorFrustum::translate(QVector3D const &position) {
+void ProjectorFrustum::translate(QVector3D const &position)
+{
     QMatrix4x4 translation;
     translation.translate(position);
     _position = translation * _position;
     _eye = translation * _eye;
 
     // translate each near corner
-    for (auto &corner: _near_corners) {
+    for (auto &corner: _near_corners)
         corner.second = translation * corner.second;
-    }
 
-    for (auto &corner: _far_corners) {
+    for (auto &corner: _far_corners)
         corner.second = translation * corner.second;
-    }
 }
 
 
-void ProjectorFrustum::rotate(float angle, QVector3D const &axis) {
+void ProjectorFrustum::rotate(float angle, QVector3D const &axis)
+{
     // make rotation matrix
     QQuaternion rotation = QQuaternion::fromAxisAndAngle(axis, angle);
     _eye = rotation * _eye;
 
-    for (auto &corner: _near_corners) {
+    for (auto &corner: _near_corners)
         corner.second = rotation * corner.second;
-    }
 
-    for (auto &corner: _far_corners) {
+    for (auto &corner: _far_corners)
         corner.second = rotation * corner.second;
-    }
 }
 
 
@@ -118,11 +106,9 @@ std::map<ProjectorFrustum::Corner, QVector3D> const &ProjectorFrustum::getNearCo
     return _near_corners;
 }
 
-
 std::map<ProjectorFrustum::Corner, QVector3D> const &ProjectorFrustum::getFarCorners() const {
     return _far_corners;
 }
-
 
 QVector3D const &ProjectorFrustum::getEye() const {
     return _eye;

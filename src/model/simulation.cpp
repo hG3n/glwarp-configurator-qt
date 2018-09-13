@@ -15,13 +15,15 @@ Simulation::~Simulation()
 }
 
 
-void Simulation::runCalculations() {
+void Simulation::runCalculations()
+{
     _dp->calculateDomeHitpoints(_mirror, _dome);
     _dp->calculateTransformationMesh();
 }
 
 
-void Simulation::initialize(ModelConfig *config) {
+void Simulation::initialize(ModelConfig *config)
+{
     float aspect_ratio = (float)config->dome_projector.screen_width /  config->dome_projector.screen_height;
 
     ProjectorFrustum *new_frustum = new ProjectorFrustum(aspect_ratio,
@@ -43,7 +45,8 @@ void Simulation::initialize(ModelConfig *config) {
 }
 
 
-void Simulation::updateFromConfig(ModelConfig *config) {
+void Simulation::updateFromConfig(ModelConfig *config)
+{
     _dp->updateFromConfig(config);
 
     _mirror->set_radius(config->mirror.radius);
@@ -54,7 +57,8 @@ void Simulation::updateFromConfig(ModelConfig *config) {
 }
 
 
-Scene Simulation::getCurrentScene() const {
+Scene Simulation::getCurrentScene() const
+{
     Scene s;
     s.dome_vertices = _dp->dome_vertices;
     s.first_hits = _dp->first_hits;
@@ -68,16 +72,19 @@ Scene Simulation::getCurrentScene() const {
 }
 
 
-std::vector<QVector3D> Simulation::getTransformationMesh() const {
+std::vector<QVector3D> Simulation::getTransformationMesh() const
+{
     return _dp->getMeshCoords();
 }
 
-std::vector<QVector3D> Simulation::getTextureCoords() const {
+std::vector<QVector3D> Simulation::getTextureCoords() const
+{
     return _dp->getTexCoords();
 }
 
 
-QVector3D Simulation::jsonArray2Vec3(json11::Json const &vec_obj) {
+QVector3D Simulation::jsonArray2Vec3(json11::Json const &vec_obj)
+{
     std::vector<json11::Json> e = vec_obj.array_items();
     return QVector3D(e[0].number_value(), e[1].number_value(), e[2].number_value());
 }

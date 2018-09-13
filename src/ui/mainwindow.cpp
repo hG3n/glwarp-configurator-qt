@@ -10,10 +10,11 @@
 
 MainWindow::MainWindow(QWidget *parent)
     :QMainWindow(parent)
-    , main_widget_(0)
+    , main_widget_(Q_NULLPTR)
     , actions_()
 {
     setWindowTitle("GLWarp Configurator");
+
     initCentralWidget();
     initActions();
     initMenuBar();
@@ -36,7 +37,6 @@ void MainWindow::initCentralWidget() {
 
 void MainWindow::initActions()
 {
-
     QList<QAction*> window_actions;
 
     window_actions.append(new QAction(tr("Full Screen"), this));

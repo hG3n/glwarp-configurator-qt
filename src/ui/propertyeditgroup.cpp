@@ -3,31 +3,35 @@
 #include "ui/propertyeditgroup.h"
 
 PropertyEditGroup::PropertyEditGroup(const QJsonObject &config, QWidget *parent)
-    :QWidget(parent)
+    : QWidget(parent)
+    , _attribute()
+    , _ui_elements()
 {
     initLayout(config);
 }
 
-QJsonObject PropertyEditGroup::toJson() const {
+QJsonObject PropertyEditGroup::toJson() const
+{
     QJsonObject obj;
-    for(auto pair: _ui_elements.toStdMap()) {
+    for(auto pair: _ui_elements.toStdMap())
         obj[pair.first] = pair.second->toJson();
-    }
+
     return obj;
 }
 
-void PropertyEditGroup::fromJson(const QJsonObject &values) {
-    for(auto key : values.keys()) {
+void PropertyEditGroup::fromJson(const QJsonObject &values)
+{
+    for(auto key : values.keys())
         _ui_elements[key]->fromJson(values[key].toObject());
-    }
 }
 
-QString PropertyEditGroup::getAttribute() const {
+QString PropertyEditGroup::getAttribute() const
+{
     return _attribute;
 }
 
-void PropertyEditGroup::initLayout(const QJsonObject & config) {
-
+void PropertyEditGroup::initLayout(const QJsonObject & config)
+{
     setContentsMargins(0,0,0,0);
 
     // create new root layout
@@ -40,15 +44,15 @@ void PropertyEditGroup::initLayout(const QJsonObject & config) {
 
     // add groups
     QJsonObject groups = config["groups"].toObject();
-    for(auto group : groups) {
+    for(auto group : groups)
         initEditGroup(group.toObject(), root);
-    }
 
     // set layout
     setLayout(root);
 }
 
-void PropertyEditGroup::initEditGroup(const QJsonObject &config, QBoxLayout *layout) {
+void PropertyEditGroup::initEditGroup(const QJsonObject &config, QBoxLayout *layout)
+{
     QString title = config["title"].toString();
     QString attribute = config["attribute"].toString();
 

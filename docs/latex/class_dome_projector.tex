@@ -1,0 +1,191 @@
+\hypertarget{class_dome_projector}{}\section{Dome\+Projector Class Reference}
+\label{class_dome_projector}\index{Dome\+Projector@{Dome\+Projector}}
+
+
+The \mbox{\hyperlink{class_dome_projector}{Dome\+Projector}} class describes a projector specialized on calculating a warping geometry.  
+
+
+
+
+{\ttfamily \#include $<$dome\+\_\+projector.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_dome_projector_aea4bdc99173b4fcc44388d5efb204ceb}{Dome\+Projector}} (\mbox{\hyperlink{class_projector_frustum}{Projector\+Frustum}} $\ast$\+\_\+frustum, int \+\_\+grid\+\_\+rings, int \+\_\+grid\+\_\+ring\+\_\+elements, Q\+Vector3D const \&position, int dome\+\_\+rings, int dome\+\_\+ring\+\_\+elements)
+\item 
+\mbox{\hyperlink{class_dome_projector_aa4ae5284677524033bcafb09dcd132b2}{$\sim$\+Dome\+Projector}} ()
+\item 
+\mbox{\Hypertarget{class_dome_projector_a2fc9fff775752f59c2ff961f8696eba1}\label{class_dome_projector_a2fc9fff775752f59c2ff961f8696eba1}} 
+void \mbox{\hyperlink{class_dome_projector_a2fc9fff775752f59c2ff961f8696eba1}{initialize}} ()
+\begin{DoxyCompactList}\small\item\em initialize \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_dome_projector_a28963378c069176dc852605e02a12ed4}{calculate\+Transformation\+Mesh}} ()
+\begin{DoxyCompactList}\small\item\em Calculates the transformation mesh using data previously simulated. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_dome_projector_a1d8bd78cd24cbd92d6605b4cc3d061c3}{calculate\+Dome\+Hitpoints}} (\mbox{\hyperlink{class_sphere}{Sphere}} $\ast$mirror, \mbox{\hyperlink{class_sphere}{Sphere}} $\ast$dome)
+\begin{DoxyCompactList}\small\item\em Performs a raycast, aiming to hit the dome using the mirror as reflection medium. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_dome_projector_a70b4a39dec84fa11faf57a7dbd422c37}{update\+From\+Config}} (\mbox{\hyperlink{struct_model_config}{Model\+Config}} $\ast$model\+\_\+config)
+\begin{DoxyCompactList}\small\item\em Updates internal values from given config. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_projector_frustum}{Projector\+Frustum}} $\ast$ \mbox{\hyperlink{class_dome_projector_a6d7a65d45ce490b25d79694ec2b76f3b}{get\+Frustum}} () const
+\item 
+void \mbox{\hyperlink{class_dome_projector_afd963b30b1cd4fa401de40ce99a5da7b}{translate}} (Q\+Vector3D position)
+\begin{DoxyCompactList}\small\item\em Alter the \mbox{\hyperlink{class_dome_projector}{Dome\+Projector}}\textquotesingle{}s position. \end{DoxyCompactList}\item 
+std\+::vector$<$ Q\+Vector3D $>$ \mbox{\hyperlink{class_dome_projector_a7289aa1fc872437e0ce0ced081f3ca87}{get\+Mesh\+Coords}} () const
+\begin{DoxyCompactList}\small\item\em Returns calculated mesh coordinates. \end{DoxyCompactList}\item 
+std\+::vector$<$ Q\+Vector3D $>$ \mbox{\hyperlink{class_dome_projector_abb4b7cda4a5e64e3069a1b5ace4a8ca2}{get\+Tex\+Coords}} () const
+\begin{DoxyCompactList}\small\item\em Returns calculated texture coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_dome_projector_aee69ea0cbe641217af998cbb6669d91a}\label{class_dome_projector_aee69ea0cbe641217af998cbb6669d91a}} 
+std\+::vector$<$ Q\+Vector3D $>$ {\bfseries sample\+\_\+grid}
+\item 
+\mbox{\Hypertarget{class_dome_projector_a5d157d37386f714b94dd04455019749b}\label{class_dome_projector_a5d157d37386f714b94dd04455019749b}} 
+std\+::vector$<$ Q\+Vector3D $>$ {\bfseries first\+\_\+hits}
+\item 
+\mbox{\Hypertarget{class_dome_projector_aec6c5285b17e5c73537c45eb62bada81}\label{class_dome_projector_aec6c5285b17e5c73537c45eb62bada81}} 
+std\+::vector$<$ Q\+Vector3D $>$ {\bfseries second\+\_\+hits}
+\item 
+\mbox{\Hypertarget{class_dome_projector_a65dad2376d52d0ec2601f4a797a3b4f2}\label{class_dome_projector_a65dad2376d52d0ec2601f4a797a3b4f2}} 
+std\+::vector$<$ Q\+Vector3D $>$ {\bfseries dome\+\_\+vertices}
+\item 
+\mbox{\Hypertarget{class_dome_projector_aa1540ea0ff8e2211b20176f04adb5455}\label{class_dome_projector_aa1540ea0ff8e2211b20176f04adb5455}} 
+std\+::vector$<$ Q\+Vector3D $>$ {\bfseries mesh\+\_\+coords}
+\item 
+\mbox{\Hypertarget{class_dome_projector_a28f75086f3ce94c35a3d6c7d102709db}\label{class_dome_projector_a28f75086f3ce94c35a3d6c7d102709db}} 
+std\+::vector$<$ Q\+Vector3D $>$ {\bfseries texture\+\_\+coords}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \mbox{\hyperlink{class_dome_projector}{Dome\+Projector}} class describes a projector specialized on calculating a warping geometry. 
+
+The dome projector calculates a, for the given model accurate projection mesh. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_dome_projector_aea4bdc99173b4fcc44388d5efb204ceb}\label{class_dome_projector_aea4bdc99173b4fcc44388d5efb204ceb}} 
+\index{Dome\+Projector@{Dome\+Projector}!Dome\+Projector@{Dome\+Projector}}
+\index{Dome\+Projector@{Dome\+Projector}!Dome\+Projector@{Dome\+Projector}}
+\subsubsection{\texorpdfstring{Dome\+Projector()}{DomeProjector()}}
+{\footnotesize\ttfamily Dome\+Projector\+::\+Dome\+Projector (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_projector_frustum}{Projector\+Frustum}} $\ast$}]{\+\_\+frustum,  }\item[{int}]{\+\_\+grid\+\_\+rings,  }\item[{int}]{\+\_\+grid\+\_\+ring\+\_\+elements,  }\item[{Q\+Vector3D const \&}]{position,  }\item[{int}]{dome\+\_\+rings,  }\item[{int}]{dome\+\_\+ring\+\_\+elements }\end{DoxyParamCaption})}
+
+Creates a dome projector object alongside the specified sample grid 
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+frustum} & \\
+\hline
+{\em \+\_\+screen} & \\
+\hline
+{\em \+\_\+grid\+\_\+rings} & \\
+\hline
+{\em \+\_\+grid\+\_\+ring\+\_\+elements} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_dome_projector_aa4ae5284677524033bcafb09dcd132b2}\label{class_dome_projector_aa4ae5284677524033bcafb09dcd132b2}} 
+\index{Dome\+Projector@{Dome\+Projector}!````~Dome\+Projector@{$\sim$\+Dome\+Projector}}
+\index{````~Dome\+Projector@{$\sim$\+Dome\+Projector}!Dome\+Projector@{Dome\+Projector}}
+\subsubsection{\texorpdfstring{$\sim$\+Dome\+Projector()}{~DomeProjector()}}
+{\footnotesize\ttfamily Dome\+Projector\+::$\sim$\+Dome\+Projector (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Destructor 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_dome_projector_a1d8bd78cd24cbd92d6605b4cc3d061c3}\label{class_dome_projector_a1d8bd78cd24cbd92d6605b4cc3d061c3}} 
+\index{Dome\+Projector@{Dome\+Projector}!calculate\+Dome\+Hitpoints@{calculate\+Dome\+Hitpoints}}
+\index{calculate\+Dome\+Hitpoints@{calculate\+Dome\+Hitpoints}!Dome\+Projector@{Dome\+Projector}}
+\subsubsection{\texorpdfstring{calculate\+Dome\+Hitpoints()}{calculateDomeHitpoints()}}
+{\footnotesize\ttfamily void Dome\+Projector\+::calculate\+Dome\+Hitpoints (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_sphere}{Sphere}} $\ast$}]{mirror,  }\item[{\mbox{\hyperlink{class_sphere}{Sphere}} $\ast$}]{dome }\end{DoxyParamCaption})}
+
+
+
+Performs a raycast, aiming to hit the dome using the mirror as reflection medium. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mirror} & \\
+\hline
+{\em dome} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_dome_projector_a28963378c069176dc852605e02a12ed4}\label{class_dome_projector_a28963378c069176dc852605e02a12ed4}} 
+\index{Dome\+Projector@{Dome\+Projector}!calculate\+Transformation\+Mesh@{calculate\+Transformation\+Mesh}}
+\index{calculate\+Transformation\+Mesh@{calculate\+Transformation\+Mesh}!Dome\+Projector@{Dome\+Projector}}
+\subsubsection{\texorpdfstring{calculate\+Transformation\+Mesh()}{calculateTransformationMesh()}}
+{\footnotesize\ttfamily void Dome\+Projector\+::calculate\+Transformation\+Mesh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Calculates the transformation mesh using data previously simulated. 
+
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\+Q\+Vector3\+D$>$ transformation mesh 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_dome_projector_a6d7a65d45ce490b25d79694ec2b76f3b}\label{class_dome_projector_a6d7a65d45ce490b25d79694ec2b76f3b}} 
+\index{Dome\+Projector@{Dome\+Projector}!get\+Frustum@{get\+Frustum}}
+\index{get\+Frustum@{get\+Frustum}!Dome\+Projector@{Dome\+Projector}}
+\subsubsection{\texorpdfstring{get\+Frustum()}{getFrustum()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_projector_frustum}{Projector\+Frustum}} $\ast$ Dome\+Projector\+::get\+Frustum (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns the projectors frustum. \begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_dome_projector_a7289aa1fc872437e0ce0ced081f3ca87}\label{class_dome_projector_a7289aa1fc872437e0ce0ced081f3ca87}} 
+\index{Dome\+Projector@{Dome\+Projector}!get\+Mesh\+Coords@{get\+Mesh\+Coords}}
+\index{get\+Mesh\+Coords@{get\+Mesh\+Coords}!Dome\+Projector@{Dome\+Projector}}
+\subsubsection{\texorpdfstring{get\+Mesh\+Coords()}{getMeshCoords()}}
+{\footnotesize\ttfamily std\+::vector$<$ Q\+Vector3D $>$ Dome\+Projector\+::get\+Mesh\+Coords (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns calculated mesh coordinates. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_dome_projector_abb4b7cda4a5e64e3069a1b5ace4a8ca2}\label{class_dome_projector_abb4b7cda4a5e64e3069a1b5ace4a8ca2}} 
+\index{Dome\+Projector@{Dome\+Projector}!get\+Tex\+Coords@{get\+Tex\+Coords}}
+\index{get\+Tex\+Coords@{get\+Tex\+Coords}!Dome\+Projector@{Dome\+Projector}}
+\subsubsection{\texorpdfstring{get\+Tex\+Coords()}{getTexCoords()}}
+{\footnotesize\ttfamily std\+::vector$<$ Q\+Vector3D $>$ Dome\+Projector\+::get\+Tex\+Coords (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns calculated texture coordinates. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_dome_projector_afd963b30b1cd4fa401de40ce99a5da7b}\label{class_dome_projector_afd963b30b1cd4fa401de40ce99a5da7b}} 
+\index{Dome\+Projector@{Dome\+Projector}!translate@{translate}}
+\index{translate@{translate}!Dome\+Projector@{Dome\+Projector}}
+\subsubsection{\texorpdfstring{translate()}{translate()}}
+{\footnotesize\ttfamily void Dome\+Projector\+::translate (\begin{DoxyParamCaption}\item[{Q\+Vector3D}]{position }\end{DoxyParamCaption})}
+
+
+
+Alter the \mbox{\hyperlink{class_dome_projector}{Dome\+Projector}}\textquotesingle{}s position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_dome_projector_a70b4a39dec84fa11faf57a7dbd422c37}\label{class_dome_projector_a70b4a39dec84fa11faf57a7dbd422c37}} 
+\index{Dome\+Projector@{Dome\+Projector}!update\+From\+Config@{update\+From\+Config}}
+\index{update\+From\+Config@{update\+From\+Config}!Dome\+Projector@{Dome\+Projector}}
+\subsubsection{\texorpdfstring{update\+From\+Config()}{updateFromConfig()}}
+{\footnotesize\ttfamily void Dome\+Projector\+::update\+From\+Config (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_model_config}{Model\+Config}} $\ast$}]{model\+\_\+config }\end{DoxyParamCaption})}
+
+
+
+Updates internal values from given config. 
+
+It thereby regenerates the radial sampling grid as well as the dome grid with the specified values. 
+\begin{DoxyParams}{Parameters}
+{\em model\+\_\+config} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/model/dome\+\_\+projector.\+hpp\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/model/dome\+\_\+projector.\+cpp\end{DoxyCompactItemize}

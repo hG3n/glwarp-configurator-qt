@@ -1,0 +1,156 @@
+\hypertarget{class_sphere}{}\section{Sphere Class Reference}
+\label{class_sphere}\index{Sphere@{Sphere}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_sphere_a890a63ff583cb88e7ec4e840b4ef5eb9}\label{class_sphere_a890a63ff583cb88e7ec4e840b4ef5eb9}} 
+\mbox{\hyperlink{class_sphere_a890a63ff583cb88e7ec4e840b4ef5eb9}{Sphere}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_sphere}{Sphere}} c\textquotesingle{}tor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_sphere_a066dd77d24d95f7cb2e16880b3a5ae6e}\label{class_sphere_a066dd77d24d95f7cb2e16880b3a5ae6e}} 
+\mbox{\hyperlink{class_sphere_a066dd77d24d95f7cb2e16880b3a5ae6e}{Sphere}} (float radius)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_sphere}{Sphere}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_sphere_a507519d4ee1d48277626fe3c74e8228b}{Sphere}} (float radius, const Q\+Vector3D \&position)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_sphere}{Sphere}}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_sphere_a789d83c264bed2ee64a30bca1261ab41}{intersect}} (\mbox{\hyperlink{struct_ray}{Ray}} const \&r, std\+::pair$<$ \mbox{\hyperlink{struct_hitpoint}{Hitpoint}}, \mbox{\hyperlink{struct_hitpoint}{Hitpoint}} $>$ $\ast$hp\+\_\+pair)
+\item 
+float \mbox{\hyperlink{class_sphere_ac22727cc5f7fdac7548798fb88f7cadd}{get\+\_\+radius}} () const
+\begin{DoxyCompactList}\small\item\em Returns the spheres radius. \end{DoxyCompactList}\item 
+Q\+Vector3D \mbox{\hyperlink{class_sphere_a253bd3ccf57e854989fb49c835fddb0b}{get\+\_\+position}} () const
+\begin{DoxyCompactList}\small\item\em Returns the spheres position. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_sphere_ad050355312225f312b676edc376158e1}{set\+\_\+position}} (const Q\+Vector3D \&new\+\_\+position)
+\begin{DoxyCompactList}\small\item\em Set the Spheres position. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_sphere_a293cdd84dea67955c6a7d14e86c8d919}{set\+\_\+radius}} (float new\+\_\+radius)
+\begin{DoxyCompactList}\small\item\em Set the Spheres radius. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \mbox{\hyperlink{class_sphere_adeb07662f568bb893f87459c082f00b2}{operator$<$$<$}} (std\+::ostream \&os, const \mbox{\hyperlink{class_sphere}{Sphere}} \&sphere)
+\begin{DoxyCompactList}\small\item\em operator $<$$<$ used for printing the Class using std$<$$<$cout; \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_sphere_a507519d4ee1d48277626fe3c74e8228b}\label{class_sphere_a507519d4ee1d48277626fe3c74e8228b}} 
+\index{Sphere@{Sphere}!Sphere@{Sphere}}
+\index{Sphere@{Sphere}!Sphere@{Sphere}}
+\subsubsection{\texorpdfstring{Sphere()}{Sphere()}}
+{\footnotesize\ttfamily Sphere\+::\+Sphere (\begin{DoxyParamCaption}\item[{float}]{radius,  }\item[{const Q\+Vector3D \&}]{position }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{class_sphere}{Sphere}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em radius} & \\
+\hline
+{\em position} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_sphere_a253bd3ccf57e854989fb49c835fddb0b}\label{class_sphere_a253bd3ccf57e854989fb49c835fddb0b}} 
+\index{Sphere@{Sphere}!get\+\_\+position@{get\+\_\+position}}
+\index{get\+\_\+position@{get\+\_\+position}!Sphere@{Sphere}}
+\subsubsection{\texorpdfstring{get\+\_\+position()}{get\_position()}}
+{\footnotesize\ttfamily Q\+Vector3D Sphere\+::get\+\_\+position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns the spheres position. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_sphere_ac22727cc5f7fdac7548798fb88f7cadd}\label{class_sphere_ac22727cc5f7fdac7548798fb88f7cadd}} 
+\index{Sphere@{Sphere}!get\+\_\+radius@{get\+\_\+radius}}
+\index{get\+\_\+radius@{get\+\_\+radius}!Sphere@{Sphere}}
+\subsubsection{\texorpdfstring{get\+\_\+radius()}{get\_radius()}}
+{\footnotesize\ttfamily float Sphere\+::get\+\_\+radius (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns the spheres radius. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_sphere_a789d83c264bed2ee64a30bca1261ab41}\label{class_sphere_a789d83c264bed2ee64a30bca1261ab41}} 
+\index{Sphere@{Sphere}!intersect@{intersect}}
+\index{intersect@{intersect}!Sphere@{Sphere}}
+\subsubsection{\texorpdfstring{intersect()}{intersect()}}
+{\footnotesize\ttfamily bool Sphere\+::intersect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_ray}{Ray}} const \&}]{r,  }\item[{std\+::pair$<$ \mbox{\hyperlink{struct_hitpoint}{Hitpoint}}, \mbox{\hyperlink{struct_hitpoint}{Hitpoint}} $>$ $\ast$}]{hp\+\_\+pair }\end{DoxyParamCaption})}
+
+Validates, whether the given ray intersects the \mbox{\hyperlink{class_sphere}{Sphere}} and retunts a pair of Hitpoints. 
+\begin{DoxyParams}{Parameters}
+{\em r} & \\
+\hline
+{\em hp\+\_\+pair} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_sphere_ad050355312225f312b676edc376158e1}\label{class_sphere_ad050355312225f312b676edc376158e1}} 
+\index{Sphere@{Sphere}!set\+\_\+position@{set\+\_\+position}}
+\index{set\+\_\+position@{set\+\_\+position}!Sphere@{Sphere}}
+\subsubsection{\texorpdfstring{set\+\_\+position()}{set\_position()}}
+{\footnotesize\ttfamily void Sphere\+::set\+\_\+position (\begin{DoxyParamCaption}\item[{const Q\+Vector3D \&}]{new\+\_\+position }\end{DoxyParamCaption})}
+
+
+
+Set the Spheres position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+position} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_sphere_a293cdd84dea67955c6a7d14e86c8d919}\label{class_sphere_a293cdd84dea67955c6a7d14e86c8d919}} 
+\index{Sphere@{Sphere}!set\+\_\+radius@{set\+\_\+radius}}
+\index{set\+\_\+radius@{set\+\_\+radius}!Sphere@{Sphere}}
+\subsubsection{\texorpdfstring{set\+\_\+radius()}{set\_radius()}}
+{\footnotesize\ttfamily void Sphere\+::set\+\_\+radius (\begin{DoxyParamCaption}\item[{float}]{new\+\_\+radius }\end{DoxyParamCaption})}
+
+
+
+Set the Spheres radius. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+radius} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_sphere_adeb07662f568bb893f87459c082f00b2}\label{class_sphere_adeb07662f568bb893f87459c082f00b2}} 
+\index{Sphere@{Sphere}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Sphere@{Sphere}}
+\subsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily std\+::ostream\& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os,  }\item[{const \mbox{\hyperlink{class_sphere}{Sphere}} \&}]{sphere }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+operator $<$$<$ used for printing the Class using std$<$$<$cout; 
+
+Because of reasons, Qt has its own way of printing things. Therefor this\textquotesingle{}ll not work with Qt\textquotesingle{}s q\+Debug() $<$$<$
+
+I\textquotesingle{}m not going to look into this, ... just because.
+
+
+\begin{DoxyParams}{Parameters}
+{\em os} & \\
+\hline
+{\em sphere} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/model/sphere.\+hpp\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/model/sphere.\+cpp\end{DoxyCompactItemize}

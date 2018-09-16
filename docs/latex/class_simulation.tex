@@ -1,0 +1,115 @@
+\hypertarget{class_simulation}{}\section{Simulation Class Reference}
+\label{class_simulation}\index{Simulation@{Simulation}}
+
+
+The \mbox{\hyperlink{class_simulation}{Simulation}} class handles single model simulation passes. The \mbox{\hyperlink{class_simulation}{Simulation}} is a mere middleman handling connections to the model from the outside as well as passing computed results to outter classes and interfaces.  
+
+
+
+
+{\ttfamily \#include $<$simulation.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_simulation_afd97d61478060a4cc1bd7470f6c865aa}\label{class_simulation_afd97d61478060a4cc1bd7470f6c865aa}} 
+void \mbox{\hyperlink{class_simulation_afd97d61478060a4cc1bd7470f6c865aa}{run\+Calculations}} ()
+\begin{DoxyCompactList}\small\item\em Runs a \mbox{\hyperlink{class_simulation}{Simulation}} pass. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_simulation_a9cb0aae7c447fd77c0dd7900e925e03e}{initialize}} (\mbox{\hyperlink{struct_model_config}{Model\+Config}} $\ast$model\+\_\+config)
+\begin{DoxyCompactList}\small\item\em Initializes main \mbox{\hyperlink{class_simulation}{Simulation}} components. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_simulation_a0a19a19f99d3e88f020c8e1a4b7d8440}{update\+From\+Config}} (\mbox{\hyperlink{struct_model_config}{Model\+Config}} $\ast$model\+\_\+config)
+\begin{DoxyCompactList}\small\item\em Updates the \mbox{\hyperlink{class_simulation}{Simulation}} from given json configuration. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_simulation_a6b801c919ee95c0d967a8037cd73afe5}{build\+Model}} (\mbox{\hyperlink{struct_model_config}{Model\+Config}} $\ast$model\+\_\+config)
+\begin{DoxyCompactList}\small\item\em Builds the model. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_simulation_ad9bd99eb4bc5bb719f7a9a7abe377b49}\label{class_simulation_ad9bd99eb4bc5bb719f7a9a7abe377b49}} 
+\mbox{\hyperlink{class_scene}{Scene}} \mbox{\hyperlink{class_simulation_ad9bd99eb4bc5bb719f7a9a7abe377b49}{get\+Current\+Scene}} () const
+\begin{DoxyCompactList}\small\item\em Returns a scene dto. \end{DoxyCompactList}\item 
+std\+::vector$<$ Q\+Vector3D $>$ \mbox{\hyperlink{class_simulation_a51325a28f5c8d5e37cb8d90fb6f79634}{get\+Transformation\+Mesh}} () const
+\begin{DoxyCompactList}\small\item\em Returns the current transformation mesh points. \end{DoxyCompactList}\item 
+std\+::vector$<$ Q\+Vector3D $>$ \mbox{\hyperlink{class_simulation_a7dfcbd7e6fe8e6c1c57e01f8367da642}{get\+Texture\+Coords}} () const
+\begin{DoxyCompactList}\small\item\em Returns the current calculated texture coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \mbox{\hyperlink{class_simulation}{Simulation}} class handles single model simulation passes. The \mbox{\hyperlink{class_simulation}{Simulation}} is a mere middleman handling connections to the model from the outside as well as passing computed results to outter classes and interfaces. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_simulation_a6b801c919ee95c0d967a8037cd73afe5}\label{class_simulation_a6b801c919ee95c0d967a8037cd73afe5}} 
+\index{Simulation@{Simulation}!build\+Model@{build\+Model}}
+\index{build\+Model@{build\+Model}!Simulation@{Simulation}}
+\subsubsection{\texorpdfstring{build\+Model()}{buildModel()}}
+{\footnotesize\ttfamily void Simulation\+::build\+Model (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_model_config}{Model\+Config}} $\ast$}]{model\+\_\+config }\end{DoxyParamCaption})}
+
+
+
+Builds the model. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em model\+\_\+config} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_simulation_a7dfcbd7e6fe8e6c1c57e01f8367da642}\label{class_simulation_a7dfcbd7e6fe8e6c1c57e01f8367da642}} 
+\index{Simulation@{Simulation}!get\+Texture\+Coords@{get\+Texture\+Coords}}
+\index{get\+Texture\+Coords@{get\+Texture\+Coords}!Simulation@{Simulation}}
+\subsubsection{\texorpdfstring{get\+Texture\+Coords()}{getTextureCoords()}}
+{\footnotesize\ttfamily std\+::vector$<$ Q\+Vector3D $>$ Simulation\+::get\+Texture\+Coords (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns the current calculated texture coordinates. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_simulation_a51325a28f5c8d5e37cb8d90fb6f79634}\label{class_simulation_a51325a28f5c8d5e37cb8d90fb6f79634}} 
+\index{Simulation@{Simulation}!get\+Transformation\+Mesh@{get\+Transformation\+Mesh}}
+\index{get\+Transformation\+Mesh@{get\+Transformation\+Mesh}!Simulation@{Simulation}}
+\subsubsection{\texorpdfstring{get\+Transformation\+Mesh()}{getTransformationMesh()}}
+{\footnotesize\ttfamily std\+::vector$<$ Q\+Vector3D $>$ Simulation\+::get\+Transformation\+Mesh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns the current transformation mesh points. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_simulation_a9cb0aae7c447fd77c0dd7900e925e03e}\label{class_simulation_a9cb0aae7c447fd77c0dd7900e925e03e}} 
+\index{Simulation@{Simulation}!initialize@{initialize}}
+\index{initialize@{initialize}!Simulation@{Simulation}}
+\subsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily void Simulation\+::initialize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_model_config}{Model\+Config}} $\ast$}]{model\+\_\+config }\end{DoxyParamCaption})}
+
+
+
+Initializes main \mbox{\hyperlink{class_simulation}{Simulation}} components. 
+
+Components created are\+: the first reflection mirror $<$\+Sphere$>$ the final reflection medium $<$\+Sphere$>$ the dome projector maintaining the calculations $<$\+Dome\+Projector$>$
+
+
+\begin{DoxyParams}{Parameters}
+{\em model\+\_\+config} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_simulation_a0a19a19f99d3e88f020c8e1a4b7d8440}\label{class_simulation_a0a19a19f99d3e88f020c8e1a4b7d8440}} 
+\index{Simulation@{Simulation}!update\+From\+Config@{update\+From\+Config}}
+\index{update\+From\+Config@{update\+From\+Config}!Simulation@{Simulation}}
+\subsubsection{\texorpdfstring{update\+From\+Config()}{updateFromConfig()}}
+{\footnotesize\ttfamily void Simulation\+::update\+From\+Config (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_model_config}{Model\+Config}} $\ast$}]{model\+\_\+config }\end{DoxyParamCaption})}
+
+
+
+Updates the \mbox{\hyperlink{class_simulation}{Simulation}} from given json configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/model/simulation.\+h\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/model/simulation.\+cpp\end{DoxyCompactItemize}

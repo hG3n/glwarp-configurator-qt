@@ -1,0 +1,112 @@
+\hypertarget{class_config}{}\section{Config Class Reference}
+\label{class_config}\index{Config@{Config}}
+
+
+The \mbox{\hyperlink{class_config}{Config}} class handles config loading and parsing.  
+
+
+
+
+{\ttfamily \#include $<$config.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_config_aeafd352da1f8e8596038fba4ffc8ce35}{load\+Model\+Config}} (const Q\+String \&path)
+\begin{DoxyCompactList}\small\item\em Loads model config. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_config_af74ffa7c4476a31403415a11a6cf1108}{load\+Ui\+Config}} (const Q\+String \&path)
+\begin{DoxyCompactList}\small\item\em Loads user interface config. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_model_config}{Model\+Config}} $\ast$ \mbox{\hyperlink{class_config_a1ff780b4fbdf6f7e432e11f2490c1b56}{get\+Model\+Config}} () const
+\begin{DoxyCompactList}\small\item\em Returns model config. \end{DoxyCompactList}\item 
+Q\+Json\+Object \mbox{\hyperlink{class_config_a7a137547a3757056c6dea9f93945c417}{get\+Model\+Config\+Json}} () const
+\begin{DoxyCompactList}\small\item\em Returns model config as json. \end{DoxyCompactList}\item 
+Q\+Json\+Object \mbox{\hyperlink{class_config_ab3828a5d249dc41d32da68fd9048c4fd}{get\+Ui\+Config}} () const
+\begin{DoxyCompactList}\small\item\em Returns user interface config. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_config_ad1d88d5265d60c785c30d69db00c5b9a}\label{class_config_ad1d88d5265d60c785c30d69db00c5b9a}} 
+static Q\+Dir {\bfseries get\+Application\+Path} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \mbox{\hyperlink{class_config}{Config}} class handles config loading and parsing. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_config_a1ff780b4fbdf6f7e432e11f2490c1b56}\label{class_config_a1ff780b4fbdf6f7e432e11f2490c1b56}} 
+\index{Config@{Config}!get\+Model\+Config@{get\+Model\+Config}}
+\index{get\+Model\+Config@{get\+Model\+Config}!Config@{Config}}
+\subsubsection{\texorpdfstring{get\+Model\+Config()}{getModelConfig()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_model_config}{Model\+Config}} $\ast$ Config\+::get\+Model\+Config (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns model config. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_config_a7a137547a3757056c6dea9f93945c417}\label{class_config_a7a137547a3757056c6dea9f93945c417}} 
+\index{Config@{Config}!get\+Model\+Config\+Json@{get\+Model\+Config\+Json}}
+\index{get\+Model\+Config\+Json@{get\+Model\+Config\+Json}!Config@{Config}}
+\subsubsection{\texorpdfstring{get\+Model\+Config\+Json()}{getModelConfigJson()}}
+{\footnotesize\ttfamily Q\+Json\+Object Config\+::get\+Model\+Config\+Json (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns model config as json. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_config_ab3828a5d249dc41d32da68fd9048c4fd}\label{class_config_ab3828a5d249dc41d32da68fd9048c4fd}} 
+\index{Config@{Config}!get\+Ui\+Config@{get\+Ui\+Config}}
+\index{get\+Ui\+Config@{get\+Ui\+Config}!Config@{Config}}
+\subsubsection{\texorpdfstring{get\+Ui\+Config()}{getUiConfig()}}
+{\footnotesize\ttfamily Q\+Json\+Object Config\+::get\+Ui\+Config (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns user interface config. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_config_aeafd352da1f8e8596038fba4ffc8ce35}\label{class_config_aeafd352da1f8e8596038fba4ffc8ce35}} 
+\index{Config@{Config}!load\+Model\+Config@{load\+Model\+Config}}
+\index{load\+Model\+Config@{load\+Model\+Config}!Config@{Config}}
+\subsubsection{\texorpdfstring{load\+Model\+Config()}{loadModelConfig()}}
+{\footnotesize\ttfamily bool Config\+::load\+Model\+Config (\begin{DoxyParamCaption}\item[{const Q\+String \&}]{path }\end{DoxyParamCaption})}
+
+
+
+Loads model config. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_config_af74ffa7c4476a31403415a11a6cf1108}\label{class_config_af74ffa7c4476a31403415a11a6cf1108}} 
+\index{Config@{Config}!load\+Ui\+Config@{load\+Ui\+Config}}
+\index{load\+Ui\+Config@{load\+Ui\+Config}!Config@{Config}}
+\subsubsection{\texorpdfstring{load\+Ui\+Config()}{loadUiConfig()}}
+{\footnotesize\ttfamily bool Config\+::load\+Ui\+Config (\begin{DoxyParamCaption}\item[{const Q\+String \&}]{path }\end{DoxyParamCaption})}
+
+
+
+Loads user interface config. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/config.\+h\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/config.\+cpp\end{DoxyCompactItemize}

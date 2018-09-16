@@ -1,0 +1,111 @@
+\hypertarget{class_configurator}{}\section{Configurator Class Reference}
+\label{class_configurator}\index{Configurator@{Configurator}}
+
+
+The \mbox{\hyperlink{class_configurator}{Configurator}} class creates a mondular user interfaces consisting of ui groups with Qt style spin boxes.  
+
+
+
+
+{\ttfamily \#include $<$configurator.\+h$>$}
+
+Inheritance diagram for Configurator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_configurator}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_configurator_a80a4e2988400839fe550f87fc3681cbb}\label{class_configurator_a80a4e2988400839fe550f87fc3681cbb}} 
+void \mbox{\hyperlink{class_configurator_a80a4e2988400839fe550f87fc3681cbb}{on\+Confirm}} ()
+\begin{DoxyCompactList}\small\item\em Slot connected to button press event. Emits the value\+Update signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_configurator_ab558c7a35d9d766fe3a7ae80326223f0}{value\+Update}} (Q\+Json\+Object new\+\_\+values)
+\begin{DoxyCompactList}\small\item\em Emits a signal that new values are available. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_configurator_a7908b0494f0e057fc0b91c334d5902f9}\label{class_configurator_a7908b0494f0e057fc0b91c334d5902f9}} 
+{\bfseries Configurator} (const Q\+Json\+Object \&config, Q\+Widget $\ast$parent=Q\+\_\+\+N\+U\+L\+L\+P\+TR)
+\item 
+Q\+Json\+Object \mbox{\hyperlink{class_configurator_a89fc398da91616473846cfcadd511c81}{get\+Values}} () const
+\begin{DoxyCompactList}\small\item\em Returns the set values of all nested U\+I-\/elements as json object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_configurator_abb86d4cefc42b8e79fc440e2b13dd9d8}{set\+Values}} (const Q\+Json\+Object \&values)
+\begin{DoxyCompactList}\small\item\em Set values from given json object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \mbox{\hyperlink{class_configurator}{Configurator}} class creates a mondular user interfaces consisting of ui groups with Qt style spin boxes. 
+
+A user interface configuraion file has the following basic layout, starting off with a $<$string$>$ specifying the Confirm buttons label, as well as an array containing groups of ui elements to be created.
+
+\{ \char`\"{}confirm\+\_\+message\char`\"{} \+: \char`\"{}\+Recalculate\char`\"{}, \char`\"{}ui\char`\"{} \+: \mbox{[}...\mbox{]} \}
+
+Each major group gets a title as well as a key attribute matching the key specified within the respective model configuration. The key is important for the main application to build a correspondence between user interface and model configuraion. Furthermore, to-\/be-\/created ui groups are given as attributes of a json object. This is done in order to maintain the order of groups specified in the json file within the application.
+
+\{ \char`\"{}title\char`\"{}\+: \char`\"{}\+Projector\char`\"{}, \char`\"{}attribute\char`\"{}\+: \char`\"{}projector\char`\"{}, \char`\"{}groups\char`\"{}\+: \{ ... \}, \}
+
+Groups are specified by simple creating a named json object. Containing a title, again another key to identify the attribute it changes. Important is, that the objects name as well as the string inclueded within the \textquotesingle{}attrbute\textquotesingle{} field M\+U\+ST match. Finally each group contains an array which specifies the amount of values to be captured. For each element of the \textquotesingle{}elements\textquotesingle{} array, the applicaion will create a simple Q\+Spinbox.
+
+\{ \char`\"{}position\char`\"{}\+: \{ \char`\"{}title\char`\"{}\+: \char`\"{}\+Position\char`\"{}, \char`\"{}attribute\char`\"{} \+: \char`\"{}position\char`\"{}, \char`\"{}elements\char`\"{} \+: \mbox{[}...\mbox{]}, \}
+
+Each Element to be created needs several attributes in order to function properly. First the Spinboxes title, as well as the attribute it captures. In addition to that the minimum, maximum and the precision need to be specified
+
+\{ \char`\"{}title\char`\"{}\+: \char`\"{}\+X\char`\"{}, \char`\"{}attribute\char`\"{}\+: \char`\"{}x\char`\"{}, \char`\"{}precision\char`\"{}\+: 0.\+01, \char`\"{}min\char`\"{}\+: -\/2.\+0, \char`\"{}max\char`\"{}\+: 2.\+0 \}, 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_configurator_a89fc398da91616473846cfcadd511c81}\label{class_configurator_a89fc398da91616473846cfcadd511c81}} 
+\index{Configurator@{Configurator}!get\+Values@{get\+Values}}
+\index{get\+Values@{get\+Values}!Configurator@{Configurator}}
+\subsubsection{\texorpdfstring{get\+Values()}{getValues()}}
+{\footnotesize\ttfamily Q\+Json\+Object Configurator\+::get\+Values (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns the set values of all nested U\+I-\/elements as json object. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_configurator_abb86d4cefc42b8e79fc440e2b13dd9d8}\label{class_configurator_abb86d4cefc42b8e79fc440e2b13dd9d8}} 
+\index{Configurator@{Configurator}!set\+Values@{set\+Values}}
+\index{set\+Values@{set\+Values}!Configurator@{Configurator}}
+\subsubsection{\texorpdfstring{set\+Values()}{setValues()}}
+{\footnotesize\ttfamily void Configurator\+::set\+Values (\begin{DoxyParamCaption}\item[{const Q\+Json\+Object \&}]{values }\end{DoxyParamCaption})}
+
+
+
+Set values from given json object. 
+
+Information on the json structure can be found at this classes main description $\ast$
+
+
+\begin{DoxyParams}{Parameters}
+{\em values} & specifies a json object containing information on which U\+I-\/element should be set to with the given value \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_configurator_ab558c7a35d9d766fe3a7ae80326223f0}\label{class_configurator_ab558c7a35d9d766fe3a7ae80326223f0}} 
+\index{Configurator@{Configurator}!value\+Update@{value\+Update}}
+\index{value\+Update@{value\+Update}!Configurator@{Configurator}}
+\subsubsection{\texorpdfstring{value\+Update}{valueUpdate}}
+{\footnotesize\ttfamily void Configurator\+::value\+Update (\begin{DoxyParamCaption}\item[{Q\+Json\+Object}]{new\+\_\+values }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+
+
+Emits a signal that new values are available. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+values} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/ui/configurator.\+h\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/ui/configurator.\+cpp\end{DoxyCompactItemize}

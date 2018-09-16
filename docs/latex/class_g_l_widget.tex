@@ -1,0 +1,130 @@
+\hypertarget{class_g_l_widget}{}\section{G\+L\+Widget Class Reference}
+\label{class_g_l_widget}\index{G\+L\+Widget@{G\+L\+Widget}}
+Inheritance diagram for G\+L\+Widget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_g_l_widget}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_g_l_widget_a84c5673c0e92eac927220d368c505c94}\label{class_g_l_widget_a84c5673c0e92eac927220d368c505c94}} 
+void {\bfseries cleanup} ()
+\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_g_l_widget_a75a7f63bf253007d7dcbeee402e963d1}{update\+Scene}} (\mbox{\hyperlink{class_scene}{Scene}} scene)
+\begin{DoxyCompactList}\small\item\em Updates the scene. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_g_l_widget_a39ef1736aef8b1c6e2f7cff20b7a3997}\label{class_g_l_widget_a39ef1736aef8b1c6e2f7cff20b7a3997}} 
+{\bfseries G\+L\+Widget} (Q\+Widget $\ast$parent=Q\+\_\+\+N\+U\+L\+L\+P\+TR)
+\item 
+Q\+Size \mbox{\hyperlink{class_g_l_widget_a1e50c746ef5d95c14de5907be6239dd1}{minimum\+Size\+Hint}} () const override
+\begin{DoxyCompactList}\small\item\em minimum\+Size\+Hint \end{DoxyCompactList}\item 
+Q\+Size \mbox{\hyperlink{class_g_l_widget_af04a97931fb78d610e1c73d7c4887319}{size\+Hint}} () const override
+\begin{DoxyCompactList}\small\item\em size\+Hint \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_widget_ae31adda78d396b83f0891b8cde79a6cf}{set\+Scene}} (\mbox{\hyperlink{class_scene}{Scene}} scene)
+\begin{DoxyCompactList}\small\item\em Sets the current scene. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_g_l_widget_a2349a3ff7c9cc814de1b4a93a0b28acd}\label{class_g_l_widget_a2349a3ff7c9cc814de1b4a93a0b28acd}} 
+void \mbox{\hyperlink{class_g_l_widget_a2349a3ff7c9cc814de1b4a93a0b28acd}{initialize\+GL}} () override
+\begin{DoxyCompactList}\small\item\em Initialize Open\+GL context. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_g_l_widget_a843150d06edc5e2e50d98e395c2b8759}\label{class_g_l_widget_a843150d06edc5e2e50d98e395c2b8759}} 
+void \mbox{\hyperlink{class_g_l_widget_a843150d06edc5e2e50d98e395c2b8759}{paint\+GL}} () override
+\begin{DoxyCompactList}\small\item\em paint\+GL \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_widget_a71942bbb513fac0a1d4f0c1c24b37def}{resize\+GL}} (int width, int height) override
+\begin{DoxyCompactList}\small\item\em resize\+GL \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_g_l_widget_afeba4699aa12cde94ecd469e58a60aab}\label{class_g_l_widget_afeba4699aa12cde94ecd469e58a60aab}} 
+void {\bfseries mouse\+Press\+Event} (Q\+Mouse\+Event $\ast$event) override
+\item 
+\mbox{\Hypertarget{class_g_l_widget_a7cb45e554d24c2020512aa18949a6230}\label{class_g_l_widget_a7cb45e554d24c2020512aa18949a6230}} 
+void {\bfseries mouse\+Move\+Event} (Q\+Mouse\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_g_l_widget_a1e50c746ef5d95c14de5907be6239dd1}\label{class_g_l_widget_a1e50c746ef5d95c14de5907be6239dd1}} 
+\index{G\+L\+Widget@{G\+L\+Widget}!minimum\+Size\+Hint@{minimum\+Size\+Hint}}
+\index{minimum\+Size\+Hint@{minimum\+Size\+Hint}!G\+L\+Widget@{G\+L\+Widget}}
+\subsubsection{\texorpdfstring{minimum\+Size\+Hint()}{minimumSizeHint()}}
+{\footnotesize\ttfamily Q\+Size G\+L\+Widget\+::minimum\+Size\+Hint (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+minimum\+Size\+Hint 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_g_l_widget_a71942bbb513fac0a1d4f0c1c24b37def}\label{class_g_l_widget_a71942bbb513fac0a1d4f0c1c24b37def}} 
+\index{G\+L\+Widget@{G\+L\+Widget}!resize\+GL@{resize\+GL}}
+\index{resize\+GL@{resize\+GL}!G\+L\+Widget@{G\+L\+Widget}}
+\subsubsection{\texorpdfstring{resize\+G\+L()}{resizeGL()}}
+{\footnotesize\ttfamily void G\+L\+Widget\+::resize\+GL (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+
+resize\+GL 
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & \\
+\hline
+{\em height} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_g_l_widget_ae31adda78d396b83f0891b8cde79a6cf}\label{class_g_l_widget_ae31adda78d396b83f0891b8cde79a6cf}} 
+\index{G\+L\+Widget@{G\+L\+Widget}!set\+Scene@{set\+Scene}}
+\index{set\+Scene@{set\+Scene}!G\+L\+Widget@{G\+L\+Widget}}
+\subsubsection{\texorpdfstring{set\+Scene()}{setScene()}}
+{\footnotesize\ttfamily void G\+L\+Widget\+::set\+Scene (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_scene}{Scene}}}]{scene }\end{DoxyParamCaption})}
+
+
+
+Sets the current scene. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scene} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_g_l_widget_af04a97931fb78d610e1c73d7c4887319}\label{class_g_l_widget_af04a97931fb78d610e1c73d7c4887319}} 
+\index{G\+L\+Widget@{G\+L\+Widget}!size\+Hint@{size\+Hint}}
+\index{size\+Hint@{size\+Hint}!G\+L\+Widget@{G\+L\+Widget}}
+\subsubsection{\texorpdfstring{size\+Hint()}{sizeHint()}}
+{\footnotesize\ttfamily Q\+Size G\+L\+Widget\+::size\+Hint (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+size\+Hint 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_g_l_widget_a75a7f63bf253007d7dcbeee402e963d1}\label{class_g_l_widget_a75a7f63bf253007d7dcbeee402e963d1}} 
+\index{G\+L\+Widget@{G\+L\+Widget}!update\+Scene@{update\+Scene}}
+\index{update\+Scene@{update\+Scene}!G\+L\+Widget@{G\+L\+Widget}}
+\subsubsection{\texorpdfstring{update\+Scene}{updateScene}}
+{\footnotesize\ttfamily void G\+L\+Widget\+::update\+Scene (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_scene}{Scene}}}]{scene }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+
+
+Updates the scene. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scene} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/ui/glwidget.\+h\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/ui/glwidget.\+cpp\end{DoxyCompactItemize}

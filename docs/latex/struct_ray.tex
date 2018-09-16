@@ -1,0 +1,165 @@
+\hypertarget{struct_ray}{}\section{Ray Struct Reference}
+\label{struct_ray}\index{Ray@{Ray}}
+
+
+The \mbox{\hyperlink{struct_ray}{Ray}} struct describes a ray that can be cast from an origin towards a specified direction.  
+
+
+
+
+{\ttfamily \#include $<$ray.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_ray_a2e3d2c29f2df4ab3da10da79d4acb852}{Ray}} ()
+\item 
+\mbox{\hyperlink{struct_ray_a92effebbda59de6b4f889718dec7520a}{Ray}} (const Q\+Vector3D \&origin)
+\item 
+\mbox{\hyperlink{struct_ray_a46a83135920eb622d6c51cc15091c6fc}{Ray}} (const Q\+Vector3D \&origin, const Q\+Vector3D \&direction)
+\item 
+\mbox{\hyperlink{struct_ray_a155a0b6573cf6a9a2256eb5062523daf}{Ray}} (const \mbox{\hyperlink{struct_ray}{Ray}} \&ray)
+\item 
+\mbox{\hyperlink{struct_ray_a8b0e575ce5df046c0c7615c32a96a46f}{$\sim$\+Ray}} ()
+\item 
+Q\+Vector3D \mbox{\hyperlink{struct_ray_aaa4b1d97ddd42e6a4a880b0854f0e84e}{reflect}} (Q\+Vector3D const \&normal) const
+\begin{DoxyCompactList}\small\item\em Returns the reflection vector of this ray with a specified normal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{struct_ray_a8e3059d44fffe72fb98bb23528016a74}\label{struct_ray_a8e3059d44fffe72fb98bb23528016a74}} 
+Q\+Vector3D {\bfseries origin}
+\item 
+\mbox{\Hypertarget{struct_ray_a4480e81172e55beea90f19542bb35fa4}\label{struct_ray_a4480e81172e55beea90f19542bb35fa4}} 
+Q\+Vector3D {\bfseries direction}
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \mbox{\hyperlink{struct_ray_a5c8a3bf0a8e125a67943f442cbbf8e06}{operator$<$$<$}} (std\+::ostream \&os, const \mbox{\hyperlink{struct_ray}{Ray}} \&ray)
+\begin{DoxyCompactList}\small\item\em operator $<$$<$ used for printing the Class using std$<$$<$cout; \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \mbox{\hyperlink{struct_ray}{Ray}} struct describes a ray that can be cast from an origin towards a specified direction. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{struct_ray_a2e3d2c29f2df4ab3da10da79d4acb852}\label{struct_ray_a2e3d2c29f2df4ab3da10da79d4acb852}} 
+\index{Ray@{Ray}!Ray@{Ray}}
+\index{Ray@{Ray}!Ray@{Ray}}
+\subsubsection{\texorpdfstring{Ray()}{Ray()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily Ray\+::\+Ray (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+default c\textquotesingle{}tor \mbox{\Hypertarget{struct_ray_a92effebbda59de6b4f889718dec7520a}\label{struct_ray_a92effebbda59de6b4f889718dec7520a}} 
+\index{Ray@{Ray}!Ray@{Ray}}
+\index{Ray@{Ray}!Ray@{Ray}}
+\subsubsection{\texorpdfstring{Ray()}{Ray()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily Ray\+::\+Ray (\begin{DoxyParamCaption}\item[{const Q\+Vector3D \&}]{origin }\end{DoxyParamCaption})}
+
+c\textquotesingle{}tor 
+\begin{DoxyParams}{Parameters}
+{\em origin} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{struct_ray_a46a83135920eb622d6c51cc15091c6fc}\label{struct_ray_a46a83135920eb622d6c51cc15091c6fc}} 
+\index{Ray@{Ray}!Ray@{Ray}}
+\index{Ray@{Ray}!Ray@{Ray}}
+\subsubsection{\texorpdfstring{Ray()}{Ray()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily Ray\+::\+Ray (\begin{DoxyParamCaption}\item[{const Q\+Vector3D \&}]{origin,  }\item[{const Q\+Vector3D \&}]{direction }\end{DoxyParamCaption})}
+
+c\textquotesingle{}tor 
+\begin{DoxyParams}{Parameters}
+{\em origin} & \\
+\hline
+{\em direction} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{struct_ray_a155a0b6573cf6a9a2256eb5062523daf}\label{struct_ray_a155a0b6573cf6a9a2256eb5062523daf}} 
+\index{Ray@{Ray}!Ray@{Ray}}
+\index{Ray@{Ray}!Ray@{Ray}}
+\subsubsection{\texorpdfstring{Ray()}{Ray()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily Ray\+::\+Ray (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_ray}{Ray}} \&}]{ray }\end{DoxyParamCaption})}
+
+copy c\textquotesingle{}tor 
+\begin{DoxyParams}{Parameters}
+{\em ray} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{struct_ray_a8b0e575ce5df046c0c7615c32a96a46f}\label{struct_ray_a8b0e575ce5df046c0c7615c32a96a46f}} 
+\index{Ray@{Ray}!````~Ray@{$\sim$\+Ray}}
+\index{````~Ray@{$\sim$\+Ray}!Ray@{Ray}}
+\subsubsection{\texorpdfstring{$\sim$\+Ray()}{~Ray()}}
+{\footnotesize\ttfamily Ray\+::$\sim$\+Ray (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+d\textquotesingle{}tor 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{struct_ray_aaa4b1d97ddd42e6a4a880b0854f0e84e}\label{struct_ray_aaa4b1d97ddd42e6a4a880b0854f0e84e}} 
+\index{Ray@{Ray}!reflect@{reflect}}
+\index{reflect@{reflect}!Ray@{Ray}}
+\subsubsection{\texorpdfstring{reflect()}{reflect()}}
+{\footnotesize\ttfamily Q\+Vector3D Ray\+::reflect (\begin{DoxyParamCaption}\item[{Q\+Vector3D const \&}]{hitpoint\+\_\+normal }\end{DoxyParamCaption}) const}
+
+
+
+Returns the reflection vector of this ray with a specified normal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em normal} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+reflect ray along given normal 
+\begin{DoxyParams}{Parameters}
+{\em normal} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+\subsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{struct_ray_a5c8a3bf0a8e125a67943f442cbbf8e06}\label{struct_ray_a5c8a3bf0a8e125a67943f442cbbf8e06}} 
+\index{Ray@{Ray}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Ray@{Ray}}
+\subsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily std\+::ostream\& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os,  }\item[{const \mbox{\hyperlink{struct_ray}{Ray}} \&}]{ray }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+operator $<$$<$ used for printing the Class using std$<$$<$cout; 
+
+Because of reasons, Qt has its own way of printing things. Therefor this\textquotesingle{}ll not work with Qt\textquotesingle{}s q\+Debug() $<$$<$
+
+I\textquotesingle{}m not going to look into this, ... just because.
+
+
+\begin{DoxyParams}{Parameters}
+{\em os} & \\
+\hline
+{\em ray} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+stream $<$$<$ output operator 
+\begin{DoxyParams}{Parameters}
+{\em os} & \\
+\hline
+{\em ray} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/model/ray.\+hpp\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/model/ray.\+cpp\end{DoxyCompactItemize}

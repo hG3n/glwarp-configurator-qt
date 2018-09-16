@@ -1,0 +1,134 @@
+\hypertarget{class_g_l_warp_widget}{}\section{G\+L\+Warp\+Widget Class Reference}
+\label{class_g_l_warp_widget}\index{G\+L\+Warp\+Widget@{G\+L\+Warp\+Widget}}
+Inheritance diagram for G\+L\+Warp\+Widget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_g_l_warp_widget}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_g_l_warp_widget_a24e35ffcefc3499ec94c1e233d9f1b22}\label{class_g_l_warp_widget_a24e35ffcefc3499ec94c1e233d9f1b22}} 
+void {\bfseries cleanup} ()
+\item 
+\mbox{\Hypertarget{class_g_l_warp_widget_a5de5b6170929ad43973d9156c6c577d1}\label{class_g_l_warp_widget_a5de5b6170929ad43973d9156c6c577d1}} 
+void {\bfseries key\+Press\+Event} (Q\+Key\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_g_l_warp_widget_a5b2cdeb05b78d1acb1f13e59a691a001}{G\+L\+Warp\+Widget}} (Q\+Widget $\ast$parent=Q\+\_\+\+N\+U\+L\+L\+P\+TR)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_g_l_widget}{G\+L\+Widget}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_g_l_warp_widget_a38b3a090564985953d31003630985361}{$\sim$\+G\+L\+Warp\+Widget}} ()
+\item 
+Q\+Size \mbox{\hyperlink{class_g_l_warp_widget_aee1b83d5cce73680d18b10432834dbcc}{minimum\+Size\+Hint}} () const override
+\begin{DoxyCompactList}\small\item\em minimum\+Size\+Hint \end{DoxyCompactList}\item 
+Q\+Size \mbox{\hyperlink{class_g_l_warp_widget_ab48f61235afc35cfac013edb34445c57}{size\+Hint}} () const override
+\begin{DoxyCompactList}\small\item\em size\+Hint \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_warp_widget_ac7619517a9aa914452fa39092242b3b3}{update\+Values}} (std\+::vector$<$ Q\+Vector3D $>$ mesh\+\_\+values, std\+::vector$<$ Q\+Vector3D $>$ uv\+\_\+values)
+\begin{DoxyCompactList}\small\item\em Update the mesh and uv\+\_\+values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_g_l_warp_widget_ae5168c23c1d80794c85cc3401c5fbf91}\label{class_g_l_warp_widget_ae5168c23c1d80794c85cc3401c5fbf91}} 
+void \mbox{\hyperlink{class_g_l_warp_widget_ae5168c23c1d80794c85cc3401c5fbf91}{initialize\+GL}} () override
+\begin{DoxyCompactList}\small\item\em Initializes the Qt-\/\+Open\+GL context. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_g_l_warp_widget_a970521ed7331e205962fd3b669234980}\label{class_g_l_warp_widget_a970521ed7331e205962fd3b669234980}} 
+void \mbox{\hyperlink{class_g_l_warp_widget_a970521ed7331e205962fd3b669234980}{paint\+GL}} () override
+\begin{DoxyCompactList}\small\item\em paint\+GL \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g_l_warp_widget_a3f5becb91977e33d64f40ad68c903b64}{resize\+GL}} (int width, int height) override
+\begin{DoxyCompactList}\small\item\em resize\+GL \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_g_l_warp_widget_a5b2cdeb05b78d1acb1f13e59a691a001}\label{class_g_l_warp_widget_a5b2cdeb05b78d1acb1f13e59a691a001}} 
+\index{G\+L\+Warp\+Widget@{G\+L\+Warp\+Widget}!G\+L\+Warp\+Widget@{G\+L\+Warp\+Widget}}
+\index{G\+L\+Warp\+Widget@{G\+L\+Warp\+Widget}!G\+L\+Warp\+Widget@{G\+L\+Warp\+Widget}}
+\subsubsection{\texorpdfstring{G\+L\+Warp\+Widget()}{GLWarpWidget()}}
+{\footnotesize\ttfamily G\+L\+Warp\+Widget\+::\+G\+L\+Warp\+Widget (\begin{DoxyParamCaption}\item[{Q\+Widget $\ast$}]{parent = {\ttfamily Q\+\_\+NULLPTR} }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{class_g_l_widget}{G\+L\+Widget}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_g_l_warp_widget_a38b3a090564985953d31003630985361}\label{class_g_l_warp_widget_a38b3a090564985953d31003630985361}} 
+\index{G\+L\+Warp\+Widget@{G\+L\+Warp\+Widget}!````~G\+L\+Warp\+Widget@{$\sim$\+G\+L\+Warp\+Widget}}
+\index{````~G\+L\+Warp\+Widget@{$\sim$\+G\+L\+Warp\+Widget}!G\+L\+Warp\+Widget@{G\+L\+Warp\+Widget}}
+\subsubsection{\texorpdfstring{$\sim$\+G\+L\+Warp\+Widget()}{~GLWarpWidget()}}
+{\footnotesize\ttfamily G\+L\+Warp\+Widget\+::$\sim$\+G\+L\+Warp\+Widget (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+d\textquotesingle{}tor 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_g_l_warp_widget_aee1b83d5cce73680d18b10432834dbcc}\label{class_g_l_warp_widget_aee1b83d5cce73680d18b10432834dbcc}} 
+\index{G\+L\+Warp\+Widget@{G\+L\+Warp\+Widget}!minimum\+Size\+Hint@{minimum\+Size\+Hint}}
+\index{minimum\+Size\+Hint@{minimum\+Size\+Hint}!G\+L\+Warp\+Widget@{G\+L\+Warp\+Widget}}
+\subsubsection{\texorpdfstring{minimum\+Size\+Hint()}{minimumSizeHint()}}
+{\footnotesize\ttfamily Q\+Size G\+L\+Warp\+Widget\+::minimum\+Size\+Hint (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+minimum\+Size\+Hint 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_g_l_warp_widget_a3f5becb91977e33d64f40ad68c903b64}\label{class_g_l_warp_widget_a3f5becb91977e33d64f40ad68c903b64}} 
+\index{G\+L\+Warp\+Widget@{G\+L\+Warp\+Widget}!resize\+GL@{resize\+GL}}
+\index{resize\+GL@{resize\+GL}!G\+L\+Warp\+Widget@{G\+L\+Warp\+Widget}}
+\subsubsection{\texorpdfstring{resize\+G\+L()}{resizeGL()}}
+{\footnotesize\ttfamily void G\+L\+Warp\+Widget\+::resize\+GL (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+
+resize\+GL 
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & \\
+\hline
+{\em height} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_g_l_warp_widget_ab48f61235afc35cfac013edb34445c57}\label{class_g_l_warp_widget_ab48f61235afc35cfac013edb34445c57}} 
+\index{G\+L\+Warp\+Widget@{G\+L\+Warp\+Widget}!size\+Hint@{size\+Hint}}
+\index{size\+Hint@{size\+Hint}!G\+L\+Warp\+Widget@{G\+L\+Warp\+Widget}}
+\subsubsection{\texorpdfstring{size\+Hint()}{sizeHint()}}
+{\footnotesize\ttfamily Q\+Size G\+L\+Warp\+Widget\+::size\+Hint (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+size\+Hint 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_g_l_warp_widget_ac7619517a9aa914452fa39092242b3b3}\label{class_g_l_warp_widget_ac7619517a9aa914452fa39092242b3b3}} 
+\index{G\+L\+Warp\+Widget@{G\+L\+Warp\+Widget}!update\+Values@{update\+Values}}
+\index{update\+Values@{update\+Values}!G\+L\+Warp\+Widget@{G\+L\+Warp\+Widget}}
+\subsubsection{\texorpdfstring{update\+Values()}{updateValues()}}
+{\footnotesize\ttfamily void G\+L\+Warp\+Widget\+::update\+Values (\begin{DoxyParamCaption}\item[{std\+::vector$<$ Q\+Vector3D $>$}]{mesh\+\_\+values,  }\item[{std\+::vector$<$ Q\+Vector3D $>$}]{uv\+\_\+values }\end{DoxyParamCaption})}
+
+
+
+Update the mesh and uv\+\_\+values. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mesh\+\_\+values} & \\
+\hline
+{\em uv\+\_\+values} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/ui/glwarpwidget.\+h\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/ui/glwarpwidget.\+cpp\end{DoxyCompactItemize}

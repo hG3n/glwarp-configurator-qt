@@ -1,0 +1,183 @@
+\hypertarget{class_projector_frustum}{}\section{Projector\+Frustum Class Reference}
+\label{class_projector_frustum}\index{Projector\+Frustum@{Projector\+Frustum}}
+
+
+The \mbox{\hyperlink{class_projector_frustum}{Projector\+Frustum}} class describes a light projector frustum.  
+
+
+
+
+{\ttfamily \#include $<$projector\+\_\+frustum.\+hpp$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_projector_frustum_ada11c8a7dc78a009ac6a7fd8667c264b}\label{class_projector_frustum_ada11c8a7dc78a009ac6a7fd8667c264b}} 
+enum {\bfseries Clipping\+Plane} \{ {\bfseries N\+E\+AR}, 
+{\bfseries F\+AR}
+ \}
+\item 
+\mbox{\Hypertarget{class_projector_frustum_a3ed65cdb2799b84b6d8341ee77e69c74}\label{class_projector_frustum_a3ed65cdb2799b84b6d8341ee77e69c74}} 
+enum {\bfseries Corner} \{ {\bfseries TL}, 
+{\bfseries TR}, 
+{\bfseries BL}, 
+{\bfseries BR}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_projector_frustum_aaddf578aae0115cd79ba29dc878ae545}\label{class_projector_frustum_aaddf578aae0115cd79ba29dc878ae545}} 
+\mbox{\hyperlink{class_projector_frustum_aaddf578aae0115cd79ba29dc878ae545}{Projector\+Frustum}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_projector_frustum}{Projector\+Frustum}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_projector_frustum_aac915f2a3a87868d11f0bb66a18342db}{Projector\+Frustum}} (float \+\_\+aspect\+\_\+ratio, float \+\_\+fov, float \+\_\+near, float \+\_\+far)
+\begin{DoxyCompactList}\small\item\em Creates a new frustum with the given values. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_projector_frustum_a1c5c97e807392f1e828c050ef17bcc92}{translate}} (Q\+Vector3D const \&position)
+\begin{DoxyCompactList}\small\item\em Translate to current position. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_projector_frustum_a31107a66549d2aed4c17a936989d2427}{rotate}} (float angle, Q\+Vector3D const \&axis)
+\begin{DoxyCompactList}\small\item\em Rotate by given degree angle around specified axis. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_projector_frustum_addd0f88dab59f47a2e66d8e08d438425}{set\+F\+OV}} (float fov)
+\begin{DoxyCompactList}\small\item\em Set the frustum field of view. \end{DoxyCompactList}\item 
+std\+::map$<$ Corner, Q\+Vector3D $>$ const  \& \mbox{\hyperlink{class_projector_frustum_a940f0000d14b46b8678b4c6910a18831}{get\+Near\+Corners}} () const
+\begin{DoxyCompactList}\small\item\em Returns near clipping plane corners. \end{DoxyCompactList}\item 
+std\+::map$<$ Corner, Q\+Vector3D $>$ const  \& \mbox{\hyperlink{class_projector_frustum_a74ad1cd476b378e48135744f6083ef31}{get\+Far\+Corners}} () const
+\begin{DoxyCompactList}\small\item\em Returns far clipping plane corners. \end{DoxyCompactList}\item 
+Q\+Vector3D const  \& \mbox{\hyperlink{class_projector_frustum_ab0a343f5e94821717a6abcec7e4a6a5c}{get\+Eye}} () const
+\begin{DoxyCompactList}\small\item\em Returns frustum eye ray. \end{DoxyCompactList}\item 
+Q\+Vector3D const  \& \mbox{\hyperlink{class_projector_frustum_a45f134fc399cff7c2f3a518e8cf5674d}{get\+Position}} () const
+\begin{DoxyCompactList}\small\item\em Returns the position. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \mbox{\hyperlink{class_projector_frustum}{Projector\+Frustum}} class describes a light projector frustum. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_projector_frustum_aac915f2a3a87868d11f0bb66a18342db}\label{class_projector_frustum_aac915f2a3a87868d11f0bb66a18342db}} 
+\index{Projector\+Frustum@{Projector\+Frustum}!Projector\+Frustum@{Projector\+Frustum}}
+\index{Projector\+Frustum@{Projector\+Frustum}!Projector\+Frustum@{Projector\+Frustum}}
+\subsubsection{\texorpdfstring{Projector\+Frustum()}{ProjectorFrustum()}}
+{\footnotesize\ttfamily Projector\+Frustum\+::\+Projector\+Frustum (\begin{DoxyParamCaption}\item[{float}]{\+\_\+aspect\+\_\+ratio,  }\item[{float}]{\+\_\+fov,  }\item[{float}]{\+\_\+near,  }\item[{float}]{\+\_\+far }\end{DoxyParamCaption})}
+
+
+
+Creates a new frustum with the given values. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+aspect\+\_\+ratio} & \\
+\hline
+{\em \+\_\+fov} & \\
+\hline
+{\em \+\_\+near} & \\
+\hline
+{\em \+\_\+far} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_projector_frustum_ab0a343f5e94821717a6abcec7e4a6a5c}\label{class_projector_frustum_ab0a343f5e94821717a6abcec7e4a6a5c}} 
+\index{Projector\+Frustum@{Projector\+Frustum}!get\+Eye@{get\+Eye}}
+\index{get\+Eye@{get\+Eye}!Projector\+Frustum@{Projector\+Frustum}}
+\subsubsection{\texorpdfstring{get\+Eye()}{getEye()}}
+{\footnotesize\ttfamily Q\+Vector3D const  \& Projector\+Frustum\+::get\+Eye (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns frustum eye ray. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_projector_frustum_a74ad1cd476b378e48135744f6083ef31}\label{class_projector_frustum_a74ad1cd476b378e48135744f6083ef31}} 
+\index{Projector\+Frustum@{Projector\+Frustum}!get\+Far\+Corners@{get\+Far\+Corners}}
+\index{get\+Far\+Corners@{get\+Far\+Corners}!Projector\+Frustum@{Projector\+Frustum}}
+\subsubsection{\texorpdfstring{get\+Far\+Corners()}{getFarCorners()}}
+{\footnotesize\ttfamily std\+::map$<$ Projector\+Frustum\+::\+Corner, Q\+Vector3D $>$ const  \& Projector\+Frustum\+::get\+Far\+Corners (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns far clipping plane corners. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_projector_frustum_a940f0000d14b46b8678b4c6910a18831}\label{class_projector_frustum_a940f0000d14b46b8678b4c6910a18831}} 
+\index{Projector\+Frustum@{Projector\+Frustum}!get\+Near\+Corners@{get\+Near\+Corners}}
+\index{get\+Near\+Corners@{get\+Near\+Corners}!Projector\+Frustum@{Projector\+Frustum}}
+\subsubsection{\texorpdfstring{get\+Near\+Corners()}{getNearCorners()}}
+{\footnotesize\ttfamily std\+::map$<$ Projector\+Frustum\+::\+Corner, Q\+Vector3D $>$ const  \& Projector\+Frustum\+::get\+Near\+Corners (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns near clipping plane corners. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_projector_frustum_a45f134fc399cff7c2f3a518e8cf5674d}\label{class_projector_frustum_a45f134fc399cff7c2f3a518e8cf5674d}} 
+\index{Projector\+Frustum@{Projector\+Frustum}!get\+Position@{get\+Position}}
+\index{get\+Position@{get\+Position}!Projector\+Frustum@{Projector\+Frustum}}
+\subsubsection{\texorpdfstring{get\+Position()}{getPosition()}}
+{\footnotesize\ttfamily Q\+Vector3D const  \& Projector\+Frustum\+::get\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns the position. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_projector_frustum_a31107a66549d2aed4c17a936989d2427}\label{class_projector_frustum_a31107a66549d2aed4c17a936989d2427}} 
+\index{Projector\+Frustum@{Projector\+Frustum}!rotate@{rotate}}
+\index{rotate@{rotate}!Projector\+Frustum@{Projector\+Frustum}}
+\subsubsection{\texorpdfstring{rotate()}{rotate()}}
+{\footnotesize\ttfamily void Projector\+Frustum\+::rotate (\begin{DoxyParamCaption}\item[{float}]{angle,  }\item[{Q\+Vector3D const \&}]{axis }\end{DoxyParamCaption})}
+
+
+
+Rotate by given degree angle around specified axis. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em angle} & \\
+\hline
+{\em axis} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_projector_frustum_addd0f88dab59f47a2e66d8e08d438425}\label{class_projector_frustum_addd0f88dab59f47a2e66d8e08d438425}} 
+\index{Projector\+Frustum@{Projector\+Frustum}!set\+F\+OV@{set\+F\+OV}}
+\index{set\+F\+OV@{set\+F\+OV}!Projector\+Frustum@{Projector\+Frustum}}
+\subsubsection{\texorpdfstring{set\+F\+O\+V()}{setFOV()}}
+{\footnotesize\ttfamily void Projector\+Frustum\+::set\+F\+OV (\begin{DoxyParamCaption}\item[{float}]{fov }\end{DoxyParamCaption})}
+
+
+
+Set the frustum field of view. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fov} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_projector_frustum_a1c5c97e807392f1e828c050ef17bcc92}\label{class_projector_frustum_a1c5c97e807392f1e828c050ef17bcc92}} 
+\index{Projector\+Frustum@{Projector\+Frustum}!translate@{translate}}
+\index{translate@{translate}!Projector\+Frustum@{Projector\+Frustum}}
+\subsubsection{\texorpdfstring{translate()}{translate()}}
+{\footnotesize\ttfamily void Projector\+Frustum\+::translate (\begin{DoxyParamCaption}\item[{Q\+Vector3D const \&}]{position }\end{DoxyParamCaption})}
+
+
+
+Translate to current position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/model/projector\+\_\+frustum.\+hpp\item 
+/\+Users/h\+Gen/\+Desktop/qt/glwarp-\/configuration-\/tool/src/model/projector\+\_\+frustum.\+cpp\end{DoxyCompactItemize}

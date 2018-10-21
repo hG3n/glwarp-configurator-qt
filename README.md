@@ -55,15 +55,15 @@ Each Element to be created needs several attributes in order to function properl
 
 The already provided ui.json file contains the maximum configurable amount of values to this point. Because of the structure it should be an easy task to extend the interfaces as well as the funcitonality.
 
-## General Workflow
-
-### Foreword
-All values feeded into the system must be in metric units (m) reflecting the real world setup. However, since the implemented DomeProjector class only abstracts the real life setup minor drifts between software representation and real world setup are considered completely normal.
+## Values
+All values feeded into the system must be in metric units (m) reflecting the real world setup. However, since the implemented DomeProjector class only abstracts the real life setup minor drifts between software representation and real world setup are just a logic consequence.
 Results calculated from the configurator do represent the actual geometry that should be used for an exact projection. The final production warping software is capable of altering the position and rotation of the mesh, allowing for more accurate setups.
 
 ## Workflow
-Once all real world parameters have been measured the applicaiton features very simple intearctions to be followed. In order to resimulate the current specified setup a menu action __Edit > Run Simulation__ has been added in addition to the Recalculate button on the lower end of the sidebar. Furthermore the shortcut __Ctrl+R__ on Linux and Windows as well as __CMD+R__ on Mac were implemented.
-It is suggested to first simulate values with a low Output resolution (4x16, 8x32, depending on the utilized hardware) as well as a lower sample point count (64x64 or 128x128). These values are sufficient to first test the specified values using the glwarp LINK tool. If these values appear to be good the resolutions can be increased. However, note that a very high output resolution can lead to a dropping framerate in glwarp, since more texture information have to be processed 
+Once all real world parameters have been measured the applicaiton features very simple intearctions to be followed. In order to resimulate the current specified setup a menu action ___Edit > Run Simulation___ has been added in addition to the Recalculate button on the lower end of the sidebar. Furthermore the shortcut ___CTRL+R___ on Linux and Windows as well as ___CMD+R___ on Mac were implemented.
 
+It is suggested to first simulate values with a low Output resolution (4x16, 8x32, depending on the utilized hardware) as well as a lower sample point count (64x64 or 128x128). These values are sufficient to first test the specified values using the glwarp LINK tool. If these values appear to be good the resolutions can be increased. However, note that a very high output resolution can lead to a dropping framerate in glwarp, since more texture information have to be processed. For a final dataset in the dome environment this tool was developed for a sample resolution of 512x512 was accurate enough to create an accurate transformation mesh.
 
+Functionality to save and load the config as well as a final set of transformations are also available as ___File___ actions.
 
+The three dimensional output simply utilizes `GL_POINTS` for a performant display of raycasted points. The coordinate systems origin is visualized using four of those. Every other geometry is only visible if all needed elements are aligned the proper way. A representation of the final geometrys appearance is placed directly over the origin in yellow. 

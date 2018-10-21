@@ -1,7 +1,5 @@
 # GLwarp Configurator
-
 Glwarp configurator is a software toolkit aimed to create transformation datasets for fulldome configurations using a single projector and a spherical mirror.
-
 
 ## Setup
 The Software was tested using Qt-Versions 5.8, 5.9, 5.10. Simply add the project to QtCreator and configure for either of the mentioned versions.
@@ -56,7 +54,7 @@ Each Element to be created needs several attributes in order to function properl
 The already provided ui.json file contains the maximum configurable amount of values to this point. Because of the structure it should be an easy task to extend the interfaces as well as the funcitonality.
 
 ## Values
-All values feeded into the system must be in metric units (m) reflecting the real world setup. However, since the implemented DomeProjector class only abstracts the real life setup minor drifts between software representation and real world setup are just a logic consequence.
+All values fed into the system must be in metric units (m) reflecting the real world setup. However, since the implemented DomeProjector class only abstracts the real life setup minor drifts between software representation and real world setup are just a logic consequence.
 Results calculated from the configurator do represent the actual geometry that should be used for an exact projection. The final production warping software is capable of altering the position and rotation of the mesh, allowing for more accurate setups.
 
 ## Workflow
@@ -66,4 +64,6 @@ It is suggested to first simulate values with a low Output resolution (4x16, 8x3
 
 Functionality to save and load the config as well as a final set of transformations are also available as ___File___ actions.
 
-The three dimensional output simply utilizes `GL_POINTS` for a performant display of raycasted points. The coordinate systems origin is visualized using four of those. Every other geometry is only visible if all needed elements are aligned the proper way. A representation of the final geometrys appearance is placed directly over the origin in yellow. 
+The three dimensional output simply utilizes `GL_POINT`'s for a performant display of raycasted points. The coordinate systems origin is visualized using four of those. Every other geometry is only visible if all needed elements are aligned the proper way. A representation of the final geometrys appearance is placed directly over the origin in yellow. A rotation of the visualization around the origin can be applied simply by dragging the view.
+
+All these elements can be changed within the `GlWidget`'s class function `paintGL` 
